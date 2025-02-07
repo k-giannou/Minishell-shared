@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:31:28 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/07 19:12:00 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/07 20:35:13 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int	count_tokens(char *line, bool single_quote, bool double_quote)
 				while ((line[i] && single_quote && line[i] != '\'')
 					|| (line[i] && double_quote && line[i] != '"'))//tant que je suis pas arriver a la prochaine meme quote, j'avance
 					i++;
-				i++;
+				valid_quotes(line[i++], &single_quote, &double_quote);
 			}
 			while(line[i] && line[i] != '\'' && line[i] != '"' && line[i] != ' ')//si j'ai des characteres, quotes exclues, j'avance jusqu'a un white space ou une quote
 				i++;
@@ -57,11 +57,11 @@ static int	count_tokens(char *line, bool single_quote, bool double_quote)
 		count++;//j'ajoute mon mot
 	}
 	if (single_quote || double_quote)//si les quotes se ferment pas correctement, erreur
-		return (ft_fprintf(2, "Error : quotes aren't closed properly\n"), free(line), exit(1), -1);
+		return (ft_fprintf(2, "Error : quotes aren't closed properly\n"), free(line), -1);
 	return (count++);//sinon, je renvoie le nombre de mots
 }
 
-static char	*ft_substr(char *line, t_minishell *mini, int i, int j)
+static char	*ft_substr(char *line, t_minishell *mini, int i, int j, int *new_i)
 {
 	int	len;
 	char *str;
@@ -73,22 +73,24 @@ static char	*ft_substr(char *line, t_minishell *mini, int i, int j)
 	{
 		if (line[len] == '\'' || line[len] == '"')//si mon caractere est une quote
 		{
-			valid_quotes(line[i++], &(mini->single_quote), &(mini->double_quote));
-				while ((line[i] && mini->single_quote && line[i] != '\'')
-					|| (line[i] && mini->double_quote && line[i] != '"'))//tant que je suis pas arriver a la prochaine meme quote, j'avance
+			valid_quotes(line[len++], &(mini->single_quote), &(mini->double_quote));
+				while ((line[len] && mini->single_quote && line[len] != '\'')
+					|| (line[len] && mini->double_quote && line[len] != '"'))//tant que je suis pas arriver a la prochaine meme quote, j'avance
 				len++;
+			valid_quotes(line[len], &(mini->single_quote), &(mini->double_quote));
 			if (line[len] && line[len + 1] && line[len + 1] != ' ')//si j'ai pas d'espaces apres les quotes
 				len++;
 		}
 		while(line[len] && line[len] != '\'' && line[len] != '"' && line[len] != ' ')//si j'ai des characteres, quotes exclues, j'avance jusqu'a un white space ou une quote
 			len++;
 	}
+	*new_i += len;
 	str = malloc(len + 1);
 	if (!str)
 		return (NULL);
 	while (i < len)
 	{
-		if (line[i] == '\'' || line[len] == '"')//si j'ai une quote
+		while (line[i] == '\'' || line[i] == '"')//si j'ai une quote
 			i++;
 		str[j++] = line[i++];
 	}
@@ -109,7 +111,7 @@ static char	**split_line(char *line, char **splited_line, t_minishell *mini)
 	{
 		while (line[i] && line[i] != ' ')//tant que je suis pas arriver a la fin de la ligne ou a un espace
 		{
-			splited_line[j] = ft_substr(line + i, mini, 0, 0);
+			splited_line[j] = ft_substr(line + i, mini, 0, 0, &i);
 			if (!splited_line[j])
 				return (free_dbl_tab(splited_line), free(line), NULL);
 		}
@@ -129,8 +131,7 @@ char	**optimised_line(char *line, t_minishell *mini)
 
 	splited_line = malloc(sizeof(char *) * count_tokens(line, 0, 0) + 1);
 	if (!splited_line)
-		return ((void)ft_fprintf(2, RED"Error : split line failed\n"RESET),
-			NULL);
+		return (NULL);
 	i = 0;
 	while (line[i] == ' ')// 1)j'avance dans ma string jusqu'a croiser autre chose qu'un white space
 			i++;

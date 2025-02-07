@@ -1,18 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   replace.c                                          :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/07 19:55:21 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/02/07 20:17:40 by locagnio         ###   ########.fr       */
+/*   Created: 2025/02/07 20:01:18 by locagnio          #+#    #+#             */
+/*   Updated: 2025/02/07 20:17:56 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
+
 char	*replace_var(t_minishell *mini, char *str)//str=$user
 {
-	t_env     *current;
+	t_env	*current;
 	char	*dest;
 	int	len;
 	int	i;
@@ -45,4 +47,3 @@ char	*replace_var(t_minishell *mini, char *str)//str=$user
 	}
 	return (str);
 }
-

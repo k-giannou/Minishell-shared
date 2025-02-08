@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:31:28 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/07 20:35:13 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/08 15:58:56 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static char	*ft_substr(char *line, t_minishell *mini, int i, int j, int *new_i)
 
 	len = 0;
 	if (line && line[0] == 0)//si j'ai un tableau vide
-		return (str = malloc(1), str[0] = 0, str);
+		return (str = ft_calloc(1, 1), str);
 	while (line[len] && line[len] != ' ')//tant que je suis pas arriver a la fin de la ligne ou a un espace
 	{
 		if (line[len] == '\'' || line[len] == '"')//si mon caractere est une quote
@@ -77,15 +77,15 @@ static char	*ft_substr(char *line, t_minishell *mini, int i, int j, int *new_i)
 				while ((line[len] && mini->single_quote && line[len] != '\'')
 					|| (line[len] && mini->double_quote && line[len] != '"'))//tant que je suis pas arriver a la prochaine meme quote, j'avance
 				len++;
-			valid_quotes(line[len], &(mini->single_quote), &(mini->double_quote));
-			if (line[len] && line[len + 1] && line[len + 1] != ' ')//si j'ai pas d'espaces apres les quotes
-				len++;
+			valid_quotes(line[len++], &(mini->single_quote), &(mini->double_quote));
 		}
 		while(line[len] && line[len] != '\'' && line[len] != '"' && line[len] != ' ')//si j'ai des characteres, quotes exclues, j'avance jusqu'a un white space ou une quote
 			len++;
 	}
 	*new_i += len;
-	str = malloc(len + 1);
+	if (line[len] == ' ')
+		len--;
+	str = ft_calloc(len + 1, 1);
 	if (!str)
 		return (NULL);
 	while (i < len)
@@ -113,7 +113,7 @@ static char	**split_line(char *line, char **splited_line, t_minishell *mini)
 		{
 			splited_line[j] = ft_substr(line + i, mini, 0, 0, &i);
 			if (!splited_line[j])
-				return (free_dbl_tab(splited_line), free(line), NULL);
+				return (free_all(NULL, splited_line), NULL);
 		}
 		j++;
 		k = 0;
@@ -129,12 +129,13 @@ char	**optimised_line(char *line, t_minishell *mini)
 	char	**splited_line;
 	int i;
 
-	splited_line = malloc(sizeof(char *) * count_tokens(line, 0, 0) + 1);
+	splited_line = ft_calloc(sizeof(char *), count_tokens(line, 0, 0) + 1);
 	if (!splited_line)
-		return (NULL);
+		return (free(line), NULL);
 	i = 0;
 	while (line[i] == ' ')// 1)j'avance dans ma string jusqu'a croiser autre chose qu'un white space
 			i++;
 	splited_line = split_line(line + i, splited_line, mini);
+	free(line);
 	return (splited_line);
 }

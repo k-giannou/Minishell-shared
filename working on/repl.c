@@ -41,6 +41,7 @@ char    *replace_var(t_minishell *mini, char *str)//it must take quotes that ope
 	int	t;
 	char	*dest;
 	int	len_to_move;
+	bool	found = false;
 
     current = mini->env;
     if (!current)
@@ -51,7 +52,7 @@ char    *replace_var(t_minishell *mini, char *str)//it must take quotes that ope
     {
 	 	if (str[i] == '\'')//when it founds ' , it conitinues copy exaclty until it founds the other ' .
 		{
-
+			
 			line[k++] = str[i++];//copys openning '
 			while (str[i] != '\'' && str[i] != '\0')
 				line[k++] = str[i++];
@@ -69,7 +70,7 @@ char    *replace_var(t_minishell *mini, char *str)//it must take quotes that ope
 					i = i + 2;//skips $_
 		 		//else if$_^@#&*
 			}
-		 	else if (ft_isalpha(str[i + 1]) || ft_isdigit(str[i + 1]) || str[i + 1] == '_')//while is letter, number, _ it has to change it if exist
+		 	if (ft_isalpha(str[i + 1]) || ft_isdigit(str[i + 1]) || str[i + 1] == '_')//while is letter, number, _ it has to change it if exist
 			{
 				i++;//we pass $
 				t = 0;
@@ -87,14 +88,11 @@ char    *replace_var(t_minishell *mini, char *str)//it must take quotes that ope
 					if (ft_strncmp(dest, current->data, ft_strlen(dest)) == 0)
 					{
 						t = 0;
+						found = true;
 						while (current->data[t] != '\0')
 						{
-							while (len_to_move >= 0)
-							{
+							while (len_to_move-- >= 0)
 								t++;
-								len_to_move--;
-								
-							}
 							line[k++] = current->data[t++];
 						}
 						break ;
@@ -105,9 +103,10 @@ char    *replace_var(t_minishell *mini, char *str)//it must take quotes that ope
 				dest = NULL;
 			}
 			
-		}			
-		else
+		}	
+		else 		
 			line[k++] = str[i++];
+		found = false;
 	}
 	line[k] = '\0';
 	return (ftstrdup(line));

@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/08 15:49:00 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/08 17:00:36 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,7 @@ void	pwd(t_env *env);
 void	ft_env(t_env *env);
 void	echo(char **line);
 void	exec_cmd(char **line, t_minishell *mini);
+
+char    *replace_var(t_minishell *mini, char *str);
 
 # endif

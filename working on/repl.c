@@ -40,7 +40,6 @@ char    *replace_var(t_minishell *mini, char *str)//it must take quotes that ope
 	int	k;
 	int	t;
 	char	*dest;
-	int	len_to_move;
 	bool	found = false;
 
     current = mini->env;
@@ -52,7 +51,6 @@ char    *replace_var(t_minishell *mini, char *str)//it must take quotes that ope
     {
 	 	if (str[i] == '\'')//when it founds ' , it conitinues copy exaclty until it founds the other ' .
 		{
-			
 			line[k++] = str[i++];//copys openning '
 			while (str[i] != '\'' && str[i] != '\0')
 				line[k++] = str[i++];
@@ -60,54 +58,43 @@ char    *replace_var(t_minishell *mini, char *str)//it must take quotes that ope
 		}
 		else if (str[i] == '$')//when finds $ , check the rules are needed to see if do replace
 		{
-			if (str[i + 1] == '\0' || str[i + 1]== '\"')//end of the sentence or finds $", copy
+			if (str[i + 1] == '\0' || str[i + 1]== '\"' || str[i + 1] == 32)//end of the sentence or finds $", copy
 				line[k++] = str[i++];
-			else if (str[i + 1] == 32)//space, copy
-				line[k++] = str[i++];
-		 	else if (str[i + 1] == '_')//$_
-			{
-				if (str[i + 2] == '\0' || str[i + 2] == 32 || str[i + 2] == '\"')//is after $_ is space or terminator or ", no copy $_
-					i = i + 2;//skips $_
-		 		//else if$_^@#&*
-			}
-		 	if (ft_isalpha(str[i + 1]) || ft_isdigit(str[i + 1]) || str[i + 1] == '_')//while is letter, number, _ it has to change it if exist
+		 	else if (ft_isalpha(str[i + 1]) || ft_isdigit(str[i + 1]) || str[i + 1] == '_')//while is letter, number, _ it has to change it if exist
 			{
 				i++;//we pass $
 				t = 0;
 			 	current = mini->env;
-				len_to_move = 0;
 				while (ft_isalpha(str[i]) || ft_isdigit(str[i]) || str[i] == '_')
-				{
-					len_to_move++;
 					to_search[t++] = str[i++];
-				}
-				to_search[t] = '\0';
+				to_search[t++] = '\0';
 				dest = ftstrdup(to_search);
 				while (current)
 				{
 					if (ft_strncmp(dest, current->data, ft_strlen(dest)) == 0)
 					{
-						t = 0;
 						found = true;
 						while (current->data[t] != '\0')
-						{
-							while (len_to_move-- >= 0)
-								t++;
 							line[k++] = current->data[t++];
-						}
 						break ;
 					}
 					current = current->next;
 				}
+				if (!found)
+				{
+					t = 0;
+					line[k++] = '$';
+					while (to_search[t] != '\0')
+						line[k++] = to_search[t++];
+				}
 				free (dest);
 				dest = NULL;
-			}
-			
-		}	
+			}	
+		}
 		else 		
 			line[k++] = str[i++];
 		found = false;
 	}
-	line[k] = '\0';
 	return (ftstrdup(line));
 }
+

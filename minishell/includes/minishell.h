@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/08 17:00:36 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/08 17:34:13 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@
 # define BOLD		"\033[1m"  // Texte en gras
 # define UNDERLINE	"\033[4m"  // Texte souligné
 # define ITALIC      "\033[3m"  // Texte en italique
+
+#define DBL_Q '"'
+#define SGL_Q '\''
 
 typedef struct s_env
 {

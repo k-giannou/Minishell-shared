@@ -84,10 +84,7 @@ char    *replace_var(t_minishell *mini, char *str)//it must take quotes that ope
 				}
 				if (!found)
 				{
-					t = 0;
-					line[k++] = '$';
-					while (to_search[t] != '\0')
-						line[k++] = to_search[t++];
+					i = i + t;
 				}
 				free (dest);
 				dest = NULL;

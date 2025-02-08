@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:17 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/08 17:30:13 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/08 18:54:57 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,3 +91,28 @@ int main(int ac, char **av, char **env)
 	free_all(mini, line);
 	return (0);
 }
+
+/* int main(int ac, char **av, char **env)
+{
+	t_minishell	*mini;
+	char *str;
+	
+	(void)ac;
+	(void)av;
+	mini = ft_calloc(1, sizeof(t_minishell));
+	if (!mini)
+		return (ft_fprintf(2, "Error : fail init struct\n"), 1);
+	if (init_env(&(mini->env), env))
+		return (ft_fprintf(2, "Error : fail copying env\n"), 1);
+	str = replace_var(mini, ft_readline(YELLOW"minishell> "RESET));
+	while (ft_strcmp(str, "exit"))
+	{
+		if (!ft_strcmp(str, "env"))
+			ft_env(mini->env);
+		printf("%s\n", str);
+		free(str);
+		str = replace_var(mini, ft_readline(YELLOW"minishell> "RESET));
+	}
+	free(str);
+	return (0);
+} */

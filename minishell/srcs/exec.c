@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:33:34 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/07 21:02:28 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/08 15:44:20 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void	exec_cmd(char **line, t_minishell *mini)
 	else if (!ft_strcmp(line[0], "env"))
 		ft_env(mini->env);
 	else if (!ft_strcmp(line[0], "exit"))
-		return (free_dbl_tab(line), exit(0));
+		return (rl_clear_history(), free_all(mini, line), exit(0));
 	else
 		ft_fprintf(2, "%s: command not found\n", line[0]);
-	free_dbl_tab(line);
+	free_all(NULL, line);
 }

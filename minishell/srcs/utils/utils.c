@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 20:38:24 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/07 20:48:54 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/08 14:34:03 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_strjoinm(char const *s1, char const *s2)
 	i = 0;
 	j = 0;
 	len = ft_strlen(s1) + ft_strlen(s2) + 1;
-	new_string = malloc(len);
+	new_string = ft_calloc(len, 1);
 	if (!new_string)
 		return (NULL);
 	while (s1[i] != '\0')
@@ -69,7 +69,7 @@ char	*ft_itoa(int n)
 	i = init_vals(nb, &sign);
 	if (nb < 0)
 		nb = -nb;
-	cpy = malloc(sizeof(char) * i + 1);
+	cpy = ft_calloc(sizeof(char), i + 1);
 	if (!cpy)
 		return (NULL);
 	if (sign == 1)
@@ -106,7 +106,7 @@ char	*ft_strdup(const char *src)
 
 	i = 0;
 	len_src = (int)ft_strlen(src);
-	cpy = (char *)malloc(sizeof(char) * (len_src + 1));
+	cpy = (char *)ft_calloc(sizeof(char), (len_src + 1));
 	if (!cpy)
 		return (NULL);
 	while (src[i] != '\0')

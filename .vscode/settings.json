@@ -2,6 +2,7 @@
 	"files.associations": {
 		"minishell.h": "c",
 		"stdio.h": "c",
-		"readline.h": "c"
+		"readline.h": "c",
+		"get_next_line_bonus.h": "c"
 	}
 }

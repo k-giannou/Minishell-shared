@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 20:01:18 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/07 20:17:56 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/08 14:35:50 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*replace_var(t_minishell *mini, char *str)//str=$user
 		{
 			len = strlen(current->data);
 			len = len - strlen(str) + 1;
-			dest = malloc(sizeof(char)* len + 1);
+			dest = ft_calloc(sizeof(char), len + 1);
 			if (!dest)
 				return (NULL);
 			len = strlen(str) + 1;

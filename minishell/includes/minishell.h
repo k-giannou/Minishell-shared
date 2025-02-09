@@ -77,5 +77,6 @@ void	echo(char **line);
 void	exec_cmd(char **line, t_minishell *mini);
 
 char    *replace_var(t_minishell *mini, char *str);
+int	ft_charset(int c);
 
 # endif

@@ -1,19 +1,5 @@
 #include "../includes/minishell.h"
 
-int 	ft_isalpha(int c)
-{
-	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
-		return (1);
-	return (0);
-}
-
-int	ft_isdigit(int c)
-{
-	if (c >= '0' && c <= '9')
-		return (1);
-	return (0);
-}
-
 char	*ftstrdup(char *src)
 {
 	char	*dest;
@@ -33,6 +19,20 @@ char	*ftstrdup(char *src)
 	return (dest);
 }
 
+int	ft_charset(int c)
+{
+	char	set[] = " $  ' ";
+	int i;
+	
+	i = 0;
+	while (set[i] != '\0')
+	{
+		if (c == set[i++] || c == '\0' || c == '\"')
+			return (1);
+	}
+	return (0);
+}
+
 char    *replace_var(t_minishell *mini, char *str)//it must take quotes that open and close correctly
 {
     t_env	*current;
@@ -42,8 +42,9 @@ char    *replace_var(t_minishell *mini, char *str)//it must take quotes that ope
 	int	k;
 	int	t;
 	char	*dest;
-	bool	found = false;
-
+	bool dbl_quote = false;
+	int	quote_sum = 0;
+	
     current = mini->env;
     if (!current)
         return (NULL);
@@ -51,49 +52,58 @@ char    *replace_var(t_minishell *mini, char *str)//it must take quotes that ope
 	k = 0;
     while (str[i] != '\0')
     {
-	 	if (str[i] == '\'')//when it founds ' , it conitinues copy exaclty until it founds the other ' .
+		
+	 	if (str[i] == '\'' && (!dbl_quote))//when it founds ' , it conitinues copy exaclty until it founds the other ' .
 		{
 			line[k++] = str[i++];//copys openning '
 			while (str[i] != '\'' && str[i] != '\0')
 				line[k++] = str[i++];
 			line[k++] = str[i++];//copys closing '
 		}
+		else if (str[i]== '\"')//check the double quotes and print them
+		{
+			line[k++] = str[i++];
+			quote_sum++;
+			if (quote_sum % 2 == 0)
+				dbl_quote = false;//not inside double quote
+			else
+				dbl_quote = true;
+		}
 		else if (str[i] == '$')//when finds $ , check the rules are needed to see if do replace
 		{
-			if (str[i + 1] == '\0' || str[i + 1]== '\"' || str[i + 1] == 32)//end of the sentence or finds $", copy
+			if (str[i + 1] == '\0' || str[i + 1] == 32 || str[i + 1] == '$')
+					line[k++] = str[i++];
+			else if (str[i + 1] == '\"' && dbl_quote)//if inside dbl quotes we copy the $
 				line[k++] = str[i++];
-		 	else if (ft_isalpha(str[i + 1]) || ft_isdigit(str[i + 1]) || str[i + 1] == '_')//while is letter, number, _ it has to change it if exist
+			else if (str[i + 1] == '\"' && (!dbl_quote))//if outside dbl we ignore it
+				i++;
+		 	else// if (str[i + 1] == '\"' && ((quote_sum % 2 == 1)))//if outside
 			{
-				i++;//we pass $
-				t = 0;
-			 	current = mini->env;
-				while (ft_isalpha(str[i]) || ft_isdigit(str[i]) || str[i] == '_')
-					to_search[t++] = str[i++];
-				to_search[t++] = '\0';
-				dest = ftstrdup(to_search);
-				while (current)
-				{
-					if (ft_strncmp(dest, current->data, ft_strlen(dest)) == 0)
+					i++;//we pass $
+					t = 0;
+				 	current = mini->env;
+					while (!ft_charset(str[i]))
+						to_search[t++] = str[i++];
+					to_search[t++] = '\0';//++ becuse we need it later
+					dest = ftstrdup(to_search);
+					while (current)
 					{
-						found = true;
-						while (current->data[t] != '\0')
-							line[k++] = current->data[t++];
-						break ;
+						if (ft_strncmp(dest, current->data, ft_strlen(dest)) == 0)
+						{
+							while (current->data[t] != '\0')
+								line[k++] = current->data[t++];
+							break ;
+						}
+						current = current->next;
 					}
-					current = current->next;
-				}
-				if (!found)
-				{
-					i = i + t;
-				}
-				free (dest);
-				dest = NULL;
-			}	
+					free (dest);
+					dest = NULL;
+			}
 		}
 		else 		
 			line[k++] = str[i++];
-		found = false;
 	}
+	line[k] = '\0';
 	return (ftstrdup(line));
 }
 

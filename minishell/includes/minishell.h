@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/10 16:39:16 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/10 17:17:04 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_minishell
 	bool	sgl_q;
 	bool	dbl_q;
 	t_env	*env;
+	t_env	*env_export;
 } t_minishell;
 
 void	error(void);

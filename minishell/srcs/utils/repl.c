@@ -1,16 +1,5 @@
 #include "../includes/minishell.h"
 
-typedef struct s_variables
-{
-	char	line[70000];//we check the str and we copy char by char in like, except it needs replace
-	char	to_search[70000];
-    int	i;
-	int	k;
-	int	t;
-	bool dbl_quote;
-	int	quote_sum;
-} t_variables ;
-
 char	*ftstrdup(char *src)
 {
 	char	*dest;

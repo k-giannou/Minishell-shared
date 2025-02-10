@@ -47,6 +47,17 @@ typedef struct s_env
 	struct s_env	*next;	
 } t_env, t_cell;
 
+typedef struct s_variables
+{
+	char	line[70000];//we check the str and we copy char by char in like, except it needs replace
+	char	to_search[70000];
+    int	i;
+	int	k;
+	int	t;
+	bool dbl_quote;
+	int	quote_sum;
+} t_variables ;
+
 typedef struct s_minishell
 {
 	bool	sgl_q;
@@ -55,7 +66,9 @@ typedef struct s_minishell
 	int		hist_lines;
 	t_env	*env;
 	t_env	*env_export;
+	t_variables vars;
 } t_minishell;
+
 
 void	error(void);
 void	welcome(void);

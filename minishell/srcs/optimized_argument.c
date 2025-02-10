@@ -6,31 +6,13 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:31:28 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/08 18:13:10 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/10 16:48:59 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	valid_quotes(char c, bool *single_quote, bool *double_quote)
-{
-	if (!(*single_quote) && !(*double_quote))
-	{
-		if (c == SGL_Q)
-			(*single_quote) = 1;
-		else if (c == DBL_Q)
-			(*double_quote) = 1;
-	}
-	else if ((*single_quote) || (*double_quote))
-	{
-		if (c == SGL_Q && (*single_quote) && !(*double_quote))
-			(*single_quote) = 0;
-		else if (c == DBL_Q && (*double_quote) && !(*single_quote))
-			(*double_quote) = 0;
-	}
-}
-
-static int	count_tokens(char *line, bool single_quote, bool double_quote, int i)
+static int	count_tokens(char *line, bool sgl_q, bool dbl_q, int i)
 {
 	int	count;
 
@@ -43,23 +25,49 @@ static int	count_tokens(char *line, bool single_quote, bool double_quote, int i)
 		{
 			if (line[i] == SGL_Q || line[i] == DBL_Q)//2)si mon caractere est une quote
 			{
-				valid_quotes(line[i++], &single_quote, &double_quote);
-				while ((line[i] && single_quote && line[i] != SGL_Q)
-					|| (line[i] && double_quote && line[i] != DBL_Q))//tant que je suis pas arriver a la prochaine meme quote, j'avance
+				valid_quotes(line[i++], &sgl_q, &dbl_q);
+				while ((line[i] && sgl_q && line[i] != SGL_Q)
+					|| (line[i] && dbl_q && line[i] != DBL_Q))//tant que je suis pas arriver a la prochaine meme quote, j'avance
 					i++;
-				valid_quotes(line[i++], &single_quote, &double_quote);
+				valid_quotes(line[i++], &sgl_q, &dbl_q);
 			}
 			while(line[i] && line[i] != SGL_Q && line[i] != DBL_Q && line[i] != ' ')//si j'ai des characteres, quotes exclues, j'avance jusqu'a un white space ou une quote
 				i++;
 		}
 		count++;//j'ajoute mon mot
 	}
-	if (single_quote || double_quote)//si les quotes se ferment pas correctement, erreur
+	if (sgl_q || dbl_q)//si les quotes se ferment pas correctement, erreur
 		return (ft_fprintf(2, "Error : quotes aren't closed properly\n"), free(line), -1);
 	return (count++);//sinon, je renvoie le nombre de mots
 }
+static char	*ft_substr2(char *line, t_minishell *mini, int len)
+{
+	char *str;
+	int i;
+	int j;
 
-static char	*ft_substr(char *line, t_minishell *mini, int i, int j, int *new_i)
+	i = 0;
+	j = 0;	
+	mini->sgl_q = 0;
+	mini->dbl_q = 0;
+	str = ft_calloc(len + 1, 1);
+	if (!str)
+		return (NULL);
+	while (i < len)
+	{
+		if ((line[i] == SGL_Q || line[i] == DBL_Q) && !mini->sgl_q
+			&& !mini->dbl_q)//si j'ai une quote
+			valid_quotes(line[i++], &(mini->sgl_q), &(mini->dbl_q));
+		else if ((line[i] == SGL_Q && mini->sgl_q) || (line[i] == DBL_Q
+			&& mini->dbl_q))
+			valid_quotes(line[i++], &(mini->sgl_q), &(mini->dbl_q));
+		str[j++] = line[i++];
+	}
+	str[j] = 0;
+	return (str);
+}
+
+static char	*ft_substr(char *line, t_minishell *mini, int *new_i)
 {
 	int	len;
 	char *str;
@@ -72,11 +80,11 @@ static char	*ft_substr(char *line, t_minishell *mini, int i, int j, int *new_i)
 	{
 		if (line[len] == SGL_Q || line[len] == DBL_Q)//si mon caractere est une quote
 		{
-			valid_quotes(line[len++], &(mini->single_quote), &(mini->double_quote));
-				while ((line[len] && mini->single_quote && line[len] != SGL_Q)
-					|| (line[len] && mini->double_quote && line[len] != DBL_Q))//tant que je suis pas arriver a la prochaine meme quote, j'avance
+			valid_quotes(line[len++], &(mini->sgl_q), &(mini->dbl_q));
+				while ((line[len] && mini->sgl_q && line[len] != SGL_Q)
+					|| (line[len] && mini->dbl_q && line[len] != DBL_Q))//tant que je suis pas arriver a la prochaine meme quote, j'avance
 				len++;
-			valid_quotes(line[len++], &(mini->single_quote), &(mini->double_quote));
+			valid_quotes(line[len++], &(mini->sgl_q), &(mini->dbl_q));
 		}
 		while(line[len] && line[len] != SGL_Q && line[len] != DBL_Q && line[len] != ' ')//si j'ai des characteres, quotes exclues, j'avance jusqu'a un white space ou une quote
 			len++;
@@ -84,17 +92,7 @@ static char	*ft_substr(char *line, t_minishell *mini, int i, int j, int *new_i)
 	*new_i += len;
 	if (line[len] == ' ' && (line[len - 1] == SGL_Q || line[len - 1] == DBL_Q))
 		len--;
-	str = ft_calloc(len + 1, 1);
-	if (!str)
-		return (NULL);
-	while (i < len)
-	{
-		while (line[i] == SGL_Q || line[i] == DBL_Q)//si j'ai une quote
-			i++;
-		str[j++] = line[i++];
-	}
-	str[j] = 0;
-	return (str);//sinon, je renvoie le nombre de mots
+	return (ft_substr2(line, mini, len));//sinon, je renvoie le nombre de mots
 }
 
 static char	**split_line(char *line, char **splited_line, t_minishell *mini)
@@ -110,7 +108,7 @@ static char	**split_line(char *line, char **splited_line, t_minishell *mini)
 	{
 		while (line[i] && line[i] != ' ')//tant que je suis pas arriver a la fin de la ligne ou a un espace
 		{
-			splited_line[j] = ft_substr(line + i, mini, 0, 0, &i);
+			splited_line[j] = ft_substr(line + i, mini, &i);
 			if (!splited_line[j])
 				return (free_all(NULL, splited_line), NULL);
 		}

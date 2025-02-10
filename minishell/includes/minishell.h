@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/08 17:34:13 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/10 16:39:16 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,15 @@ typedef struct s_env
 
 typedef struct s_minishell
 {
-	bool	single_quote;
-	bool	double_quote;
+	bool	sgl_q;
+	bool	dbl_q;
 	t_env	*env;
 } t_minishell;
 
 void	error(void);
 void	welcome(void);
 char	*ft_itoa(int n);
+int		ft_isalnum(char c);
 void	print_list(t_env *L);
 char	*ft_strdup(const char *src);
 void	ft_print_dlb_tabs(char **tab);
@@ -65,6 +66,7 @@ char	*ft_strjoinm(char const *s1, char const *s2);
 char	**optimised_line(char *line, t_minishell *mini);
 char	*ft_remove_from_string(char *str, char *to_delete);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
+void	valid_quotes(char c, bool *sgl_q, bool *dbl_q);
 
 //frees
 void	ft_list_clear(t_env *begin_list);

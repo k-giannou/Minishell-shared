@@ -97,4 +97,3 @@ char    *replace_var(t_minishell *mini, char *str)//it must take quotes that ope
 	}
 	return (ftstrdup(line));
 }
-

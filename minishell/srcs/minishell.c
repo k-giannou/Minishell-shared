@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:17 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/08 19:16:24 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/10 16:33:46 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,13 @@ int	init_env(t_env	**my_env, char **env)
 int main(int ac, char **av, char **env)
 {
 	char		**line;
+	char		*str;
 	t_minishell	*mini;
 	
 	(void)ac;
 	(void)av;
 	//welcome();
+	str = NULL;
 	mini = ft_calloc(1, sizeof(t_minishell));
 	if (!mini)
 		return (ft_fprintf(2, "Error : fail init struct\n"), 1);
@@ -83,7 +85,8 @@ int main(int ac, char **av, char **env)
 		return (ft_fprintf(2, "Error : fail copying env\n"), 1);
 	while (1)
 	{
-		line = optimised_line(ft_readline(YELLOW"minishell> "RESET), mini);
+		str = replace_var(mini, ft_readline(YELLOW"minishell> "RESET));
+		line = optimised_line(str, mini);
 		if (!line || !line[0] || line[0][0] == 0)
 			continue ;
 		exec_cmd(line, mini);
@@ -92,10 +95,10 @@ int main(int ac, char **av, char **env)
 	return (0);
 }
 
-int main(int ac, char **av, char **env)
+/* int main(int ac, char **av, char **env)
 {
 	t_minishell	*mini;
-	char *str;
+	char	*str;
 	
 	(void)ac;
 	(void)av;
@@ -109,10 +112,11 @@ int main(int ac, char **av, char **env)
 	{
 		if (!ft_strcmp(str, "env"))
 			ft_env(mini->env);
-		printf("%s\n", replace_var(mini, str));
+		str = replace_var(mini, str);
+		printf("%s\n", str);
 		free(str);
 		str = ft_readline(YELLOW"minishell> "RESET);
 	}
 	free(str);
 	return (0);
-}
+} */

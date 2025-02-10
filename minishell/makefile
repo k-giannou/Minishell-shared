@@ -7,7 +7,7 @@ HDRS			= includes
 SRCS			=  srcs/minishell.c srcs/print.c srcs/exec.c srcs/free.c srcs/utils/utils.c\
 				   srcs/utils/utils2.c srcs/utils/ft_split.c srcs/buildins/pwd.c\
 				   srcs/buildins/env.c srcs/buildins/echo.c srcs/optimized_argument.c\
-				   srcs/utils/repl.c srcs/utils/ft_list_sort.c\
+				   srcs/utils/repl.c srcs/utils/ft_list_sort.c srcs/buildins/exit.c\
 				   \
 				   srcs/gnl/get_next_line_bonus.c srcs/gnl/get_next_line_utils_bonus.c
 SRC_O			= $(SRCS:srcs/.c=.o)

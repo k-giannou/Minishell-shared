@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:54:19 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/10 17:33:23 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/10 20:30:10 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ void	free_all(t_minishell *mini, char **str)
 			ft_list_clear(mini->env);
 		if (mini->env_export)
 			ft_list_clear(mini->env_export);
-		free(mini);	
+		close(mini->fd);
+		if (unlink(HISTORY) == -1)
+        	ft_fprintf(2, "Error : cannot delete history file\n");
+		free(mini);
 	}
 	if (str)
 		free_dbl_tab(str);

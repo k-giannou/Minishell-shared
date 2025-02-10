@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:31:28 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/10 17:52:35 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/10 19:38:45 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	count_tokens(char *line, bool sgl_q, bool dbl_q, int i)
 		count++;//j'ajoute mon mot
 	}
 	if (sgl_q || dbl_q)//si les quotes se ferment pas correctement, erreur
-		return (ft_fprintf(2, "Error : quotes aren't closed properly\n"), free(line), exit(1), -1);
+		return (ft_fprintf(2, "Error : quotes aren't closed properly\n"), -1);
 	return (count++);//sinon, je renvoie le nombre de mots
 }
 
@@ -59,10 +59,11 @@ static char	*ft_substr2(char *line, t_minishell *mini, int len)
 		if ((line[i] == SGL_Q || line[i] == DBL_Q) && !mini->sgl_q
 			&& !mini->dbl_q)//si j'ai une quote
 			valid_quotes(line[i++], &(mini->sgl_q), &(mini->dbl_q));
-		else if ((line[i] == SGL_Q && mini->sgl_q) || (line[i] == DBL_Q
+		if ((line[i] == SGL_Q && mini->sgl_q) || (line[i] == DBL_Q
 			&& mini->dbl_q))
 			valid_quotes(line[i++], &(mini->sgl_q), &(mini->dbl_q));
-		str[j++] = line[i++];
+		else
+			str[j++] = line[i++];
 	}
 	str[j] = 0;
 	return (str);
@@ -126,8 +127,12 @@ char	**optimised_line(char *line, t_minishell *mini)
 {
 	char	**splited_line;
 	int i;
+	int	count;
 
-	splited_line = ft_calloc(sizeof(char *), count_tokens(line, 0, 0, 0) + 1);
+	count = count_tokens(line, 0, 0, 0);
+	if (count == -1)
+		return (free(line), NULL);
+	splited_line = ft_calloc(sizeof(char *), count + 1);
 	if (!splited_line)
 		return (free(line), NULL);
 	i = 0;

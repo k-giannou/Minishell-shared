@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:17 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/10 16:33:46 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/10 17:56:48 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,9 @@ int main(int ac, char **av, char **env)
 		return (ft_fprintf(2, "Error : fail init struct\n"), 1);
 	if (init_env(&(mini->env), env))
 		return (ft_fprintf(2, "Error : fail copying env\n"), 1);
+	mini->env_export = ft_envdup(mini->env);
+	ft_env_sort((&mini->env_export));
+	print_list(mini->env_export);
 	while (1)
 	{
 		str = replace_var(mini, ft_readline(YELLOW"minishell> "RESET));

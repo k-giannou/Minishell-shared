@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 19:15:45 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/06 21:00:30 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/10 18:20:39 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	print_list(t_env *L)
 		printf("%s\n", L->data);
 		L = L->next;
 	}
+	printf("\n\n");
 }
 
 void	ft_env(t_env *env)

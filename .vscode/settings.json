@@ -4,6 +4,7 @@
 		"stdio.h": "c",
 		"readline.h": "c",
 		"get_next_line_bonus.h": "c",
-		"unistd.h": "c"
+		"unistd.h": "c",
+		"fcntl.h": "c"
 	}
 }

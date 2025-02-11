@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:17 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/10 20:30:02 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/11 14:50:25 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,10 @@ int main(int ac, char **av, char **env)
 	while (1)
 	{
 		str = replace_var(mini, ft_readline(YELLOW"minishell> "RESET, mini));
+		/* printf("your function : %s \n", str); */
 		line = optimised_line(str, mini);
+		/* for (int i = 0; line[i]; i++)
+			printf("my split : %s\n", line[i]); */
 		if (!line || !line[0] || line[0][0] == 0)
 			continue ;
 		exec_cmd(line, mini);

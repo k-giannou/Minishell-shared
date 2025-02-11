@@ -117,6 +117,7 @@ char    *replace_var(t_minishell *mini, char *str)
     t_env	*current;
 	t_variables v;
 
+	add_history(str);
 	v = mini->vars;
 	init_v(v);
     current = mini->env;

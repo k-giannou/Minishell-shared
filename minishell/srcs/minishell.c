@@ -6,27 +6,14 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:17 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/11 14:50:25 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/11 20:50:07 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 //le bash doit fonctionner sur bash, pas zsh
-
-/* t_signal signal; */
-
-char	*ft_readline(char *str, t_minishell *mini)
-{
-	char	*line;
-
-	ft_fprintf(1, "%s", str);
-	line = get_next_line(0);
-	ft_fprintf(mini->fd, "%s", line);
-	mini->hist_lines++;
-	line[ft_strlen(line) - 1] = 0;
-	return (line);
-}
+	volatile sig_atomic_t g_signal = 0;
 
 t_env	*create_cell(char *data)
 {
@@ -80,7 +67,8 @@ t_minishell *init_vals(char **env)
 		return (ft_fprintf(2, "Error : fail copying env\n"), exit(1), NULL);
 	mini->env_export = ft_envdup(mini->env);
 	ft_env_sort((&mini->env_export));
-	mini->fd = open(HISTORY, O_RDWR | O_CREAT | O_APPEND, 0777);
+	sig_init();
+	mini->current_location = getenv("PWD");
 	return (mini);
 }
 
@@ -97,7 +85,7 @@ int main(int ac, char **av, char **env)
 	mini = init_vals(env);
 	while (1)
 	{
-		str = replace_var(mini, ft_readline(YELLOW"minishell> "RESET, mini));
+		str = replace_var(mini, readline(YELLOW"minishell> "RESET));
 		/* printf("your function : %s \n", str); */
 		line = optimised_line(str, mini);
 		/* for (int i = 0; line[i]; i++)

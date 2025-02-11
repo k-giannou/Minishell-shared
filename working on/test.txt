@@ -1,0 +1,37 @@
+export =value         # Δεν μπορεί να υπάρχει μεταβλητή χωρίς όνομα
+export 123VAR=value   # Δεν μπορεί να ξεκινά με αριθμό
+export VAR-with-dash=1 # Δεν υποστηρίζονται παύλες στο όνομα της μεταβλητής
+export VAR!@#=test    # Δεν υποστηρίζονται ειδικοί χαρακτήρες στο όνομα
+export VAR VALUE      # Λείπει το =
+export "VAR WITH SPACE"=test  # Το όνομα της μεταβλητής δεν μπορεί να έχει κενά
+export VAR+=test      # Το += δεν υποστηρίζεται για μεταβλητές περιβάλλοντος
+export VAR==value     # Διπλά ==
+export export VAR=value # Δεν χρειάζεται διπλό export
+export VAR=value; export VAR2 # Η δεύτερη εντολή είναι ελλιπής
+export VAR=$UNDEFINED_VAR # Αν η $UNDEFINED_VAR είναι άδεια, το VAR θα είναι κενό
+export 1VAR=test      # Το όνομα της μεταβλητής δεν μπορεί να ξεκινά με αριθμό
+export VAR-TEST=foo   # Δεν επιτρέπονται παύλες στο όνομα της μεταβλητής
+export VAR&TEST=foo   # Το `&` δεν επιτρέπεται στο όνομα
+export $VAR=value     # Δεν μπορεί να ξεκινά με `$`
+export VAR=test test2 # Το test2 θεωρείται ξεχωριστό όρισμα
+export VAR==          # Λάθος χρήση του `=`
+export VAR="unterminated # Λάθος, λείπει το τελικό `"`
+export PATH+=":/custom/bin"  # Δεν υποστηρίζεται += στο minishell
+export VAR=test; ls          # `ls` δεν πρέπει να είναι στην ίδια γραμμή
+export -n VAR=test           # Το `-n` δεν είναι έγκυρο flag στο minishell
+export -p VAR=test           # To `-p` στο minishell δεν σημαίνει κάτι
+export VAR=$((2+2))          # Η αριθμητική επέκταση ίσως δεν υποστηρίζεται στο minishell
+export VAR={a,b,c}           # Οι αγκύλες δεν υποστηρίζονται έτσι στο minishell
+export VAR="$(command notfound)"  # Αν η εντολή αποτύχει, η μεταβλητή θα είναι κενή
+export VAR=$'test\n'         # Το `$'...'` ίσως να μην υποστηρίζεται στο minishell
+export VAR=test | grep VAR   # Η εντολή `grep` δεν ανήκει σε `export`
+export VAR=test && export VAR2=test2  # `&&` μπορεί να μην λειτουργεί στο minishell
+export VAR="unclosed quote   # Ανοικτό εισαγωγικό, λάθος σύνταξη
+export VAR="value'           # Μικτή χρήση εισαγωγικών, λάθος σύνταξη
+export ""=value              # Κενό όνομα μεταβλητής, μη έγκυρο
+export VAR='single' double   # Μη έγκυρη χρήση εισαγωγικών
+export VAR=$HOME/usr/local   # Μάλλον το `/usr/local` δεν θα προστεθεί σωστά
+export \VAR=value            # Το backslash ίσως δημιουργεί πρόβλημα
+export "VAR=value"           # Τα εισαγωγικά μπορεί να θεωρηθούν μέρος του ονόματος
+export VAR=foo bar           # Το `bar` θεωρείται ξεχωριστό όρισμα
+

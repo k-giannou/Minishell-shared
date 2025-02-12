@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:31:28 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/10 19:38:45 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/12 17:24:59 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static char	*ft_substr2(char *line, t_minishell *mini, int len)
 	return (str);
 }
 
-static char	*ft_substr(char *line, t_minishell *mini, int *new_i)
+static char	*ft_substr_mini(char *line, t_minishell *mini, int *new_i)
 {
 	int	len;
 	char *str;
@@ -110,7 +110,7 @@ static char	**split_line(char *line, char **splited_line, t_minishell *mini)
 	{
 		while (line[i] && line[i] != ' ')//tant que je suis pas arriver a la fin de la ligne ou a un espace
 		{
-			splited_line[j] = ft_substr(line + i, mini, &i);
+			splited_line[j] = ft_substr_mini(line + i, mini, &i);
 			if (!splited_line[j])
 				return (free_all(NULL, splited_line), NULL);
 		}

@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 17:48:48 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/11 16:38:29 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/12 17:14:56 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*ft_line_save(char *line_save, int fd)
 		else if (line_save[0] && bytes_read == 0)
 			continue ;
 		buffer[bytes_read] = '\0';
-		line_save = ft_strjoin(line_save, buffer);
+		line_save = ft_strjoin_gnl(line_save, buffer);
 	}
 	free(buffer);
 	return (line_save);

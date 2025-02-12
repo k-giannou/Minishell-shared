@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:17 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/11 20:50:07 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/12 16:57:42 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ int	init_env(t_env	**my_env, char **env)
 		{
 			free(tmp->data);
 			shlvl = ft_itoa(ft_atoi(env[i] + 6) + 1);
-			tmp->data = ft_strjoinm("SHLVL=", shlvl);
-			free(shlvl);
+			tmp->data = ft_strjoinm("SHLVL=", shlvl, 2);
 			if (!tmp->data || !tmp->data[6])
 				return (ft_list_clear(*my_env), 1);
 		}
@@ -86,10 +85,7 @@ int main(int ac, char **av, char **env)
 	while (1)
 	{
 		str = replace_var(mini, readline(YELLOW"minishell> "RESET));
-		/* printf("your function : %s \n", str); */
 		line = optimised_line(str, mini);
-		/* for (int i = 0; line[i]; i++)
-			printf("my split : %s\n", line[i]); */
 		if (!line || !line[0] || line[0][0] == 0)
 			continue ;
 		exec_cmd(line, mini);

@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/12 15:13:08 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/12 17:18:09 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,15 @@
 # include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "ft_fprintf.h"
-# include "get_next_line_bonus.h"
 # include <sys/stat.h>
 # include <wait.h>
 # include <stdbool.h>
 # include <termios.h>
 # include <signal.h>
+
+# include "libft_extras.h"
+# include "ft_fprintf.h"
+# include "get_next_line_bonus.h"
 
 # define RESET		"\033[0m"   //Réinitialisation
 # define RED		"\033[31m"   //Couleur rouge
@@ -78,25 +80,20 @@ void	error(void);
 void	welcome(void);
 void	sig_init(void);
 char	*ft_itoa(int n);
-int		ft_isalnum(char c);
 void	print_list(t_env *L);
 t_env	*ft_envdup(t_env *src);
 t_env	*create_cell(char *data);
 char	*ft_strdup(const char *src);
 void	ft_print_dlb_tabs(char **tab);
-void	ft_putstr_fd(char *s, int fd);
 void	ft_env_sort(t_env **begin_list);
 int		rest_letters_of_name(char *str);
-char	**ft_split(char *str, char *charset);
 t_env	*add_at(t_env *L, char *data, int pos);
 void	ft_exit(t_minishell *mini, char **line);
-char	*ft_readline(char *str, t_minishell *mini);
 char	*replace_var(t_minishell *mini, char *str);
-char	*ft_strjoinm(char const *s1, char const *s2);
 void	valid_quotes(char c, bool *sgl_q, bool *dbl_q);
 char	**optimised_line(char *line, t_minishell *mini);
 int		just_export_or_unset(char **vars, char *command);
-char	*ft_remove_from_string(char *str, char *to_delete);
+char	*ft_strjoinm(char *s1, char *s2, int tab_to_free);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 
 //frees

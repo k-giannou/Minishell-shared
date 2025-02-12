@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:33:34 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/11 20:50:53 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/12 15:13:31 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ void	exec_cmd(char **line, t_minishell *mini)
 	if (!ft_strcmp(line[0], "pwd"))
 		pwd(mini->env);
 	else if (!ft_strcmp(line[0], "echo"))
-			echo(line);
+		echo(line);
 	else if (!ft_strcmp(line[0], "cd"))
 		cd(line[1], &mini);
-	/* else if (!ft_strcmp(line[0], "export"))
-		return (1);
+	else if (!ft_strcmp(line[0], "export"))
+		export(line, mini);
 	else if (!ft_strcmp(line[0], "unset"))
-		return (1);*/
+		unset(line, mini);
 	else if (!ft_strcmp(line[0], "env"))
 		ft_env(mini->env);
 	else if (!ft_strcmp(line[0], "exit"))

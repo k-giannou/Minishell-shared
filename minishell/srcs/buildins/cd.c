@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 19:15:45 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/11 21:15:40 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/12 15:04:37 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,17 @@ int	ft_strrchr(const char *s, int c)
 	return (0);
 }
 
-void	switch_slash(char *path)
+void	switch_slash(char *path, char *curr_pwd)
 {
 	char	c;
 	char	c2;
 	int		i;
 
+	if (!ft_strcmp(curr_pwd, "/"))
+	{
+		path[ft_strlen(path) - 1] = 0;
+		return ;	
+	}
 	c = path[0];
 	path[0] = '/';
 	i = 0;
@@ -63,6 +68,26 @@ void	switch_slash(char *path)
 	}
 }
 
+char	*double_dots(t_env	*tmp, char *path)
+{
+	char	*str;
+	int		i;
+	int		len_path;
+
+	i = 0;
+	str = NULL;
+	len_path = ft_strlen(path);
+	while (str[i + 2] == '/' && !ft_strncmp(str + i, "..", 2)
+		&& i < len_path)
+	{
+		str = tmp->data;
+		tmp->data = ft_strndup(str, ft_strrchr(str, '/'));
+		free(str);
+		i += 3;
+	}
+	return (tmp->data);
+}
+
 char	*new_location(t_env *env, char *path)
 {
 	t_env	*tmp;
@@ -71,20 +96,21 @@ char	*new_location(t_env *env, char *path)
 	tmp = env;
 	while (ft_strncmp(tmp->data, "PWD", 3))
 		tmp = tmp->next;
-	if (!ft_strcmp(path, ".."))
+	printf ("%s\n", tmp->data);
+	if (!ft_strcmp(path, "."))
+		return (tmp->data);
+	if (!ft_strncmp(path, "..", 2))
+		return (double_dots(tmp, path));
+	if (path[0] == '/')
 	{
-		str = tmp->data;
-		printf ("%s\n", tmp->data);
-		tmp->data = ft_strndup(str, ft_strrchr(str, '/'));
-		printf ("%s\n", tmp->data);
-		free(str);
+		free(tmp->data);
+		tmp->data = ft_strjoinm("PWD=", path);
 		return (tmp->data);
 	}
-	switch_slash(path);
-	printf ("%s\n", tmp->data);
+	else if (path[ft_strlen(path) - 1] == '/')
+		switch_slash(path, tmp->data + 4);
 	str = tmp->data;
 	tmp->data = ft_strjoinm(str, path);
-	printf ("%s\n", tmp->data);
 	free(str);
 	return (tmp->data);
 }
@@ -94,13 +120,13 @@ void	cd(char *path, t_minishell **mini)
 	struct stat	info;
 
 	if (access(path, F_OK) == -1)
-		return (perror("Erreur : Le répertoire n'existe pas"));
+		return (perror("Error "));
 	if (stat(path, &info) == -1)
-		return (perror("Erreur lors de l'accès aux informations du répertoire"));
+		return (perror("Error : Cannot acces to infos of repository\n"));
 	if (!S_ISDIR(info.st_mode))
-		return ((void)ft_fprintf(2, "Erreur : Ce n'est pas un répertoire\n"));
+		return ((void)ft_fprintf(2, "Error : it's not a repository.\n"));
 	if (chdir(path) == -1)
-		return (perror("Erreur lors du changement de répertoire"));
+		return (perror("Error while changing repository\n"));
 	(*mini)->current_location = new_location((*mini)->env, path);
-	printf("Répertoire changé avec succès : %s\n", (*mini)->current_location);
+	printf("Repository changed successfully : %s\n", (*mini)->current_location);
 }

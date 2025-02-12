@@ -3,21 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 19:15:45 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/12 13:24:48 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/02/12 15:17:15 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	unset()
-{
-	
-}
 
-/*
 t_env    *free_at(t_env *L, int pos)
 {
     t_env    *prec;
@@ -45,19 +40,19 @@ t_env    *free_at(t_env *L, int pos)
     return (L);
 }
 
-void	delete_from_env(char *var, t_env *v)
+void	delete_from_env(char *var, t_env **v)
 {
 	int	i;
 	t_env	*temp;
 
-	temp = v;
+	temp = *v;
 	i = 0;
     while (temp != NULL)
 	{
 		if (ft_strncmp(var, temp->data, ft_strlen(var)) == 0)
 		{
-			free_at(v, i);
-			printf("deleted.");
+			free_at(*v, i);
+			printf("deleted.\n");
 			return ;
 		}
 		temp = temp->next;
@@ -65,11 +60,11 @@ void	delete_from_env(char *var, t_env *v)
 	}
 }
 
-void	ft_unset(char **vars, t_minishell *mini)
+void	unset(char **vars, t_minishell *mini)
 {
 	int	i;
 
-	i = 0;
+	i = 1;
 	if (just_export_or_unset(vars, "unset"))
 		return ;
 	else
@@ -77,9 +72,9 @@ void	ft_unset(char **vars, t_minishell *mini)
 		{
 			if (!rest_letters_of_name(vars[i]))
 				break ;
-			delete_from_env(vars[i], mini->env);
-			delete_from_env(vars[i], mini->env_export);
+			delete_from_env(vars[i], &(mini->env));
+			delete_from_env(vars[i], &(mini->env_export));
 			i++;
 		}
 		return ;
-}*/
+}

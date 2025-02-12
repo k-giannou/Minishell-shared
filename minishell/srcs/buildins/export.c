@@ -3,20 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 19:15:45 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/12 13:24:37 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/02/12 15:12:51 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	export()
-{
-	
-}
-/*
 int 	ft_isalpha(int c)
 {
 	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
@@ -31,21 +26,21 @@ int	ft_isdigit(int c)
 	return (0);
 }
 
-int	just_export(char **vars)
+int	just_export_or_unset(char **vars, char *command)
 {
 	int	i;
 
 	i = 0;
 	while (vars[i])
 			i++;
-	if (i == 1 && ft_strcmp(vars[i], "export") == 0)
+	if (i == 1 && ft_strcmp(vars[i], command) == 0)
 		return (1) ;
 	return (0);
 }
 
 int	first_letter_valid(char *str)
 {
-	if (ft_isalpha(str[0]) || str[0] != '_' || str[0] != '$')
+	if (ft_isalpha(str[0]) || str[0] == '_')
 		return (1);
 	return (0);
 }
@@ -152,11 +147,11 @@ void	ft_print_export(t_env *v)
 		inside = false;
 	}
 }
-void	ft_export(char **vars, t_minishell *mini)
+void	export(char **vars, t_minishell *mini)
 {
-	int	i = 0;
+	int	i = 1;
 	
-	if (just_export(vars))
+	if (just_export_or_unset(vars, "export"))
 		return (ft_print_export(mini->env_export));
 	else 
 		while (vars[i])
@@ -173,4 +168,4 @@ void	ft_export(char **vars, t_minishell *mini)
 			i++;
 		}
 	return ;
-}*/
+}

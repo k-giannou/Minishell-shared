@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/11 20:50:46 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/12 15:13:08 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ char	*ft_strdup(const char *src);
 void	ft_print_dlb_tabs(char **tab);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_env_sort(t_env **begin_list);
+int		rest_letters_of_name(char *str);
 char	**ft_split(char *str, char *charset);
 t_env	*add_at(t_env *L, char *data, int pos);
 void	ft_exit(t_minishell *mini, char **line);
@@ -94,6 +95,7 @@ char	*replace_var(t_minishell *mini, char *str);
 char	*ft_strjoinm(char const *s1, char const *s2);
 void	valid_quotes(char c, bool *sgl_q, bool *dbl_q);
 char	**optimised_line(char *line, t_minishell *mini);
+int		just_export_or_unset(char **vars, char *command);
 char	*ft_remove_from_string(char *str, char *to_delete);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 
@@ -103,9 +105,11 @@ void	free_all(t_minishell *mini, char **str);
 
 //buildins
 void	pwd(t_env *env);
-void	ft_env(t_env *env);
 void	echo(char **line);
+void	ft_env(t_env *env);
 void	cd(char *chemin, t_minishell **mini);
+void	unset(char **vars, t_minishell *mini);
+void	export(char **vars, t_minishell *mini);
 void	exec_cmd(char **line, t_minishell *mini);
 
 char    *replace_var(t_minishell *mini, char *str);

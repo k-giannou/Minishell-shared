@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 19:15:45 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/12 19:20:32 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/12 21:10:35 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ void	remove_multiple_slashs(char *path, int i)
 			while (path[j] == '/')//while i'm in the slashs
 				j++;
 		}
-		path[i++] = path[j++];//i copy the characters
+		if (i != j)
+			path[i] = path[j];//i copy the characters
+		i++;
+		j++;
 	}
 	ft_bzero(path + i, ft_strlen(path + i));
 }
@@ -53,13 +56,12 @@ void	add_directory(t_env **tmp, char *path, int *i)
 	int		j;
 
 	j = 0;
-	if (!ft_strcmp(path + *i, "/"))
-		return ;
 	ft_bzero(str, 257);
-	str[j++] = '/';
+	if (ft_strcmp((*tmp)->data, "PWD=/"))
+		str[j++] = '/';
 	if (path[*i] == '/')
 		(*i)++;
-	while (path[*i] != '/')
+	while (path[*i] != '/' && path[*i])
 		str[j++] = path[(*i)++];
 	(*tmp)->data = ft_strjoin_n_free((*tmp)->data, ft_strdup(str), 12);		
 }
@@ -73,21 +75,28 @@ char	*new_location(t_env *env, char *path, int i)
 	while (ft_strncmp(tmp->data, "PWD", 3))
 		tmp = tmp->next;
 	str = NULL;
-	while (path[++i])
+	while (path[++i] && i < (int)ft_strlen(path))
 	{
-		if (i == 0 && path[i] == '/')
+		if ((i == 0 && path[i] == '/'))
 		{
 			free(tmp->data);
-			tmp->data = ft_strdup("/");
+			tmp->data = ft_strdup("PWD=/");
 		}
 		else if (!ft_strncmp(path + i, "../", 3) || !ft_strncmp(path + i, "..\0", 3))
 		{
 			str = tmp->data;
 			tmp->data = ft_strndup(str, ft_strrchr(str, '/'));
 			free(str);
+			if (!ft_strcmp(tmp->data, "PWD="))
+			{
+				free(tmp->data);
+				tmp->data = ft_strdup("PWD=/");
+			}
 			i++;
 		}
-		else
+		else if (!ft_strncmp(path + i, "./", 2) || !ft_strncmp(path + i, ".\0", 2))
+			i++;
+		else if (path[i + 1] != '.')
 			add_directory(&tmp, path, &i);
 	}
 	return (tmp->data + 4);
@@ -97,6 +106,8 @@ void	cd(char *path, t_minishell **mini)
 {
 	struct stat	info;
 
+	if (!path)
+		path = "/home/locagnio";
 	if (access(path, F_OK) == -1)
 		return (perror("Error "));
 	if (stat(path, &info) == -1)

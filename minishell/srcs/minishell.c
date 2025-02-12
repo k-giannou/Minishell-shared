@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:17 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/12 19:24:56 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/12 20:34:24 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,22 @@ t_minishell *init_vals(char **env)
 	return (mini);
 }
 
+char	*toprint(char *cur_loc)
+{
+	char	*str;
+	
+	str = ft_strdup(YELLOW);
+	str = ft_strjoin_n_free(str, cur_loc, 1);
+	str = ft_strjoin_n_free(str, "$ ", 1);
+	str = ft_strjoin_n_free(str, RESET, 1);
+	return (str);	
+}
+
 int main(int ac, char **av, char **env)
 {
 	char		**line;
 	char		*str;
+	char		*print;
 	t_minishell	*mini;
 	
 	(void)ac;
@@ -84,8 +96,9 @@ int main(int ac, char **av, char **env)
 	mini = init_vals(env);
 	while (1)
 	{
-		printf(YELLOW"%s$ "RESET, (const char *)mini->current_location);
-		str = replace_var(mini, readline(""));
+		print = toprint(mini->current_location);
+		str = replace_var(mini, readline(print));
+		free(print);
 		line = optimised_line(str, mini);
 		if (!line || !line[0] || line[0][0] == 0)
 			continue ;

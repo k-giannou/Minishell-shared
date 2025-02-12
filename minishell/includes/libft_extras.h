@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:00:12 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/12 17:31:02 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/12 19:46:44 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,6 @@
 	void			*data;
 	struct s_list	*next;
 } t_list,	t_cell; */
-
-# define RESET "\033[0m"   //Réinitialisation
-# define RED   "\033[31m"   //Couleur rouge
 
 //* free
 void		free_dbl_tab(char **str);

@@ -6,7 +6,7 @@
 /*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 19:15:45 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/12 12:50:43 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/02/12 13:24:37 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	just_export(char **vars)
 	i = 0;
 	while (vars[i])
 			i++;
-	if (--i == 1 && ft_strcmp(vars[i], "export") == 0)//>>>>>>>>>>>>>>>>>>> remember to delete --
+	if (i == 1 && ft_strcmp(vars[i], "export") == 0)
 		return (1) ;
 	return (0);
 }

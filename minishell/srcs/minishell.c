@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:17 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/12 16:57:42 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/12 19:24:56 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_minishell *init_vals(char **env)
 	mini->env_export = ft_envdup(mini->env);
 	ft_env_sort((&mini->env_export));
 	sig_init();
-	mini->current_location = getenv("PWD");
+	mini->current_location = replace_by_tilde(mini->env, getenv("PWD"));
 	return (mini);
 }
 
@@ -84,7 +84,8 @@ int main(int ac, char **av, char **env)
 	mini = init_vals(env);
 	while (1)
 	{
-		str = replace_var(mini, readline(YELLOW"minishell> "RESET));
+		printf(YELLOW"%s$ "RESET, (const char *)mini->current_location);
+		str = replace_var(mini, readline(""));
 		line = optimised_line(str, mini);
 		if (!line || !line[0] || line[0][0] == 0)
 			continue ;

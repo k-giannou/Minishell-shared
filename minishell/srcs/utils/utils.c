@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 20:38:24 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/12 16:12:50 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/12 19:25:11 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,84 +39,24 @@ char	*ft_strjoinm(char *s1, char *s2, int tab_to_free)
 	return (new_string);
 }
 
-static int	init_vals(long nb, int *sign)
+//str = /home/locagnio/common_git/minishell
+//home = /home/locagnio
+char	*replace_by_tilde(t_env *env, char *str)
 {
-	int	i;
-	int	digits;
+	int i;
+	char	*home;
+	char	*tmp;
 
 	i = 0;
-	digits = 1;
-	if (nb < 0)
+	while (ft_strncmp(env->data, "HOME=", 5))
+		env = env->next;
+	home = env->data + 5;
+	if (!ft_strncmp(str, home, ft_strlen(home)))
 	{
-		nb = -nb;
-		*sign = 1;
+		while (str[i] == home[i])
+			i++;
+		tmp = ft_strdup(str + i);
+		return (ft_strjoin_n_free("~", tmp, 2));
 	}
-	while (nb >= 10)
-	{
-		nb /= 10;
-		digits++;
-	}
-	i = digits + *sign;
-	return (i);
-}
-
-char	*ft_itoa(int n)
-{
-	char	*cpy;
-	long	nb;
-	int		i;
-	int		sign;
-
-	nb = n;
-	sign = 0;
-	i = init_vals(nb, &sign);
-	if (nb < 0)
-		nb = -nb;
-	cpy = ft_calloc(sizeof(char), i + 1);
-	if (!cpy)
-		return (NULL);
-	if (sign == 1)
-		cpy[0] = '-';
-	cpy[i--] = '\0';
-	while (i >= sign)
-	{
-		cpy[i] = nb % 10 + '0';
-		nb /= 10;
-		i--;
-	}
-	return (cpy);
-}
-
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
-{
-	size_t	i;
-
-	i = 0;
-	while ((s1[i] || s2[i]) && i < n)
-	{
-		if (s1[i] != s2[i])
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-		i++;
-	}
-	return (0);
-}
-
-char	*ft_strdup(const char *src)
-{
-	char	*cpy;
-	int		len_src;
-	int		i;
-
-	i = 0;
-	len_src = (int)ft_strlen(src);
-	cpy = (char *)ft_calloc(sizeof(char), (len_src + 1));
-	if (!cpy)
-		return (NULL);
-	while (src[i] != '\0')
-	{
-		cpy[i] = src[i];
-		i++;
-	}
-	cpy[i] = '\0';
-	return (cpy);
+	return (str);
 }

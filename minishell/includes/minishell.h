@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/12 17:18:09 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/12 19:22:23 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,22 +79,20 @@ typedef struct s_minishell
 void	error(void);
 void	welcome(void);
 void	sig_init(void);
-char	*ft_itoa(int n);
 void	print_list(t_env *L);
 t_env	*ft_envdup(t_env *src);
 t_env	*create_cell(char *data);
-char	*ft_strdup(const char *src);
 void	ft_print_dlb_tabs(char **tab);
 void	ft_env_sort(t_env **begin_list);
 int		rest_letters_of_name(char *str);
 t_env	*add_at(t_env *L, char *data, int pos);
 void	ft_exit(t_minishell *mini, char **line);
+char	*replace_by_tilde(t_env *env, char *str);
 char	*replace_var(t_minishell *mini, char *str);
 void	valid_quotes(char c, bool *sgl_q, bool *dbl_q);
 char	**optimised_line(char *line, t_minishell *mini);
 int		just_export_or_unset(char **vars, char *command);
 char	*ft_strjoinm(char *s1, char *s2, int tab_to_free);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
 
 //frees
 void	ft_list_clear(t_env *begin_list);

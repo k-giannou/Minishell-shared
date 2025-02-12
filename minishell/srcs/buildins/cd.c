@@ -6,31 +6,11 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 19:15:45 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/12 17:40:13 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/12 19:20:32 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-char	*ft_strndup(const char *src, int n)
-{
-	char	*cpy;
-	int		i;
-
-	i = 0;
-	if (n > (int)ft_strlen(src))
-		n = (int)ft_strlen(src);
-	cpy = (char *)malloc(sizeof(char) * (n + 1));
-	if (!cpy)
-		return (NULL);
-	while (src[i] && i < n)
-	{
-		cpy[i] = src[i];
-		i++;
-	}
-	cpy[i] = '\0';
-	return (cpy);
-}
 
 int	ft_strrchr(const char *s, int c)
 {
@@ -46,151 +26,71 @@ int	ft_strrchr(const char *s, int c)
 	return (0);
 }
 
-void	switch_slash(char *path, char *curr_pwd)
+void	remove_multiple_slashs(char *path, int i)
 {
-	char	c;
-	char	c2;
-	int		i;
-
-	if (!ft_strcmp(curr_pwd, "/"))
-	{
-		path[ft_strlen(path) - 1] = 0;
-		return ;	
-	}
-	c = path[0];
-	path[0] = '/';
-	i = 0;
-	while (path[++i])
-	{
-		c2 = path[i];
-		path[i] = c;
-		c = c2;
-	}
-}
-
-char	*double_dots(t_env	*tmp, char *path)
-{
-	char	*str;
-	int		i;
-	int		len_path;
-
-	i = 0;
-	str = tmp->data;
-	len_path = ft_strlen(path);
-	while ((path[i + 2] == '/' || path[i + 2] == 0)
-		&& !ft_strncmp(path + i, "..", 2) && i < len_path)
-	{
-		str = tmp->data;
-		tmp->data = ft_strndup(str, ft_strrchr(str, '/'));
-		free(str);
-		i += 3;
-	}
-	return (tmp->data);
-}
-
-void	ft_bzero(void *s, size_t n)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < n)
-	{
-		*(char *)(s + i) = 0;
-		i++;
-	}
-}
-/* char *optimised_path(char *path)
-{
-	int i;
 	int j;
 
-	i = -1;
 	j = 0;
-	while (path[++i])
+	while (path[j])
 	{
-		if (!ft_strncmp(path + i, "../", 3) || !ft_strncmp(path + i, "..\0", 3))
+		if (path[i] == '/' && path[i + 1] == '/')//if there's multiple slashs
 		{
-			j = i;
-			if (j - 2 >= 0)
-				j -= 2;
-			else
-				continue ;
-			i += 2;
-			while (path[j] != '/')
-				j--;
-			while (path[i - 1])
-				path[j++] = path[i++];
-			i = 0;	
+			i++;//i keep the first slash
+			while (path[j] == '/')//while i'm in the slashs
+				j++;
 		}
+		path[i++] = path[j++];//i copy the characters
 	}
-	if (!ft_strchr(path, '/'))
-		path = ft_strjoinm("/", path, 2);
-	printf ("path = %s\n", path);
-	return (path);
+	ft_bzero(path + i, ft_strlen(path + i));
 }
-
-char	*new_location(t_env *env, char *path)
-{
-	t_env	*tmp;
-
-	tmp = env;
-	while (ft_strncmp(tmp->data, "PWD", 3))
-		tmp = tmp->next;
-	printf ("%s\n", tmp->data);
-	if (!ft_strcmp(path, "."))
-		return (tmp->data);
-	if (!ft_strncmp(path, "..", 2))
-		return (double_dots(tmp, path));
-	if (path[0] == '/')
-	{
-		free(tmp->data);
-		tmp->data = ft_strjoinm("PWD=", path, 0);
-		return (tmp->data);
-	}
-	else if (path[ft_strlen(path) - 1] == '/')
-		switch_slash(path, tmp->data + 4);
-	tmp->data = ft_strjoinm(tmp->data, path, 1);
-	return (tmp->data);
-} */
 
 //je dois lire tout le chemin d'acces sauf si c'est un /
 //je devrais modifier la chaine en annulant les entrees dans des fichiers avec les doubles
 	//points correspondants, puis effectuer les changements ensuite
-void	*ft_memcpy(void *dest, const void *src, size_t n)
+void	add_directory(t_env **tmp, char *path, int *i)
 {
-	size_t	i;
+	char	str[257];
+	int		j;
 
-	i = 0;
-	if (!dest && !src)
-		return (0);
-	while (i < n)
-	{
-		*(char *)(dest + i) = *(char *)(src + i);
-		i++;
-	}
-	return (dest);
+	j = 0;
+	if (!ft_strcmp(path + *i, "/"))
+		return ;
+	ft_bzero(str, 257);
+	str[j++] = '/';
+	if (path[*i] == '/')
+		(*i)++;
+	while (path[*i] != '/')
+		str[j++] = path[(*i)++];
+	(*tmp)->data = ft_strjoin_n_free((*tmp)->data, ft_strdup(str), 12);		
 }
 
 char	*new_location(t_env *env, char *path, int i)
 {
 	t_env	*tmp;
-	char	optimised_path[10000];
+	char	*str;
 
 	tmp = env;
 	while (ft_strncmp(tmp->data, "PWD", 3))
 		tmp = tmp->next;
-	if (!ft_strcmp(tmp->data, "/"))
-		return (free(tmp->data), (tmp->data = ft_strdup("/")));
-	ft_bzero(optimised_path, 10000);
+	str = NULL;
 	while (path[++i])
 	{
-		if (!ft_strncmp(path + i, "../", 3) || !ft_strncmp(path + i, "..\0", 3))
+		if (i == 0 && path[i] == '/')
 		{
-			if (!ft_strncmp(path + i, "../", 3) && path[i + 4]
-				&& ft_strncmp(path + i + 3, "../", 3))
-				
+			free(tmp->data);
+			tmp->data = ft_strdup("/");
 		}
+		else if (!ft_strncmp(path + i, "../", 3) || !ft_strncmp(path + i, "..\0", 3))
+		{
+			str = tmp->data;
+			tmp->data = ft_strndup(str, ft_strrchr(str, '/'));
+			free(str);
+			i++;
+		}
+		else
+			add_directory(&tmp, path, &i);
 	}
+	return (tmp->data + 4);
 }
 
 void	cd(char *path, t_minishell **mini)
@@ -205,6 +105,7 @@ void	cd(char *path, t_minishell **mini)
 		return ((void)ft_fprintf(2, "bash: cd: %s: Not a directory\n", path));
 	if (chdir(path) == -1)
 		return (perror("Error while changing repository\n"));
-	(*mini)->current_location = new_location((*mini)->env, optimised_path(path));
-	printf("Repository changed successfully : %s\n", (*mini)->current_location);
+	remove_multiple_slashs(path, 0);
+	(*mini)->current_location = new_location((*mini)->env, path, -1);
+	(*mini)->current_location = replace_by_tilde((*mini)->env, (*mini)->current_location);
 }

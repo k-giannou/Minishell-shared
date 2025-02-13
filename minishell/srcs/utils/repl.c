@@ -69,7 +69,7 @@ void	search_and_change(t_variables *v, char *str, t_minishell *mini, t_env *curr
 	v->i++;//we pass $
 	v->t = 0;
 	current = mini->env;
-	while (!ft_charset(str[v->i]))
+	while ((!ft_charset(str[v->i])) && (ft_isalpha(str[v->i]) || ft_isdigit(str[v->i]) || str[v->i] == '_'))
 		v->to_search[v->t++] = str[v->i++];
 	v->to_search[v->t++] = '\0';//++ becuse we need it later
 	dest = ftstrdup(v->to_search);

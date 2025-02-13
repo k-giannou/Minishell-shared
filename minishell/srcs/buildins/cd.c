@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 19:15:45 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/13 21:05:47 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/13 21:09:55 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ void	cd(char *path, t_minishell **mini)
 	if (chdir(path) == -1)
 		return (perror("Error while changing repository\n"));
 	remove_multiple_slashs(path, 0);
+	free((*mini)->current_location);
 	(*mini)->current_location = new_location((*mini)->env, path, -1);
-	(*mini)->current_location = replace_by_tilde((*mini)->env, (*mini)->current_location, 1);
+	(*mini)->current_location = replace_by_tilde((*mini)->env, (*mini)->current_location);
 }

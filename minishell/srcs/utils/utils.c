@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 20:38:24 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/13 21:05:24 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/13 21:08:38 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*ft_strjoinm(char *s1, char *s2, int tab_to_free)
 
 //str = /home/locagnio/common_git/minishell
 //home = /home/locagnio
-char	*replace_by_tilde(t_env *env, char *str, int malloc)
+char	*replace_by_tilde(t_env *env, char *str)
 {
 	int		i;
 	int		j;
@@ -61,8 +61,6 @@ char	*replace_by_tilde(t_env *env, char *str, int malloc)
 		cpy[j++] = '~';
 		while (str[i])
 			cpy[j++] = str[i++];
-		if (malloc)
-			free(str);
 		return (ft_strdup(cpy));
 	}
 	return (str);

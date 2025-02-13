@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:17 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/13 21:05:42 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/13 21:06:34 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_minishell *init_vals(char **env)
 	mini->env_export = ft_envdup(mini->env);
 	ft_env_sort((&mini->env_export));
 	sig_init();
-	mini->current_location = replace_by_tilde(mini->env, getenv("PWD"), 0);
+	mini->current_location = replace_by_tilde(mini->env, getenv("PWD"));
 	return (mini);
 }
 

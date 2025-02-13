@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:31:28 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/12 17:24:59 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/13 18:08:25 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,23 @@ static char	*ft_substr2(char *line, t_minishell *mini, int len)
 	return (str);
 }
 
-static char	*ft_substr_mini(char *line, t_minishell *mini, int *new_i)
+char	*return_tab(int tab, int *new_i)
+{
+	if (tab == 0)
+		return (*new_i += 2, ft_strdup("''"));
+	else
+		return (*new_i += 2, ft_strdup(""));
+}
+
+static char	*ft_substr_mini(char *line, t_minishell *mini, int *new_i, int tab)
 {
 	int	len;
-	char *str;
 
 	len = 0;
+	(void)tab;
 	if (line[0] && ((line[0] == DBL_Q && line[1] == DBL_Q)
 		|| (line[0] == SGL_Q && line[1] == SGL_Q)))//si j'ai un tableau vide
-		return (*new_i += 2, str = ft_calloc(1, 1), str);
+		return (return_tab(tab, new_i));
 	while (line[len] && line[len] != ' ')//tant que je suis pas arriver a la fin de la ligne ou a un espace
 	{
 		if (line[len] == SGL_Q || line[len] == DBL_Q)//si mon caractere est une quote
@@ -92,8 +100,8 @@ static char	*ft_substr_mini(char *line, t_minishell *mini, int *new_i)
 			len++;
 	}
 	*new_i += len;
-	if (line[len] == ' ' && (line[len - 1] == SGL_Q || line[len - 1] == DBL_Q))
-		len--;
+	/* if (line[len] == ' ' && (line[len - 1] == SGL_Q || line[len - 1] == DBL_Q))
+		len--; */
 	return (ft_substr2(line, mini, len));//sinon, je renvoie le nombre de mots
 }
 
@@ -110,7 +118,7 @@ static char	**split_line(char *line, char **splited_line, t_minishell *mini)
 	{
 		while (line[i] && line[i] != ' ')//tant que je suis pas arriver a la fin de la ligne ou a un espace
 		{
-			splited_line[j] = ft_substr_mini(line + i, mini, &i);
+			splited_line[j] = ft_substr_mini(line + i, mini, &i, j);
 			if (!splited_line[j])
 				return (free_all(NULL, splited_line), NULL);
 		}

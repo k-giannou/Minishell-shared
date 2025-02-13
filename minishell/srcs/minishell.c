@@ -94,6 +94,7 @@ int main(int ac, char **av, char **env)
 	//welcome();
 	str = NULL;
 	mini = init_vals(env);
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		print = toprint(mini->current_location);

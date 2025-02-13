@@ -20,13 +20,13 @@ void sigint_handler(int sig)
 	rl_on_new_line();
 	rl_redisplay();
 }
-
+/*
 void sigquit_handler(int sig)
 {
 	g_signal = sig;
 	printf("^\\Quit (core dumped)\n");
 }
-
+*/
 void	sig_init(void)
 {
 	signal(SIGINT, sigint_handler);  // Gérer SIGINT (Ctrl+C)

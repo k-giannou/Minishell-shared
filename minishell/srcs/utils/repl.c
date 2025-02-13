@@ -69,7 +69,7 @@ void	search_and_change(t_variables *v, char *str, t_minishell *mini, t_env *curr
 	v->i++;//we pass $
 	v->t = 0;
 	current = mini->env;
-	while ((!ft_charset(str[v->i])) && (ft_isalpha(str[v->i]) || ft_isdigit(str[v->i]) || str[v->i] == '_'))
+	while (ft_isalpha(str[v->i]) || ft_isdigit(str[v->i]) || str[v->i] == '_')
 		v->to_search[v->t++] = str[v->i++];
 	v->to_search[v->t++] = '\0';//++ becuse we need it later
 	dest = ftstrdup(v->to_search);
@@ -104,8 +104,10 @@ void	start_replace(t_variables *v, char *str, t_minishell *mini, t_env *current)
 				v->line[v->k++] = str[v->i++];
 			else if (str[v->i + 1] == '\"' && (!v->dbl_quote))//if outside dbl we ignore it
 				v->i++;
-		 	else
+		 	else if (ft_isalpha(str[v->i + 1]) || ft_isdigit(str[v->i + 1]) || str[v->i + 1] == '_')
 					search_and_change(v, str, mini, current);
+			else
+				v->line[v->k++] = str[v->i++];
 		}
 		else 		
 			v->line[v->k++] = str[v->i++];

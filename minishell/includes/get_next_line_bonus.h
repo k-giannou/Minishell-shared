@@ -24,6 +24,6 @@ char	*get_next_line(int fd);
 char	*ft_strjoin_gnl(char *s1, char *s2);
 char	*ft_strchr(const char *s, int c);
 size_t	ft_strclen(const char *s, char c);
-void	*ft_calloc(size_t nmemb, size_t size);
+void	*ft_calloc_gnl(size_t nmemb, size_t size);
 
 #endif

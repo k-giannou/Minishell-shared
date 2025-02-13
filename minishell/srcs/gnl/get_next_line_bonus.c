@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 17:48:48 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/12 17:14:56 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/13 20:32:56 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_line_save(char *line_save, int fd)
 	int		bytes_read;
 
 	bytes_read = 1;
-	buffer = (char *)ft_calloc(BUFFER_SIZE + 1, 1);
+	buffer = (char *)ft_calloc_gnl(BUFFER_SIZE + 1, 1);
 	if (!buffer)
 		return (NULL);
 	while (!ft_strchr((const char *)line_save, '\n'))
@@ -48,7 +48,7 @@ char	*line_to_print(const char *line_save)
 
 	i = -1;
 	len = ft_strclen(line_save, '\n') + 1;
-	line = (char *)ft_calloc(len + 1, 1);
+	line = (char *)ft_calloc_gnl(len + 1, 1);
 	if (!line)
 		return (NULL);
 	while (++i < len && line_save[i])
@@ -70,7 +70,7 @@ char	*newline_save(char *line_save, int len_line)
 	if (line_save[len_line] == '\n')
 		len_line++;
 	newline_len = (ft_strclen(line_save, '\0') - len_line) + 1;
-	newline_saved = (char *)ft_calloc(newline_len, 1);
+	newline_saved = (char *)ft_calloc_gnl(newline_len, 1);
 	if (!newline_saved)
 		return (NULL);
 	while (line_save[i + len_line])
@@ -92,7 +92,7 @@ char	*get_next_line(int fd)
 	if (fd < 0 || fd >= 1024 || BUFFER_SIZE < 1)
 		return (NULL);
 	if (!line_save[fd])
-		line_save[fd] = (char *)ft_calloc(1, 1);
+		line_save[fd] = (char *)ft_calloc_gnl(1, 1);
 	line_save[fd] = ft_line_save(line_save[fd], fd);
 	if (!line_save[fd])
 		return (NULL);

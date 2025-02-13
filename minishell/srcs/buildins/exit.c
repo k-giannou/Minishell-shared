@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 21:07:06 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/13 18:33:19 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/13 20:52:08 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@
 
 void	ft_exit(t_minishell *mini, char **line)
 {
+	printf("line : %s", line[0]);
 	return (free_all(mini, line), exit(0));
 }

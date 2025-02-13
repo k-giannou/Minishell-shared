@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:19:00 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/10 19:16:46 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/13 19:43:51 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,29 @@ void	valid_quotes(char c, bool *sgl_q, bool *dbl_q)
 		else if (c == DBL_Q && (*dbl_q) && !(*sgl_q))
 			(*dbl_q) = 0;
 	}
+}
+
+int	check_quotes(char *str)
+{
+	int i;
+	bool sgl_q;
+	bool dbl_q;
+
+	if (!str)
+		return (0);
+	add_history(str);
+	i = 0;
+	sgl_q = 0;
+	dbl_q = 0;
+	while (str[i])
+		valid_quotes(str[i++], &sgl_q, &dbl_q);
+	if (sgl_q || dbl_q)
+	{
+		ft_fprintf(2, "Error : quotes aren't closed properly\n");
+		free(str);
+		return (1);
+	}
+	return (0);
 }
 
 t_env	*add_at(t_env *L, char *data, int pos)

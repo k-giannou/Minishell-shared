@@ -121,7 +121,6 @@ char    *replace_var(t_minishell *mini, char *str)
 
 	if (!str)
 		return (printf("exit\n"), exit(1), NULL);
-	add_history(str);
 	v = mini->vars;
 	init_v(v);
     current = mini->env;

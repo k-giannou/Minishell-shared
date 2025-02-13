@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 20:38:24 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/12 19:25:11 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/13 20:44:07 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,25 @@ char	*ft_strjoinm(char *s1, char *s2, int tab_to_free)
 //home = /home/locagnio
 char	*replace_by_tilde(t_env *env, char *str)
 {
-	int i;
+	int		i;
+	int		j;
 	char	*home;
-	char	*tmp;
+	char	cpy[10000];
 
 	i = 0;
+	j = 0;
+	ft_bzero(cpy, 10000);
 	while (ft_strncmp(env->data, "HOME=", 5))
 		env = env->next;
 	home = env->data + 5;
-	if (!ft_strncmp(str, home, ft_strlen(home)))
+	if (str && home && !ft_strncmp(str, home, ft_strlen(home)))
 	{
-		while (str[i] == home[i])
+		while (str[i] && home[i] && str[i] == home[i])
 			i++;
-		tmp = ft_strdup(str + i);
-		return (ft_strjoin_n_free("~", tmp, 2));
+		cpy[j++] = '~';
+		while (str[i])
+			cpy[j++] = str[i++];
+		return (ft_strdup(cpy));
 	}
 	return (str);
 }

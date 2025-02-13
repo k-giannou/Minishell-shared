@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:31:28 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/13 18:08:25 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/13 19:46:34 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ static int	count_tokens(char *line, bool sgl_q, bool dbl_q, int i)
 		}
 		count++;//j'ajoute mon mot
 	}
-	if (sgl_q || dbl_q)//si les quotes se ferment pas correctement, erreur
-		return (ft_fprintf(2, "Error : quotes aren't closed properly\n"), -1);
 	return (count++);//sinon, je renvoie le nombre de mots
 }
 
@@ -51,7 +49,7 @@ static char	*ft_substr2(char *line, t_minishell *mini, int len)
 	j = 0;	
 	mini->sgl_q = 0;
 	mini->dbl_q = 0;
-	str = ft_calloc(len + 1, 1);
+	str = ft_calloc(len + 2, 1);
 	if (!str)
 		return (NULL);
 	while (i < len)
@@ -138,8 +136,6 @@ char	**optimised_line(char *line, t_minishell *mini)
 	int	count;
 
 	count = count_tokens(line, 0, 0, 0);
-	if (count == -1)
-		return (free(line), NULL);
 	splited_line = ft_calloc(sizeof(char *), count + 1);
 	if (!splited_line)
 		return (free(line), NULL);

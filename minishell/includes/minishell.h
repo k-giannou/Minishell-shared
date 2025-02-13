@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/12 20:34:20 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/13 19:54:07 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void	welcome(void);
 void	sig_init(void);
 void	print_list(t_env *L);
 t_env	*ft_envdup(t_env *src);
+int		check_quotes(char *str);
 t_env	*create_cell(char *data);
 void	ft_print_dlb_tabs(char **tab);
 void	ft_env_sort(t_env **begin_list);

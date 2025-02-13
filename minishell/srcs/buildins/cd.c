@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 19:15:45 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/12 21:10:35 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/13 19:54:12 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,6 @@ void	remove_multiple_slashs(char *path, int i)
 	ft_bzero(path + i, ft_strlen(path + i));
 }
 
-//je dois lire tout le chemin d'acces sauf si c'est un /
-//je devrais modifier la chaine en annulant les entrees dans des fichiers avec les doubles
-	//points correspondants, puis effectuer les changements ensuite
 void	add_directory(t_env **tmp, char *path, int *i)
 {
 	char	str[257];
@@ -66,15 +63,27 @@ void	add_directory(t_env **tmp, char *path, int *i)
 	(*tmp)->data = ft_strjoin_n_free((*tmp)->data, ft_strdup(str), 12);		
 }
 
+void	new_location2(t_env **tmp)
+{
+	char	*str;
+
+	str = (*tmp)->data;
+	(*tmp)->data = ft_strndup(str, ft_strrchr(str, '/'));
+	free(str);
+	if (!ft_strcmp((*tmp)->data, "PWD="))
+	{
+		free((*tmp)->data);
+		(*tmp)->data = ft_strdup("PWD=/");
+	}
+}
+
 char	*new_location(t_env *env, char *path, int i)
 {
 	t_env	*tmp;
-	char	*str;
 
 	tmp = env;
 	while (ft_strncmp(tmp->data, "PWD", 3))
 		tmp = tmp->next;
-	str = NULL;
 	while (path[++i] && i < (int)ft_strlen(path))
 	{
 		if ((i == 0 && path[i] == '/'))
@@ -84,14 +93,7 @@ char	*new_location(t_env *env, char *path, int i)
 		}
 		else if (!ft_strncmp(path + i, "../", 3) || !ft_strncmp(path + i, "..\0", 3))
 		{
-			str = tmp->data;
-			tmp->data = ft_strndup(str, ft_strrchr(str, '/'));
-			free(str);
-			if (!ft_strcmp(tmp->data, "PWD="))
-			{
-				free(tmp->data);
-				tmp->data = ft_strdup("PWD=/");
-			}
+			new_location2(&tmp);
 			i++;
 		}
 		else if (!ft_strncmp(path + i, "./", 2) || !ft_strncmp(path + i, ".\0", 2))

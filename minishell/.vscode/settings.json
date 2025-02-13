@@ -1,9 +1,14 @@
 {
   "files.associations": {
-    "minishell.h": "c",
-    "unistd.h": "c",
-    "history.h": "c"
-  },
+	"minishell.h": "c",
+	"unistd.h": "c",
+	"history.h": "c",
+	"array": "c",
+	"string": "c",
+	"string_view": "c",
+	"span": "c",
+	"sstream": "c"
+},
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "g++",
   "C_Cpp_Runner.debuggerPath": "gdb",

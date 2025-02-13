@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:17 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/13 18:17:45 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/13 21:01:55 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,10 @@ int main(int ac, char **av, char **env)
 	while (1)
 	{
 		print = toprint(mini->current_location);
-		str = replace_var(mini, readline(print));
+		str = readline(print);
+		if (check_quotes(str))
+			continue ;
+		str = replace_var(mini, str);
 		free(print);
 		line = optimised_line(str, mini);
 		if (!line || !line[0] || line[0][0] == 0)

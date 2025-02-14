@@ -117,11 +117,7 @@ char	*host_dup(char *name)
 	i = 0;
 	k = 1;
 	dest[0] = '@';
-<<<<<<< HEAD
-	while (name[i] != '.')
-=======
 	while (name[i] != '.' && name[i] != '\0')
->>>>>>> 896545fe673c7ad86259673a24966e253da81015
 		dest[k++] = name[i++];
 	dest[k++] = ':';
 	dest[k] = '\0';

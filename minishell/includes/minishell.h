@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/14 16:09:33 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/14 17:37:08 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/stat.h>
+# include <sys/wait.h>
 # include <wait.h>
 # include <stdbool.h>
 # include <termios.h>
@@ -50,13 +51,13 @@ extern volatile sig_atomic_t g_signal;
 
 typedef struct s_env
 {
-	char	*data;
+	char			*data;
 	struct s_env	*next;	
 } t_env, t_cell;
 
 typedef struct s_variables
 {
-	char	line[70000];//we check the str and we copy char by char in like, except it needs replace
+	char	line[70000];
 	char	to_search[70000];
     int	i;
 	int	k;
@@ -114,7 +115,7 @@ void	free_all(t_minishell *mini, char **str);
 void	pwd(t_env *env);
 void	echo(char **line);
 void	ft_env(t_env *env);
-void	cd(char *chemin, t_minishell **mini);
+void	cd(char **chemin, t_minishell **mini);
 void	unset(char **vars, t_minishell *mini);
 void	export(char **vars, t_minishell *mini);
 void	exec_cmd(char **line, t_minishell *mini);

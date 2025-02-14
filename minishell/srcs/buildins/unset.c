@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 19:15:45 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/12 15:17:15 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/14 16:54:17 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,7 @@ void	delete_from_env(char *var, t_env **v)
     while (temp != NULL)
 	{
 		if (ft_strncmp(var, temp->data, ft_strlen(var)) == 0)
-		{
-			free_at(*v, i);
-			printf("deleted.\n");
-			return ;
-		}
+			return (free(temp->data), (void)free_at(*v, i));
 		temp = temp->next;
 		i++;
 	}

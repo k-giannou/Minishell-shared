@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/14 15:55:46 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/02/14 16:09:33 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ void	ft_print_dlb_tabs(char **tab);
 void	ft_env_sort(t_env **begin_list);
 int		rest_letters_of_name(char *str);
 t_env	*add_at(t_env *L, char *data, int pos);
+void	ft_get_env(t_env **env, char *env_var);
 void	ft_exit(t_minishell *mini, char **line);
 char	*replace_by_tilde(t_env *env, char *str);
 char	*replace_var(t_minishell *mini, char *str);
@@ -119,7 +120,7 @@ void	export(char **vars, t_minishell *mini);
 void	exec_cmd(char **line, t_minishell *mini);
 
 char    *replace_var(t_minishell *mini, char *str);
-int	ft_charset(int c);
+int		ft_charset(int c);
 char	*host_dup(char *name);
 char	*hostname(void);
 void	init_user(t_minishell *mini);

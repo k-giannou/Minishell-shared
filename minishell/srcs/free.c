@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:54:19 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/13 21:04:07 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/14 16:39:10 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ void	free_all(t_minishell *mini, char **str)
 			ft_list_clear(mini->env_export);
 		if (mini->current_location)
 			free(mini->current_location);
+		if (mini->user.final)
+			free(mini->user.final);
 		free(mini);
 	}
 	if (*str)

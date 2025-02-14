@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 20:38:24 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/13 21:08:38 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/14 16:09:17 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,10 @@ char	*replace_by_tilde(t_env *env, char *str)
 		return (ft_strdup(cpy));
 	}
 	return (str);
+}
+
+void	ft_get_env(t_env **env, char *env_var)
+{
+	while (ft_strncmp((*env)->data, env_var, ft_strlen(env_var)))
+		(*env) = (*env)->next;
 }

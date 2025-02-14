@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 19:15:45 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/13 21:09:55 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/14 16:19:20 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,7 @@ char	*new_location(t_env *env, char *path, int i)
 	t_env	*tmp;
 
 	tmp = env;
-	while (ft_strncmp(tmp->data, "PWD", 3))
-		tmp = tmp->next;
+	ft_get_env(&tmp, "PWD=");
 	while (path[++i] && i < (int)ft_strlen(path))
 	{
 		if ((i == 0 && path[i] == '/'))
@@ -107,6 +106,7 @@ char	*new_location(t_env *env, char *path, int i)
 void	cd(char *path, t_minishell **mini)
 {
 	struct stat	info;
+	t_env		*tmp;
 
 	if (!path)
 		path = "/home/locagnio";
@@ -121,5 +121,9 @@ void	cd(char *path, t_minishell **mini)
 	remove_multiple_slashs(path, 0);
 	free((*mini)->current_location);
 	(*mini)->current_location = new_location((*mini)->env, path, -1);
+	tmp = (*mini)->env_export;
+	ft_get_env(&tmp, "PWD=");
+	free(tmp->data);
+	tmp->data = ft_strjoin("PWD=", (*mini)->current_location);
 	(*mini)->current_location = replace_by_tilde((*mini)->env, (*mini)->current_location);
 }

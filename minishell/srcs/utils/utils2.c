@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:19:00 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/13 19:43:51 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/14 15:52:06 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,57 @@ t_env	*ft_envdup(t_env *src)
 		tmp = tmp->next;
 	}
 	return (cpy);
+}
+
+char	*host_dup(char *name)
+{
+	char	*dest;
+	int	i;
+	int	k;
+
+	i = 0;
+	while (name[i])
+		i++;
+	dest = (char *)malloc(sizeof(char) * (i + 2));
+	if (!dest)
+		return (NULL);
+	i = 0;
+	k = 1;
+	dest[0] = '@';
+	while (name[i] != '.')
+	dest[k++] = name[i++];
+	dest[k++] = ':';
+	dest[k] = '\0';
+	return (dest);
+}
+
+char	*hostname(void)
+{
+	int	fd;
+	char	hostname[50];
+	int	bytes = 0;
+	
+	fd = open(HOSTNAME, O_RDONLY);
+	if (fd != -1)
+	{
+		bytes = read(fd, hostname, 9);
+		if (bytes != -1)
+		{
+			hostname[++bytes] = '\0';
+			close (fd);
+			return (host_dup(hostname));
+		}
+	}
+	close(fd);
+	return (NULL);
+}
+
+void	init_user(t_minishell *mini)
+{
+	mini->user.hostname = NULL;
+	mini->user.hostname = hostname();
+	mini->user.name = NULL;
+	mini->user.name = getenv("USER");
+	mini->user.final = ft_strjoin(mini->user.name, mini->user.hostname);
+	//printf("%s\n", mini->user.final);
 }

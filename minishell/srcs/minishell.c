@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:17 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/13 21:06:34 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/14 15:51:24 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,17 @@ t_minishell *init_vals(char **env)
 	ft_env_sort((&mini->env_export));
 	sig_init();
 	mini->current_location = replace_by_tilde(mini->env, getenv("PWD"));
+	init_user(mini);
 	return (mini);
 }
 
-char	*toprint(char *cur_loc)
+char	*toprint(t_minishell *mini, char *cur_loc)
 {
 	char	*str;
 	
 	str = ft_strdup(YELLOW);
+	if (mini->user.final)
+		str = ft_strjoin_n_free(str, mini->user.final, 1);
 	str = ft_strjoin_n_free(str, cur_loc, 1);
 	str = ft_strjoin_n_free(str, "$ ", 1);
 	str = ft_strjoin_n_free(str, RESET, 1);
@@ -97,7 +100,7 @@ int main(int ac, char **av, char **env)
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
-		print = toprint(mini->current_location);
+		print = toprint(mini, mini->current_location);
 		str = readline(print);
 		if (check_quotes(str))
 			continue ;

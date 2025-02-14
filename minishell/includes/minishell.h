@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/13 21:06:29 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/14 15:55:46 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@
 #define SGL_Q '\''
 #define HISTORY ".history.txt"
 
+#define HOSTNAME "/etc/hostname"
+
 extern volatile sig_atomic_t g_signal;
 
 typedef struct s_env
@@ -63,6 +65,13 @@ typedef struct s_variables
 	int	quote_sum;
 } t_variables ;
 
+typedef struct s_user
+{
+	char	*name;
+	char	*hostname;
+	char	*final;
+} t_user ;
+
 typedef struct s_minishell
 {
 	bool	sgl_q;
@@ -72,6 +81,7 @@ typedef struct s_minishell
 	char	*current_location;
 	t_env	*env;
 	t_env	*env_export;
+	t_user	user;
 	t_variables vars;
 } t_minishell;
 
@@ -110,5 +120,7 @@ void	exec_cmd(char **line, t_minishell *mini);
 
 char    *replace_var(t_minishell *mini, char *str);
 int	ft_charset(int c);
-
+char	*host_dup(char *name);
+char	*hostname(void);
+void	init_user(t_minishell *mini);
 # endif

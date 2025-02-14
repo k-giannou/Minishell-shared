@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 19:15:45 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/14 17:39:09 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/14 19:32:58 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,22 +107,24 @@ void	cd(char **path, t_minishell **mini)
 {
 	struct stat	info;
 	t_env		*tmp;
+	char		*str;
 
 	if (path[1] && path[2])
 		return ((void)ft_fprintf(2, "bash: cd: too many arguments\n"));
+	str = path[1];
 	if (!path[1])
-		path[1] = "/home/locagnio";
-	if (access(path[1], F_OK) == -1)
+		str = getenv("HOME");
+	if (access(str, F_OK) == -1)
 		return (perror("Error "));
-	if (stat(path[1], &info) == -1)
+	if (stat(str, &info) == -1)
 		return (perror("Error : Cannot acces to infos of directory\n"));
 	if (!S_ISDIR(info.st_mode))
-		return ((void)ft_fprintf(2, "bash: cd: %s: Not a directory\n", path[1]));
-	if (chdir(path[1]) == -1)
+		return ((void)ft_fprintf(2, "bash: cd: %s: Not a directory\n", str));
+	if (chdir(str) == -1)
 		return (perror("Error while changing repository\n"));
-	remove_multiple_slashs(path[1], 0);
+	remove_multiple_slashs(str, 0);
 	free((*mini)->current_location);
-	(*mini)->current_location = new_location((*mini)->env, path[1], -1);
+	(*mini)->current_location = new_location((*mini)->env, str, -1);
 	tmp = (*mini)->env_export;
 	ft_get_env(&tmp, "PWD=");
 	free(tmp->data);

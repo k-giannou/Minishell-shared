@@ -6,7 +6,7 @@
 /*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:19:00 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/14 15:52:06 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/02/14 16:25:36 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,8 @@ char	*host_dup(char *name)
 	i = 0;
 	k = 1;
 	dest[0] = '@';
-	while (name[i] != '.')
-	dest[k++] = name[i++];
+	while (name[i] != '.' && name[i] != '\0')
+		dest[k++] = name[i++];
 	dest[k++] = ':';
 	dest[k] = '\0';
 	return (dest);

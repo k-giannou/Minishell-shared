@@ -102,7 +102,7 @@ void	start_replace(t_variables *v, char *str, t_minishell *mini, t_env *current)
 					v->line[v->k++] = str[v->i++];
 			else if (str[v->i + 1] == '\"' && v->dbl_quote)//if inside dbl quotes we copy the $
 				v->line[v->k++] = str[v->i++];
-			else if (str[v->i + 1] == '\"' && (!v->dbl_quote))//if outside dbl we ignore it
+			else if ((str[v->i + 1] == '\"' || str[v->i + 1] == '\'') && (!v->dbl_quote))//if outside dbl we ignore it
 				v->i++;
 		 	else if (ft_isalpha(str[v->i + 1]) || ft_isdigit(str[v->i + 1]) || str[v->i + 1] == '_')
 					search_and_change(v, str, mini, current);

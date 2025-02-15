@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/14 17:37:08 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/15 15:35:10 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,10 @@ char	*ft_strjoinm(char *s1, char *s2, int tab_to_free);
 //frees
 void	ft_list_clear(t_env *begin_list);
 void	free_all(t_minishell *mini, char **str);
+
+//pipes
+int	ispipe(char **line);
+void	pipes(char **args);
 
 //buildins
 void	pwd(t_env *env);

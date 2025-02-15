@@ -7,7 +7,8 @@
 	"string": "c",
 	"string_view": "c",
 	"span": "c",
-	"sstream": "c"
+	"sstream": "c",
+	"stdio.h": "c"
 },
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "g++",

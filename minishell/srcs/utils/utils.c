@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 20:38:24 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/19 18:33:02 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:33:39 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ void	is_redir_or_pipes(char **raw, bool sgl_q, bool dbl_q)
 		}
 		sgl_q = 0;
 		dbl_q = 0;
+		j = 0;
 		i++;
 	}
 }

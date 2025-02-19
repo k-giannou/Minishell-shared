@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/19 17:36:27 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:32:00 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ void	sig_init(void);
 t_env	*ft_envdup(t_env *src);
 int		check_quotes(char *str);
 t_env	*create_cell(char *data);
-void	is_redir_or_pipes(char **raw);
 void	ft_env_sort(t_env **begin_list);
 int		rest_letters_of_name(char *str);
 t_env	*add_at(t_env *L, char *data, int pos);
@@ -105,6 +104,7 @@ void	valid_quotes(char c, bool *sgl_q, bool *dbl_q);
 void	optimised_line(char *line, t_minishell **mini);
 int		just_export_or_unset(char **vars, char *command);
 char	*ft_strjoinm(char *s1, char *s2, int tab_to_free);
+void	is_redir_or_pipes(char **raw, bool sgl_q, bool dbl_q);
 char	*ft_substr_with_quotes(char *line, t_minishell *mini, int len);
 
 //print

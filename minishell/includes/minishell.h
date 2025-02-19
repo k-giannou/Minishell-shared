@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/15 15:35:10 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:36:27 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,16 @@
 # include "get_next_line_bonus.h"
 
 # define RESET		"\033[0m"   //Réinitialisation
+# define BOLD		"\033[1m"  // Texte en gras
+# define ITALIC      "\033[3m"  // Texte en italique
+# define UNDERLINE	"\033[4m"  // Texte souligné
 # define RED		"\033[31m"   //Couleur rouge
 # define GREEN       "\033[32m"  // Couleur verte
 # define YELLOW      "\033[33m"  // Couleur jaune
 # define BLUE        "\033[34m"  // Couleur bleue
 # define MAGENTA     "\033[35m"  // Couleur magenta
 # define CYAN        "\033[36m"  // Couleur cyan
-# define BOLD		"\033[1m"  // Texte en gras
-# define ITALIC      "\033[3m"  // Texte en italique
-# define UNDERLINE	"\033[4m"  // Texte souligné
+# define BRIGHT_GREEN  "\033[92m"  // Couleur verte claire
 
 #define DBL_Q '"'
 #define SGL_Q '\''
@@ -80,6 +81,8 @@ typedef struct s_minishell
 	int		fd;
 	int		hist_lines;
 	char	*current_location;
+	char	**tokens;
+	char	**pipes_redirs;
 	t_env	*env;
 	t_env	*env_export;
 	t_user	user;
@@ -87,46 +90,68 @@ typedef struct s_minishell
 } t_minishell;
 
 
-void	error(void);
-void	welcome(void);
 void	sig_init(void);
-void	print_list(t_env *L);
 t_env	*ft_envdup(t_env *src);
 int		check_quotes(char *str);
 t_env	*create_cell(char *data);
-void	ft_print_dlb_tabs(char **tab);
+void	is_redir_or_pipes(char **raw);
 void	ft_env_sort(t_env **begin_list);
 int		rest_letters_of_name(char *str);
 t_env	*add_at(t_env *L, char *data, int pos);
 void	ft_get_env(t_env **env, char *env_var);
-void	ft_exit(t_minishell *mini, char **line);
 char	*replace_by_tilde(t_env *env, char *str);
 char	*replace_var(t_minishell *mini, char *str);
 void	valid_quotes(char c, bool *sgl_q, bool *dbl_q);
-char	**optimised_line(char *line, t_minishell *mini);
+void	optimised_line(char *line, t_minishell **mini);
 int		just_export_or_unset(char **vars, char *command);
 char	*ft_strjoinm(char *s1, char *s2, int tab_to_free);
+char	*ft_substr_with_quotes(char *line, t_minishell *mini, int len);
+
+//print
+void	error(void);
+void	welcome(void);
+void	print_list(t_env *L);
+void	ft_print_dlb_tabs(char **tab);
+void	print_pipes_redirs(char **split, int nb_words);
 
 //frees
 void	ft_list_clear(t_env *begin_list);
-void	free_all(t_minishell *mini, char **str);
+void	free_all(t_minishell *mini, char *str);
 
 //pipes
-int	ispipe(char **line);
-void	pipes(char **args);
+void	usage(void);
+int		ispipe(char **line);
+void	here_doc(char *limiter);
+void	pipes(t_minishell *mini);
+char	**splited_env(t_env *env);
+int		get_file(char *av, int i);
+char	*get_cmd(char **ag, int *i);
+void	execute(char *av, char **env);
+char	*find_path(char *cmd, char **env);
+void	read_stdin(int *fd, char *limiter);
+int		pipex(int ac, char **av, t_minishell *mini);
+void	son_program(char *av, char **env, pid_t pid_son);
 
 //buildins
 void	pwd(t_env *env);
 void	echo(char **line);
 void	ft_env(t_env *env);
+void	ft_exit(t_minishell *mini);
+void	exec_cmd(t_minishell *mini);
 void	cd(char **chemin, t_minishell **mini);
 void	unset(char **vars, t_minishell *mini);
 void	export(char **vars, t_minishell *mini);
-void	exec_cmd(char **line, t_minishell *mini);
 
-char    *replace_var(t_minishell *mini, char *str);
-int		ft_charset(int c);
-char	*host_dup(char *name);
+//utils
 char	*hostname(void);
+int		ft_charset(int c);
+long	len_list(t_env *list);
+char	*host_dup(char *name);
+int		ft_count_words(char **split);
 void	init_user(t_minishell *mini);
+int		ft_strrchr(const char *s, int c);
+char	*ft_strsrch(const char *s, char *c);
+void	remove_multiple_slashs(char *path, int i);
+char    *replace_var(t_minishell *mini, char *str);
+
 # endif

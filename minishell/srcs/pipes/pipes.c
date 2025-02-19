@@ -6,15 +6,32 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:25:23 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/15 15:34:11 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:21:52 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	init_pipes(int *fd, pid_t pid, t_minishell *mini)
+{
+	if (pipe(fd) == -1)
+	{
+		perror(RED "Error -> issue creating pipe\n" RESET);
+		free_all(mini, "all");
+		exit(EXIT_FAILURE);
+	}
+	pid = fork();
+	if (pid == -1)
+	{
+		perror(RED "Error -> pid failure\n" RESET);
+		free_all(mini, "all");
+		exit(EXIT_FAILURE);
+	}
+}
+
 int	ispipe(char **line)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (line[i])
@@ -23,10 +40,14 @@ int	ispipe(char **line)
 	return (0);
 }
 
-void	pipes(char **args)
+void	pipes(t_minishell *mini)
 {
-	int status;
+	int		status;
+	pid_t	pid;
+	int		fd[2];
 
+	pid = 0;
+	init_pipes(fd, pid, mini);
 	status = 0;
 	waitpid(pid, &status, 0);
 

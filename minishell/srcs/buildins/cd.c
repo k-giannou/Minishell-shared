@@ -6,46 +6,11 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 19:15:45 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/14 19:32:58 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/15 18:21:54 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int	ft_strrchr(const char *s, int c)
-{
-	int	len;
-
-	len = (int)ft_strlen(s);
-	while (len >= 0)
-	{
-		if (s[len] == (char)c)
-			return (len);
-		len--;
-	}
-	return (0);
-}
-
-void	remove_multiple_slashs(char *path, int i)
-{
-	int j;
-
-	j = 0;
-	while (path[j])
-	{
-		if (path[i] == '/' && path[i + 1] == '/')//if there's multiple slashs
-		{
-			i++;//i keep the first slash
-			while (path[j] == '/')//while i'm in the slashs
-				j++;
-		}
-		if (i != j)
-			path[i] = path[j];//i copy the characters
-		i++;
-		j++;
-	}
-	ft_bzero(path + i, ft_strlen(path + i));
-}
 
 void	add_directory(t_env **tmp, char *path, int *i)
 {
@@ -77,12 +42,27 @@ void	new_location2(t_env **tmp)
 	}
 }
 
-char	*new_location(t_env *env, char *path, int i)
+void	change_old_pwd(char *data, t_minishell **mini)
+{
+	t_env	*tmp;
+	
+	tmp = (*mini)->env;
+	ft_get_env(&tmp, "OLDPWD=");
+	free(tmp->data);
+	tmp->data = ft_strjoin("OLD", data);
+	tmp = (*mini)->env_export;
+	ft_get_env(&tmp, "OLDPWD=");
+	free(tmp->data);
+	tmp->data = ft_strjoin("OLD", data);
+}
+
+char	*new_location(t_minishell **mini, char *path, int i)
 {
 	t_env	*tmp;
 
-	tmp = env;
+	tmp = (*mini)->env;
 	ft_get_env(&tmp, "PWD=");
+	change_old_pwd(tmp->data, mini);
 	while (path[++i] && i < (int)ft_strlen(path))
 	{
 		if ((i == 0 && path[i] == '/'))
@@ -124,7 +104,7 @@ void	cd(char **path, t_minishell **mini)
 		return (perror("Error while changing repository\n"));
 	remove_multiple_slashs(str, 0);
 	free((*mini)->current_location);
-	(*mini)->current_location = new_location((*mini)->env, str, -1);
+	(*mini)->current_location = new_location(mini, str, -1);
 	tmp = (*mini)->env_export;
 	ft_get_env(&tmp, "PWD=");
 	free(tmp->data);

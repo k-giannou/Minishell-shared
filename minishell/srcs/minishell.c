@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:17 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/14 17:32:25 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:08:25 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ char	*toprint(t_minishell *mini, char *cur_loc)
 
 int main(int ac, char **av, char **env)
 {
-	char		**line;
 	char		*str;
 	char		*print;
 	t_minishell	*mini;
@@ -102,14 +101,16 @@ int main(int ac, char **av, char **env)
 	{
 		print = toprint(mini, mini->current_location);
 		str = readline(print);
+		free(print);
 		if (check_quotes(str))
 			continue ;
 		str = replace_var(mini, str);
-		free(print);
-		line = optimised_line(str, mini);
-		if (!line || !line[0] || line[0][0] == 0)
+		optimised_line(str, &mini);
+		is_redir_or_pipes(mini->pipes_redirs);
+		print_pipes_redirs(mini->pipes_redirs, ft_count_words(mini->tokens));
+		if (!mini->tokens || !mini->tokens[0] || mini->tokens[0][0] == 0)
 			continue ;
-		exec_cmd(line, mini);
+		exec_cmd(mini);
 	}
 	return (0);
 }

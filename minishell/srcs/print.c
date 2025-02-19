@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 20:17:08 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/06 20:09:51 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:38:10 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,21 @@ void	ft_putcstr_fd(char *s, int fd, char c)
 		write(fd, &s[i], 1);
 		i++;
 	}
+}
+
+void	print_pipes_redirs(char **split, int nb_words)
+{
+	int	j;
+
+	j = 0;
+	printf("tab with pipes and redirs : ");
+	while (j < nb_words)
+	{
+		if (split[j])
+			printf("%s ", split[j]);
+		else
+			printf("(null) ");
+		j++;
+	}
+	printf("\n");
 }

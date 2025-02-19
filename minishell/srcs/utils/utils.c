@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 20:38:24 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/14 19:40:50 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:24:24 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ char	*ft_strjoinm(char *s1, char *s2, int tab_to_free)
 	return (new_string);
 }
 
-//str = /home/locagnio/common_git/minishell
-//home = /home/locagnio
 char	*replace_by_tilde(t_env *env, char *str)
 {
 	int		i;
@@ -70,4 +68,59 @@ void	ft_get_env(t_env **env, char *env_var)
 {
 	while (ft_strncmp((*env)->data, env_var, ft_strlen(env_var)))
 		(*env) = (*env)->next;
+}
+
+char	*ft_substr_with_quotes(char *line, t_minishell *mini, int len)
+{
+	char *str;
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;	
+	mini->sgl_q = 0;
+	mini->dbl_q = 0;
+	str = ft_calloc(len + 2, 1);
+	if (!str)
+		return (NULL);
+	while (i < len)
+		str[j++] = line[i++];
+	str[j] = 0;
+	return (str);
+}
+
+void	srch_valid_quotes(char *str, bool *sgl_q, bool *dbl_q)
+{
+	int i;
+
+	i = 0;
+	while (str && str[i] && !(str[i] == '|' || str[i] == '>'
+		|| str[i] == '<'))
+		valid_quotes(str[i++], sgl_q, dbl_q);
+}
+
+void	is_redir_or_pipes(char **raw)
+{
+	int i;
+	bool sgl_q;
+	bool dbl_q;
+
+	i = 0;
+	sgl_q = 0;
+	dbl_q = 0;
+	while (raw[i])
+	{
+		srch_valid_quotes(raw[i], &sgl_q, &dbl_q);
+		if (!((ft_strchr(raw[i], '|') || ft_strchr(raw[i], '>')
+			|| ft_strsrch(raw[i], ">>") || ft_strchr(raw[i], '<')
+			|| ft_strsrch(raw[i], "<<"))
+			&& !sgl_q && !dbl_q))
+		{
+			free(raw[i]);
+			raw[i] = NULL;
+		}
+		sgl_q = 0;
+		dbl_q = 0;
+		i++;
+	}
 }

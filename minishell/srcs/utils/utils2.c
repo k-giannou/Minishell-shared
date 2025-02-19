@@ -6,11 +6,32 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:45:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/14 16:45:31 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/15 18:35:58 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	remove_multiple_slashs(char *path, int i)
+{
+	int j;
+
+	j = 0;
+	while (path[j])
+	{
+		if (path[j] == '/' && path[j + 1] == '/')//if there's multiple slashs
+		{
+			i++;//i keep the first slash
+			while (path[j] == '/')//while i'm in the slashs
+				j++;
+		}
+		if (i != j)
+			path[i] = path[j];//i copy the characters
+		i++;
+		j++;
+	}
+	ft_bzero(path + i, ft_strlen(path + i));
+}
 
 void	valid_quotes(char c, bool *sgl_q, bool *dbl_q)
 {
@@ -98,53 +119,4 @@ t_env	*ft_envdup(t_env *src)
 		tmp = tmp->next;
 	}
 	return (cpy);
-}
-
-char	*host_dup(char *name)
-{
-	char	*dest;
-	int	i;
-	int	k;
-
-	i = ft_strlen(name);
-	dest = (char *)ft_calloc(sizeof(char), i + 2);
-	if (!dest)
-		return (NULL);
-	i = 0;
-	k = 1;
-	dest[0] = '@';
-	while (name[i] != '.' && name[i] != '\0')
-		dest[k++] = name[i++];
-	dest[k++] = ':';
-	dest[k] = '\0';
-	return (dest);
-}
-
-char	*hostname(void)
-{
-	int		fd;
-	int		bytes;
-	char	hostname[50];
-
-	bytes = 0;
-	ft_bzero(hostname, 50);
-	fd = open(HOSTNAME, O_RDONLY);
-	if (fd != -1)
-	{
-		bytes = read(fd, hostname, 9);
-		if (bytes != -1)
-			return (host_dup(hostname));
-	}
-	close(fd);
-	return (NULL);
-}
-
-void	init_user(t_minishell *mini)
-{
-	mini->user.hostname = NULL;
-	mini->user.hostname = hostname();
-	mini->user.name = NULL;
-	mini->user.name = getenv("USER");
-	mini->user.final = ft_strjoin_n_free(mini->user.name, mini->user.hostname, 2);
-	//printf("%s\n", mini->user.final);
 }

@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 20:38:24 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/19 18:33:39 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/19 21:14:38 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,22 @@ char	*ft_substr_with_quotes(char *line, t_minishell *mini, int len)
 	return (str);
 }
 
+int	check_valid_quotes(char *str, bool *sgl_q, bool *dbl_q)
+{
+	int j;
+
+	j = 0;
+	while (str[j])
+	{
+		valid_quotes(str[j], sgl_q, dbl_q);
+		if (!*sgl_q && !*dbl_q && (str[j] == '|' || str[j] == '>'
+			|| str[j] == '<'))
+			return (1);
+		j++;
+	}
+	return (0);
+}
+
 void	is_redir_or_pipes(char **raw, bool sgl_q, bool dbl_q)
 {
 	int i;
@@ -98,13 +114,7 @@ void	is_redir_or_pipes(char **raw, bool sgl_q, bool dbl_q)
 	j = 0;
 	while (raw[i])
 	{
-		while (raw[i] && raw[i][j] && !(raw[i][j] == '|' || raw[i][j] == '>'
-		|| raw[i][j] == '<'))
-			valid_quotes(raw[i][j++], &sgl_q, &dbl_q);
-		if (!((ft_strchr(raw[i], '|') || ft_strchr(raw[i], '>')
-			|| ft_strsrch(raw[i], ">>") || ft_strchr(raw[i], '<')
-			|| ft_strsrch(raw[i], "<<"))
-			&& !sgl_q && !dbl_q))
+		if (!check_valid_quotes(raw[i], &sgl_q, &dbl_q))
 		{
 			free(raw[i]);
 			raw[i] = NULL;

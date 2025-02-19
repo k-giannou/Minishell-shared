@@ -6,23 +6,23 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 17:11:55 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/15 18:19:13 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/19 20:46:03 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_cmd(char **ag, int *i)
+char	*get_cmd(char **av, int i)
 {
 	char *cmd;
 
-	if (!ag || !ag[(*i)])
+	if (!av || !av[i])
 		return (NULL);
-	cmd = ft_strdup(ag[(*i)++]);
-	while (ag[(*i)] && ag[(*i)][0] == '-' && ag[(*i)][0])
-		cmd = ft_strjoin_n_free(ft_strjoin_n_free(cmd, " ", 1), ag[(*i)++], 1);
-	while (ag[(*i)] && ft_strcmp(ag[(*i) - 1], "|"))
-		(*i)++;
+	cmd = ft_strdup(av[i++]);
+	while (av[i] || ft_strcmp(av[i], ">") || ft_strcmp(av[i], ">>")
+			|| ft_strcmp(av[i], "<") || ft_strcmp(av[i], "<<")
+			|| ft_strcmp(av[i], "|"))
+		cmd = ft_strjoin_n_free(ft_strjoin_n_free(cmd, " ", 1), av[i++], 1);
 	return (cmd);
 }
 

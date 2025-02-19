@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:45:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/19 17:54:42 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/19 20:53:10 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,20 +84,6 @@ int	ft_strrchr(const char *s, int c)
 		if (s[len] == (char)c)
 			return (len);
 		len--;
-	}
-	return (0);
-}
-
-char	*ft_strsrch(const char *s, char *c)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-	{
-		if (!ft_strncmp(s + i, c, ft_strlen(c)))
-			return ((char *)(s + i));
-		i++;
 	}
 	return (0);
 }

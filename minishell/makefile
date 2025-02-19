@@ -13,8 +13,9 @@ SRCS			=  srcs/exec.c\
 				   \
 				   srcs/utils/repl.c\
 				   srcs/utils/utils.c\
-				   srcs/utils/utils3.c\
 				   srcs/utils/utils2.c\
+				   srcs/utils/utils3.c\
+				   srcs/utils/utils4.c\
 				   srcs/utils/ft_list_sort.c\
 				   \
 				   srcs/buildins/cd.c\
@@ -25,7 +26,6 @@ SRCS			=  srcs/exec.c\
 				   srcs/buildins/unset.c\
 				   srcs/buildins/export.c\
 				   \
-				   srcs/pipes/pipes.c\
 				   srcs/pipes/pipex.c\
 				   srcs/pipes/pipex_utils.c\
 				   \

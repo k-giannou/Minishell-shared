@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/19 18:32:00 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/19 21:07:13 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,11 +125,11 @@ void	here_doc(char *limiter);
 void	pipes(t_minishell *mini);
 char	**splited_env(t_env *env);
 int		get_file(char *av, int i);
-char	*get_cmd(char **ag, int *i);
+char	*get_cmd(char **av, int i);
+int		pipex(char **av, char **env);
 void	execute(char *av, char **env);
 char	*find_path(char *cmd, char **env);
 void	read_stdin(int *fd, char *limiter);
-int		pipex(int ac, char **av, t_minishell *mini);
 void	son_program(char *av, char **env, pid_t pid_son);
 
 //buildins

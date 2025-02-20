@@ -13,7 +13,8 @@
 	"readline.h": "c",
 	"stdbool.h": "c",
 	"stdlib.h": "c",
-	"signal.h": "c"
+	"signal.h": "c",
+	"wait.h": "c"
 },
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "g++",

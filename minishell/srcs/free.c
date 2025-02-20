@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:46:16 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/19 18:01:57 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/20 18:00:29 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	ft_count_words(char **split)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	if (!split)
 		return (0);
@@ -74,8 +74,8 @@ void	free_all(t_minishell *mini, char *str)
 			ft_list_clear(mini->env);
 		if (mini->env_export)
 			ft_list_clear(mini->env_export);
-		if (mini->current_location)
-			free(mini->current_location);
+		if (mini->cur_loc)
+			free(mini->cur_loc);
 		if (mini->user.final)
 			free(mini->user.final);
 		if (mini->pipes_redirs)

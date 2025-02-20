@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 19:15:45 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/15 18:24:44 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:30:43 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,13 @@ void	unset(char **vars, t_minishell *mini)
 	i = 1;
 	if (just_export_or_unset(vars, "unset"))
 		return ;
-	else
-		while (vars[i])
-		{
-			if (!rest_letters_of_name(vars[i]))
-				break ;
-			delete_from_env(vars[i], &(mini->env));
-			delete_from_env(vars[i], &(mini->env_export));
-			i++;
-		}
+	while (vars[i])
+	{
+		if (!rest_letters_of_name(vars[i]))
+			break ;
+		delete_from_env(vars[i], &(mini->env));
+		delete_from_env(vars[i], &(mini->env_export));
+		i++;
+	}
 	return ;
 }

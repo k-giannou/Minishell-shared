@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:25:54 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/20 17:29:12 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:29:35 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@ void	start_replace(t_variables *v, char *str, t_minishell *mini,
 		else if (str[v->i] == '$')
 		{
 			if (str[v->i + 1] == '\0' || str[v->i + 1] == 32 || str[v->i
-				+ 1] == '$')
+					+ 1] == '$')
 				v->line[v->k++] = str[v->i++];
 			else if (str[v->i + 1] == '\"' && v->dbl_quote)
 				v->line[v->k++] = str[v->i++];
 			else if ((str[v->i + 1] == '\"' || str[v->i + 1] == '\'')
-					&& (!v->dbl_quote))
+				&& (!v->dbl_quote))
 				v->i++;
 			else if (ft_isalpha(str[v->i + 1]) || ft_isdigit(str[v->i + 1])
 				|| str[v->i + 1] == '_')

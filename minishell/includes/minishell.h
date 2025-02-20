@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/20 17:20:02 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/20 18:17:31 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,52 +42,51 @@
 # define CYAN        "\033[36m"  // Couleur cyan
 # define BRIGHT_GREEN  "\033[92m"  // Couleur verte claire
 
-#define DBL_Q '"'
-#define SGL_Q '\''
+# define DBL_Q '"'
+# define SGL_Q '\''
 
-#define HOSTNAME "/etc/hostname"
+# define HOSTNAME "/etc/hostname"
 
-extern volatile sig_atomic_t g_signal;
+extern volatile sig_atomic_t	g_signal;
 
 typedef struct s_variables
 {
 	char	line[70000];
 	char	to_search[70000];
-    int	i;
-	int	k;
-	int	t;
-	bool dbl_quote;
-	int	quote_sum;
-} t_variables ;
+	int		i;
+	int		k;
+	int		t;
+	bool	dbl_quote;
+	int		quote_sum;
+}	t_variables;
 
 typedef struct s_user
 {
 	char	*name;
 	char	*hostname;
 	char	*final;
-} t_user ;
+}	t_user;
 
 typedef struct s_env
 {
 	char			*data;
 	struct s_env	*next;
-} t_env, t_cell;
+} t_env,	t_cell;
 
 typedef struct s_minishell
 {
-	bool	sgl_q;
-	bool	dbl_q;
-	int		fd;
-	int		hist_lines;
-	char	*current_location;
-	char	**tokens;
-	char	**pipes_redirs;
-	t_env	*env;
-	t_env	*env_export;
-	t_user	user;
-	t_variables vars;
-} t_minishell;
-
+	bool		sgl_q;
+	bool		dbl_q;
+	int			fd;
+	int			hist_lines;
+	char		*cur_loc;
+	char		**tokens;
+	char		**pipes_redirs;
+	t_env		*env;
+	t_env		*env_export;
+	t_user		user;
+	t_variables	vars;
+}	t_minishell;
 
 void	sig_init(void);
 t_env	*ft_envdup(t_env *src);
@@ -112,6 +111,7 @@ void	welcome(void);
 void	print_list(t_env *L);
 void	ft_print_dlb_tabs(char **tab);
 void	print_pipes_redirs(char **split, int nb_words);
+void	ft_print_export(t_env *v, bool sign, bool inside);
 
 //frees
 void	ft_list_clear(t_env *begin_list);
@@ -148,9 +148,13 @@ long	len_list(t_env *list);
 char	*host_dup(char *name);
 int		ft_count_words(char **split);
 void	init_user(t_minishell *mini);
+int		first_letter_valid(char *str);
 int		ft_strrchr(const char *s, int c);
+char	*return_tab(int tab, int *new_i);
 char	*ft_strsrch(const char *s, char *c);
 void	remove_multiple_slashs(char *path, int i);
-char    *replace_var(t_minishell *mini, char *str);
+char	*replace_var(t_minishell *mini, char *str);
+void	if_pipes_or_redirs(char *line, int *i, int *count);
+char	*ft_substr_mini_2(char *line, t_minishell **mini, int *len);
 
-# endif
+#endif

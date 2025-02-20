@@ -7,6 +7,7 @@ HDRS			= includes
 SRCS			=  srcs/exec.c\
 				   srcs/free.c\
 				   srcs/print.c\
+				   srcs/print2.c\
 				   srcs/signals.c\
 				   srcs/minishell.c\
 				   srcs/optimized_argument.c\

@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 20:17:08 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/20 15:54:13 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/20 18:14:08 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 void	welcome(void)
 {
-	char	str[] = CYAN ITALIC" Welcome..."RESET CYAN"\n to...\n"BOLD GREEN" MINISHELL !\n\n"RESET;
+	char	*str;
 	int		i;
 	int		j;
 
 	i = 0;
 	j = 50000000;
+	str = CYAN ITALIC" Welcome..."RESET CYAN"\n to...\n"BOLD GREEN
+		" MINISHELL !\n\n"RESET;
 	while (str[i])
 	{
 		write(1, &str[i++], 1);
-		/* if (i == 26 || i == 36)
-			j *= 10; */
 		while (j > 0)
 			j--;
 		j = 50000000;

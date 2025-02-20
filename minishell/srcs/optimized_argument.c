@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:31:28 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/20 16:35:35 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/20 16:39:26 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,8 @@ void	split_line(char *line, t_minishell **mini)
 			if (!(*mini)->tokens[j])
 				return (free_all(*mini, "tabs"));
 			else if ((line[i] == '<' || line[i] == '>' || line[i] == '|')
-				|| ((*mini)->tokens[j][0] == '<' || (*mini)->tokens[j][0] == '>' || (*mini)->tokens[j][0] == '|'))
+				|| ((*mini)->tokens[j][0] == '<' || (*mini)->tokens[j][0] == '>'
+				|| (*mini)->tokens[j][0] == '|'))
 				break ;
 		}
 		j++;

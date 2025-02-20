@@ -18,6 +18,7 @@ SRCS			=  srcs/exec.c\
 				   srcs/utils/utils2.c\
 				   srcs/utils/utils3.c\
 				   srcs/utils/utils4.c\
+				   srcs/utils/utils5.c\
 				   srcs/utils/ft_list_sort.c\
 				   \
 				   srcs/buildins/cd.c\

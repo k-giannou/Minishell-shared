@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 19:15:45 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/20 17:38:54 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/20 18:27:14 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	add_in_env(char *str, t_env *v)
 		return ;
 	new_node->data = ft_strdup(str);
 	new_node->next = NULL;
-	ft_lstadd_back(&v, new_node);
+	ft_list_add_back(&v, new_node);
 }
 
 void	export(char **vars, t_minishell *mini)

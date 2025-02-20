@@ -6,30 +6,11 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:25:54 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/20 17:27:35 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/20 18:26:35 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-char	*ftstrdup(char *src)
-{
-	char	*dest;
-	int		i;
-
-	i = 0;
-	while (src[i])
-		i++;
-	dest = (char *)malloc(sizeof(char) * (i + 1));
-	i = 0;
-	while (src[i])
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
-}
 
 int	ft_charset(int c)
 {
@@ -71,4 +52,21 @@ void	change_bools(t_variables *v, char *str)
 		v->dbl_quote = false;
 	else
 		v->dbl_quote = true;
+}
+
+void	ft_list_add_back(t_env **lst, t_env *new)
+{
+	t_env	*temp;
+
+	if (!new)
+		return ;
+	if (!*lst)
+	{
+		*lst = new;
+		return ;
+	}
+	temp = *lst;
+	while (temp->next)
+		temp = temp->next;
+	temp->next = new;
 }

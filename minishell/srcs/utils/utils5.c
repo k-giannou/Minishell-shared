@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 18:07:16 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/20 18:13:01 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/20 18:28:06 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*return_tab(int tab, int *new_i)
 		return (*new_i += 2, ft_strdup(""));
 }
 
-char	*ft_substr_mini_2(char *line, t_minishell **mini, int *len)
+void	ft_substr_mini_2(char *line, t_minishell **mini, int *len)
 {
 	while (line[*len] && line[*len] != ' ' && line[*len] != '<'
 		&& line[*len] != '>' && line[*len] != '|')

@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:25:54 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/20 17:29:35 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/20 18:22:42 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	search_and_change(t_variables *v, char *str, t_minishell *mini,
 	while (ft_isalpha(str[v->i]) || ft_isdigit(str[v->i]) || str[v->i] == '_')
 		v->to_search[v->t++] = str[v->i++];
 	v->to_search[v->t++] = '\0';
-	dest = ftstrdup(v->to_search);
+	dest = ft_strdup(v->to_search);
 	while (current)
 	{
 		if (ft_strncmp(dest, current->data, ft_strlen(dest)) == 0)
@@ -85,5 +85,5 @@ char	*replace_var(t_minishell *mini, char *str)
 		start_replace(&v, str, mini, current);
 	v.line[v.k] = '\0';
 	free(str);
-	return (ftstrdup(v.line));
+	return (ft_strdup(v.line));
 }

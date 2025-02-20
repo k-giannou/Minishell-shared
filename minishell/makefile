@@ -12,6 +12,7 @@ SRCS			=  srcs/exec.c\
 				   srcs/optimized_argument.c\
 				   \
 				   srcs/utils/repl.c\
+				   srcs/utils/repl2.c\
 				   srcs/utils/utils.c\
 				   srcs/utils/utils2.c\
 				   srcs/utils/utils3.c\

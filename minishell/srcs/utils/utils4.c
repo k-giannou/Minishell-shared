@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:45:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/19 20:54:44 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:21:43 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ char	*ft_strsrch(const char *s, char *c)
 	return (0);
 }
 
-int		ispipe(char **line)
+int	ispipe(char **line)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (line[i])

@@ -14,7 +14,7 @@
 
 /* void	ft_exit(t_minishell *mini, char **line)
 {
-	char *str;
+	char	*str;
 
 	str = ft_readline("Are you sure ? [yes/no]\n", mini);
 	if (!ft_strcmp("yes", str))
@@ -25,7 +25,6 @@
 		ft_fprintf(1, "\nYou retard sh*t ! 💩\n", mini);
 	free(str);
 } */
-
 void	ft_exit(t_minishell *mini)
 {
 	return (free_all(mini, "all"), exit(0));

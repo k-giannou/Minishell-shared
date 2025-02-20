@@ -17,7 +17,7 @@
 static int	ft_sorted_list(t_env *list)
 {
 	t_env	*tmp;
-	int i;
+	int		i;
 
 	i = 0;
 	tmp = list;
@@ -56,9 +56,9 @@ static void	ft_env_sort2(t_env **prev, t_env **cur, t_env **after)
 
 void	ft_env_sort(t_env **begin_list)
 {
-	t_env *prev;
-	t_env *cur;
-	t_env *after;
+	t_env	*prev;
+	t_env	*cur;
+	t_env	*after;
 
 	while (!ft_sorted_list(*begin_list))
 	{

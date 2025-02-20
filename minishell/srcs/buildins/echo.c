@@ -14,7 +14,7 @@
 
 int	echo_n(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[++i])
@@ -25,7 +25,7 @@ int	echo_n(char *str)
 
 void	echo(char **line)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	if (!line[i])

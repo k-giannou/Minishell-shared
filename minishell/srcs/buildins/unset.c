@@ -12,42 +12,41 @@
 
 #include "../includes/minishell.h"
 
-
-t_env    *free_at(t_env *L, int pos)
+t_env	*free_at(t_env *L, int pos)
 {
-    t_env    *prec;
-    t_env    *cur;
-    int        i;
+	t_env	*prec;
+	t_env	*cur;
+	int		i;
 
-    cur = L;
-    if (!L)
-        return (NULL);
-    else if (pos == 0)
-    {
-        L = L->next;
-        free(cur);
-        return (L);
-    }
-    i = 0;
-    while (i < pos)
-    {
-        i++;
-        prec = cur;
-        cur = cur->next;
-    }
-    prec->next = cur->next;
-    free(cur);
-    return (L);
+	cur = L;
+	if (!L)
+		return (NULL);
+	else if (pos == 0)
+	{
+		L = L->next;
+		free(cur);
+		return (L);
+	}
+	i = 0;
+	while (i < pos)
+	{
+		i++;
+		prec = cur;
+		cur = cur->next;
+	}
+	prec->next = cur->next;
+	free(cur);
+	return (L);
 }
 
 void	delete_from_env(char *var, t_env **v)
 {
-	int	i;
+	int		i;
 	t_env	*temp;
 
 	temp = *v;
 	i = 0;
-    while (temp != NULL)
+	while (temp != NULL)
 	{
 		if (ft_strncmp(var, temp->data, ft_strlen(var)) == 0)
 			return (free(temp->data), (void)free_at(*v, i));
@@ -72,5 +71,5 @@ void	unset(char **vars, t_minishell *mini)
 			delete_from_env(vars[i], &(mini->env_export));
 			i++;
 		}
-		return ;
+	return ;
 }

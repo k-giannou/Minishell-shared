@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:45:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/15 18:35:58 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:25:14 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 void	remove_multiple_slashs(char *path, int i)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	while (path[j])
 	{
-		if (path[j] == '/' && path[j + 1] == '/')//if there's multiple slashs
+		if (path[j] == '/' && path[j + 1] == '/')
 		{
-			i++;//i keep the first slash
-			while (path[j] == '/')//while i'm in the slashs
+			i++;
+			while (path[j] == '/')
 				j++;
 		}
 		if (i != j)
-			path[i] = path[j];//i copy the characters
+			path[i] = path[j];
 		i++;
 		j++;
 	}
@@ -53,9 +53,9 @@ void	valid_quotes(char c, bool *sgl_q, bool *dbl_q)
 
 int	check_quotes(char *str)
 {
-	int i;
-	bool sgl_q;
-	bool dbl_q;
+	int		i;
+	bool	sgl_q;
+	bool	dbl_q;
 
 	if (!str)
 		return (0);

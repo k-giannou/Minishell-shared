@@ -14,23 +14,23 @@
 
 char	*get_cmd(char **av, int i)
 {
-	char *cmd;
+	char	*cmd;
 
 	if (!av || !av[i])
 		return (NULL);
 	cmd = ft_strdup(av[i++]);
 	while (av[i] || ft_strcmp(av[i], ">") || ft_strcmp(av[i], ">>")
-			|| ft_strcmp(av[i], "<") || ft_strcmp(av[i], "<<")
-			|| ft_strcmp(av[i], "|"))
+		|| ft_strcmp(av[i], "<") || ft_strcmp(av[i], "<<") || ft_strcmp(av[i],
+			"|"))
 		cmd = ft_strjoin_n_free(ft_strjoin_n_free(cmd, " ", 1), av[i++], 1);
 	return (cmd);
 }
 
 char	**splited_env(t_env *env)
 {
-	int i;
-	char **tab_env;
-	
+	int		i;
+	char	**tab_env;
+
 	i = len_list(env);
 	tab_env = ft_calloc(sizeof(char *), i + 1);
 	i = 0;

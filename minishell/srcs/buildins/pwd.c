@@ -19,7 +19,7 @@ void	pwd(t_env *env)
 	printf("%s\n", env->data + 4);
 }
 
-	/*char cwd[1024];
+/*char cwd[1024];
 
-	 if (getcwd(cwd, sizeof(cwd)) != NULL)
-    	printf("Répertoire courant : %s\n", cwd); */
+ if (getcwd(cwd, sizeof(cwd)) != NULL)
+	printf("Répertoire courant : %s\n", cwd); */

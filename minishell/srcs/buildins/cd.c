@@ -25,7 +25,7 @@ void	add_directory(t_env **tmp, char *path, int *i)
 		(*i)++;
 	while (path[*i] != '/' && path[*i])
 		str[j++] = path[(*i)++];
-	(*tmp)->data = ft_strjoin_n_free((*tmp)->data, ft_strdup(str), 12);		
+	(*tmp)->data = ft_strjoin_n_free((*tmp)->data, ft_strdup(str), 12);
 }
 
 void	new_location2(t_env **tmp)
@@ -45,7 +45,7 @@ void	new_location2(t_env **tmp)
 void	change_old_pwd(char *data, t_minishell **mini)
 {
 	t_env	*tmp;
-	
+
 	tmp = (*mini)->env;
 	ft_get_env(&tmp, "OLDPWD=");
 	free(tmp->data);
@@ -70,12 +70,14 @@ char	*new_location(t_minishell **mini, char *path, int i)
 			free(tmp->data);
 			tmp->data = ft_strdup("PWD=/");
 		}
-		else if (!ft_strncmp(path + i, "../", 3) || !ft_strncmp(path + i, "..\0", 3))
+		else if (!ft_strncmp(path + i, "../", 3) || !ft_strncmp(path + i,
+				"..\0", 3))
 		{
 			new_location2(&tmp);
 			i++;
 		}
-		else if (!ft_strncmp(path + i, "./", 2) || !ft_strncmp(path + i, ".\0", 2))
+		else if (!ft_strncmp(path + i, "./", 2) || !ft_strncmp(path + i, ".\0",
+				2))
 			i++;
 		else if (path[i + 1] != '.')
 			add_directory(&tmp, path, &i);
@@ -109,5 +111,6 @@ void	cd(char **path, t_minishell **mini)
 	ft_get_env(&tmp, "PWD=");
 	free(tmp->data);
 	tmp->data = ft_strjoin("PWD=", (*mini)->current_location);
-	(*mini)->current_location = replace_by_tilde((*mini)->env, (*mini)->current_location);
+	(*mini)->current_location = replace_by_tilde((*mini)->env,
+			(*mini)->current_location);
 }

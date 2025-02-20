@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/19 21:07:13 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:20:02 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,10 @@
 
 #define DBL_Q '"'
 #define SGL_Q '\''
-#define HISTORY ".history.txt"
 
 #define HOSTNAME "/etc/hostname"
 
 extern volatile sig_atomic_t g_signal;
-
-typedef struct s_env
-{
-	char			*data;
-	struct s_env	*next;	
-} t_env, t_cell;
 
 typedef struct s_variables
 {
@@ -73,6 +66,12 @@ typedef struct s_user
 	char	*hostname;
 	char	*final;
 } t_user ;
+
+typedef struct s_env
+{
+	char			*data;
+	struct s_env	*next;
+} t_env, t_cell;
 
 typedef struct s_minishell
 {

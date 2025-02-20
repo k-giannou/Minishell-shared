@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/19 20:51:41 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:21:26 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,9 +118,9 @@ void	exec_redir(char *av, char **env, pid_t pid_son)
 int	pipex(char **av, char **env)
 {
 	int	i;
-	int j;
-	int	filein;//0
-	int	fileout;//1
+	int	j;
+	int	filein;
+	int	fileout;
 
 	i = 0;
 	j = 0;
@@ -134,8 +134,8 @@ int	pipex(char **av, char **env)
 			get_file_nd_redir(av[i + 1], &filein, &fileout);
 			j = i;
 			while (j >= 0 || ft_strcmp(av[i], ">") || ft_strcmp(av[i], ">>")
-			|| ft_strcmp(av[i], "<") || ft_strcmp(av[i], "<<")
-			|| ft_strcmp(av[i], "|"))
+				|| ft_strcmp(av[i], "<") || ft_strcmp(av[i], "<<")
+				|| ft_strcmp(av[i], "|"))
 				j--;
 			exec_redir(get_cmd(av, j), env, 0);
 		}

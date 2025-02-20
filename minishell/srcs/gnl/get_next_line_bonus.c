@@ -29,8 +29,8 @@ char	*ft_line_save(char *line_save, int fd)
 		if (bytes_read == -1)
 			return (free(buffer), free(line_save), NULL);
 		if (!line_save[0] && bytes_read == 0)
-			return (free(buffer), free(line_save), printf("\nexit\n"),
-				exit(1), NULL);
+			return (free(buffer), free(line_save), printf("\nexit\n"), exit(1),
+				NULL);
 		else if (line_save[0] && bytes_read == 0)
 			continue ;
 		buffer[bytes_read] = '\0';

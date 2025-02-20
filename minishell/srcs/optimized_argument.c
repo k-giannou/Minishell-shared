@@ -6,11 +6,25 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:31:28 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/19 18:07:39 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/20 16:35:35 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	if_pipes_or_redirs(char *line, int *i, int *count)
+{
+	if (line[*i] == '<' || line[*i] == '>' || line[*i] == '|')//si j'ai des redirections ou des pipes
+	{
+		(*count)++;//je compte comme un mot les characteres d'avant
+		while (line[*i + 1] == '<' || line[*i + 1] == '>'
+			|| line[*i + 1] == '|')//tant que j'ai une redirection ou un pipe, je passe
+			(*i)++;
+		if (line[*i + 1] != ' ')//si j'ai encore des characteres apres je compte les redirections ou les pipes comme un mot et je continue
+			(*count)++;
+	}
+	(*i)++;
+}
 
 static int	count_tokens(char *line, bool sgl_q, bool dbl_q, int i)
 {
@@ -31,8 +45,9 @@ static int	count_tokens(char *line, bool sgl_q, bool dbl_q, int i)
 					i++;
 				valid_quotes(line[i++], &sgl_q, &dbl_q);
 			}
-			while(line[i] && line[i] != SGL_Q && line[i] != DBL_Q && line[i] != ' ')//si j'ai des characteres, quotes exclues, j'avance jusqu'a un white space ou une quote
-				i++;
+			while(line[i] && line[i] != SGL_Q && line[i] != DBL_Q
+				&& line[i] != ' ')//si j'ai des characteres, quotes exclues, j'avance jusqu'a un white space ou une quote
+				if_pipes_or_redirs(line, &i, &count);
 		}
 		count++;//j'ajoute mon mot
 	}
@@ -83,18 +98,27 @@ static char	*ft_substr_mini(char *line, t_minishell **mini, int *new_i, int tab)
 	if (line[0] && ((line[0] == DBL_Q && line[1] == DBL_Q)
 		|| (line[0] == SGL_Q && line[1] == SGL_Q)))//si j'ai un tableau vide
 		return ((*mini)->pipes_redirs[tab] = return_tab(tab, new_i), return_tab(tab, new_i));
-	while (line[len] && line[len] != ' ')//tant que je suis pas arriver a la fin de la ligne ou a un espace
-	{
-		if (line[len] == SGL_Q || line[len] == DBL_Q)//si mon caractere est une quote
-		{
-			valid_quotes(line[len++], &((*mini)->sgl_q), &((*mini)->dbl_q));
-				while ((line[len] && (*mini)->sgl_q && line[len] != SGL_Q)
-					|| (line[len] && (*mini)->dbl_q && line[len] != DBL_Q))//tant que je suis pas arriver a la prochaine meme quote, j'avance
+	if (line[len] == '<' || line[len] == '>' || line[len] == '|')
+		while (line[len] == '<' || line[len] == '>' || line[len] == '|')//tant que j'ai une redirection ou un pipe, je passe
 				len++;
-			valid_quotes(line[len++], &((*mini)->sgl_q), &((*mini)->dbl_q));
+	else
+	{
+		while (line[len] && line[len] != ' ' && line[len] != '<' && line[len] != '>'
+				&& line[len] != '|')//tant que je suis pas arriver a la fin de la ligne ou a un espace
+		{
+			if (line[len] == SGL_Q || line[len] == DBL_Q)//si mon caractere est une quote
+			{
+				valid_quotes(line[len++], &((*mini)->sgl_q), &((*mini)->dbl_q));
+					while ((line[len] && (*mini)->sgl_q && line[len] != SGL_Q)
+						|| (line[len] && (*mini)->dbl_q && line[len] != DBL_Q))//tant que je suis pas arriver a la prochaine meme quote, j'avance
+					len++;
+				valid_quotes(line[len++], &((*mini)->sgl_q), &((*mini)->dbl_q));
+			}
+			while(line[len] && line[len] != SGL_Q && line[len] != DBL_Q
+				&& line[len] != ' ' && line[len] != '<' && line[len] != '>'
+				&& line[len] != '|')//si j'ai des characteres, quotes exclues, j'avance jusqu'a un white space ou une quote
+				len++;
 		}
-		while(line[len] && line[len] != SGL_Q && line[len] != DBL_Q && line[len] != ' ')//si j'ai des characteres, quotes exclues, j'avance jusqu'a un white space ou une quote
-			len++;
 	}
 	*new_i += len;
 	(*mini)->pipes_redirs[tab] = ft_substr_with_quotes(line, *mini, len);
@@ -117,6 +141,9 @@ void	split_line(char *line, t_minishell **mini)
 			(*mini)->tokens[j] = ft_substr_mini(line + i, mini, &i, j);
 			if (!(*mini)->tokens[j])
 				return (free_all(*mini, "tabs"));
+			else if ((line[i] == '<' || line[i] == '>' || line[i] == '|')
+				|| ((*mini)->tokens[j][0] == '<' || (*mini)->tokens[j][0] == '>' || (*mini)->tokens[j][0] == '|'))
+				break ;
 		}
 		j++;
 		k = 0;

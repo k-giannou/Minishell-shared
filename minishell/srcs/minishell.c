@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:17 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/19 21:05:52 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/20 15:53:30 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ int main(int ac, char **av, char **env)
 		optimised_line(str, &mini);
 		is_redir_or_pipes(mini->pipes_redirs, 0, 0);
 		print_pipes_redirs(mini->pipes_redirs, ft_count_words(mini->tokens));
+		ft_print_dlb_tabs(mini->tokens);
 		if (!mini->tokens || !mini->tokens[0] || mini->tokens[0][0] == 0)
 			continue ;
 		exec_cmd(mini);

@@ -6,11 +6,11 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:45:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/20 18:06:32 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/24 18:39:45 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
 char	*ft_strsrch(const char *s, char *c)
 {
@@ -26,15 +26,17 @@ char	*ft_strsrch(const char *s, char *c)
 	return (0);
 }
 
-int	ispipe(char **line)
+int	pipe_count(char **line)
 {
 	int	i;
+	int count;
 
 	i = 0;
+	count = 0;
 	while (line[i])
 		if (!ft_strcmp(line[i++], "|"))
-			return (1);
-	return (0);
+			count++;
+	return (count);
 }
 
 void	ft_get_env(t_env **env, char *env_var)

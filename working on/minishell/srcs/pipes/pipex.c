@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/19 20:51:41 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/24 18:32:26 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	exec_redir(char *av, char **env, pid_t pid_son)
 	}
 }
 
-int	pipex(char **av, char **env)
+/* int	pipex(char **av, char **env)
 {
 	int	i;
 	int j;
@@ -141,4 +141,4 @@ int	pipex(char **av, char **env)
 		}
 	}
 	return (0);
-}
+} */

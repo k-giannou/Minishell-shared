@@ -32,6 +32,10 @@ SRCS			=  srcs/exec.c\
 				   srcs/pipes/pipex.c\
 				   srcs/pipes/pipex_utils.c\
 				   \
+				   srcs/redirs/redirs.c\
+				   srcs/redirs/syntax_r.c\
+				   srcs/redirs/utils_r.c\
+				   \
 				   srcs/gnl/get_next_line_bonus.c\
 				   srcs/gnl/get_next_line_utils_bonus.c
 SRC_O			= $(SRCS:srcs/.c=.o)

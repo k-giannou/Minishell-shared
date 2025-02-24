@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/23 13:14:37 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/02/24 18:37:02 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
+/* #ifndef MINISHELL_H
 # define MINISHELL_H
 
 # include <stdio.h>
@@ -190,3 +190,4 @@ void	exec_buildin(char **tab, t_minishell *mini);
 void	restore_dup(t_redirs *r);
 
 # endif
+ */

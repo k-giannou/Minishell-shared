@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/20 18:28:22 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/24 19:54:21 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,26 @@ typedef struct s_variables
 	int		quote_sum;
 }	t_variables;
 
+typedef enum
+{
+    REDIR_NONE,// -
+    REDIR_OUT, // >
+    REDIR_APPEND,// >>
+	REDIR_IN,// <
+	REDIR_IN_OUT,//<>
+	HEREDOC// <<
+}	t_type;
+
+typedef struct s_redirs
+{
+	int	saved_in;
+	int	saved_out;
+	t_type	type;
+	char	**tab;
+	int	fd;
+	int	y;
+}	t_redirs;
+
 typedef struct s_user
 {
 	char	*name;
@@ -86,6 +106,7 @@ typedef struct s_minishell
 	t_env		*env_export;
 	t_user		user;
 	t_variables	vars;
+	t_redirs	r;
 }	t_minishell;
 
 void	sig_init(void);
@@ -118,18 +139,15 @@ void	ft_list_clear(t_env *begin_list);
 void	free_all(t_minishell *mini, char *str);
 
 //pipes
-void	usage(void);
-int		ispipe(char **line);
+int		pipe_count(char **line);
 void	here_doc(char *limiter);
-void	pipes(t_minishell *mini);
 char	**splited_env(t_env *env);
 int		get_file(char *av, int i);
 char	*get_cmd(char **av, int i);
-int		pipex(char **av, char **env);
 void	execute(char *av, char **env);
 char	*find_path(char *cmd, char **env);
 void	read_stdin(int *fd, char *limiter);
-void	son_program(char *av, char **env, pid_t pid_son);
+void	pipex(t_minishell *mini, char **env);
 
 //buildins
 void	pwd(t_env *env);
@@ -140,6 +158,19 @@ void	exec_cmd(t_minishell *mini);
 void	cd(char **chemin, t_minishell **mini);
 void	unset(char **vars, t_minishell *mini);
 void	export(char **vars, t_minishell *mini);
+
+//redirs
+int		is_buildin(char *tab);
+void	restore_dup(t_redirs *r);
+int		isredir(t_minishell *mini);
+char	**copy_tokens(char **tokens);
+int		redir(t_minishell *mini, char **env);
+int		valid_filename(char **tab, char **ntab);
+int		syntax_error_redir(char **tab, char **ntab);
+void	find_tab(int *y, char **tab, char **tokens);
+int		last_file(int y, char **tab, char **tokens);
+void	exec_buildin(char **tab, t_minishell *mini, int free);
+char	**join_command_free_tab(char **tab, t_minishell *mini);
 
 //utils
 char	*hostname(void);

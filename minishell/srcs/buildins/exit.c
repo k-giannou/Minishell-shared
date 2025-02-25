@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 21:07:06 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/25 21:25:52 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/25 21:29:48 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	valid_nb(char *str)
 	i = 0;
 	while (ft_iswhitespace(str[i]))
 		i++;
-	if (ft_isdigit(str[i]) || str[i] == '+' || str[i] == '-')
+	if (str[i] && (ft_isdigit(str[i]) || str[i] == '+' || str[i] == '-'))
 		i++;
 	else
 		return (0);

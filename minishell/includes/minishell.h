@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/24 19:54:21 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/25 20:37:47 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <stdbool.h>
 # include <termios.h>
 # include <signal.h>
+# include <stdint.h>
 
 # include "libft_extras.h"
 # include "ft_fprintf.h"
@@ -44,6 +45,9 @@
 
 # define DBL_Q '"'
 # define SGL_Q '\''
+
+# define INT64_Max "9223372036854775807"
+# define INT64_Min "-9223372036854775808"
 
 # define HOSTNAME "/etc/hostname"
 

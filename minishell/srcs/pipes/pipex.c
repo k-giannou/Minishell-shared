@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/24 21:06:18 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:51:27 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ void	son_program(char *av, char **env, pid_t pid_son, t_minishell *mini)
 			exec_buildin(ft_split(av, " "), mini, 1);
 		else
 			execute(ft_strdup(av), env);//j'execute a commande
+		close(fd[1]);
 		exit(0);
 	}
 	close(fd[1]);//je ferme l'ecriture du pipe
-	dup2(fd[0], STDIN_FILENO);//je redirige l'entree standard dans la lecture du pipe
 	waitpid(pid_son, NULL, 0);//j'attends le processus enfant
 	close(fd[0]);//je ferme la lecture
 }
@@ -68,10 +68,10 @@ void	last_cmd(char *av, char **env, pid_t pid_son, t_minishell *mini)
 			exec_buildin(ft_split(av, " "), mini, 1);
 		else
 			execute(ft_strdup(av), env);//j'execute a commande
+		close(fd[1]);
 		exit(0);
 	}
 	close(fd[1]);//je ferme l'ecriture du pipe
-	dup2(fd[0], STDIN_FILENO);//je redirige l'entree standard dans la lecture du pipe
 	waitpid(pid_son, NULL, 0);//j'attends le processus enfant
 	close(fd[0]);//je ferme la lecture
 }

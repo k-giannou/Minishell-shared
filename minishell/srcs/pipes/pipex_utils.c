@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 17:11:55 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/24 18:40:35 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/25 19:08:04 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ char	*find_path(char *cmd, char **env)
 	while (env[i] && ft_strnchr(env[i], "PATH", 4) == 0)
 		i++;
 	paths = ft_split(env[i] + 5, ":");
+	ft_print_dlb_tabs(paths);
 	if (!paths)
 		perror(RED "Error -> invalid path\n" RESET);
 	i = 0;
@@ -87,6 +88,13 @@ char	*find_path(char *cmd, char **env)
 	return (0);
 }
 
+char	*check_path(char *path)
+{
+	if (access(path, F_OK) == 0 || access(path, X_OK) == 0)
+		return (path);
+	return (NULL);
+}
+
 void	execute(char *av, char **env)
 {
 	char	*path;
@@ -94,23 +102,24 @@ void	execute(char *av, char **env)
 
 	cmd = ft_split(av, " ");
 	free(av);
+	printf("cmd : %s\n", cmd[0]);
 	if (!cmd)
-	{
-		perror(RED "Error -> issue spliting command\n" RESET);
-		exit(EXIT_FAILURE);
-	}
-	path = find_path(cmd[0], env);
+		return (perror(RED "Error -> issue spliting command\n" RESET), exit(1));
+	if (cmd[0][0] != '/')
+		path = find_path(cmd[0], env);
+	else
+		path = check_path(cmd[0]);
 	if (!path)
 	{
 		free_dbl_tab(cmd);
 		perror(RED "Error -> issue finding path\n" RESET);
-		exit(EXIT_FAILURE);
+		exit(1);
 	}
 	if (execve(path, cmd, env) == -1)
 	{
 		free(path);
 		free_dbl_tab(cmd);
 		perror(RED "Error -> execution failure\n" RESET);
-		exit(EXIT_FAILURE);
+		exit(1);
 	}
 }

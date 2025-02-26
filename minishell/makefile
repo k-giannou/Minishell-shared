@@ -31,6 +31,7 @@ SRCS			=  srcs/exec.c\
 				   \
 				   srcs/pipes/pipex.c\
 				   srcs/pipes/pipex_utils.c\
+				   srcs/pipes/pipex_utils2.c\
 				   \
 				   srcs/redirs/redirs.c\
 				   srcs/redirs/syntax_r.c\

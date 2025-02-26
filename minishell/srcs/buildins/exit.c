@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 21:07:06 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/25 21:29:48 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:33:28 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ int	valid_nb(char *str)
 			return (0);
 	return (1);
 }
-
 void	ft_exit(t_minishell *mini)
 {
 	int		i;

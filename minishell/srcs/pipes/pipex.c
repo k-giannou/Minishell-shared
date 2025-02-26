@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/26 19:27:31 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/26 20:25:40 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ char **get_cmd_s(t_minishell *mini, int i)
 	if (!cmd_s)
 		return (printf("fail getting cmd's\n"), NULL);
 	j = 0;
-	while (j < pipe_count(mini->tokens) + 1)
+	while (j < pipe_count(mini->tokens) + 2)
 		cmd_s[j++] = NULL;
 	j = 0;
 	while (mini->tokens[i])
@@ -140,6 +140,7 @@ void	pipex(t_minishell *mini, char **env)
 	char	**cmd_s;
 
 	cmd_s = get_cmd_s(mini, 0);// je recupere un tableau de commandes a executer
+	ft_print_dlb_tabs(cmd_s, "cmd_s");
 	i = 0;
 	while (i < ft_count_words(cmd_s) - 1)//tant que j'ai pas executer l'avant-derniere
 		son_program(cmd_s[i++], env, 0, mini);//j'execute

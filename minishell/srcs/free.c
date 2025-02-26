@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:46:16 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/20 18:00:29 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/26 20:06:20 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	free_dbl_tab(char **str)
 {
 	int	j;
 
+	if (!str)
+		return ;
 	j = 0;
 	while (str[j])
 		free(str[j++]);
@@ -64,6 +66,7 @@ void	ft_list_clear(t_env *begin_list)
 		free(begin_list);
 		begin_list = temp;
 	}
+	begin_list = NULL;
 }
 
 void	free_all(t_minishell *mini, char *str)
@@ -90,5 +93,7 @@ void	free_all(t_minishell *mini, char *str)
 			free_pipes_redirs(mini->pipes_redirs, ft_count_words(mini->tokens));
 		if (mini->tokens)
 			free_dbl_tab(mini->tokens);
+		mini->tokens = NULL;
+		mini->pipes_redirs = NULL;
 	}
 }

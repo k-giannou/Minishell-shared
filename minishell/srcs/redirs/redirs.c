@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:21:49 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/02/24 19:11:40 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/26 17:45:01 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int	redir(t_minishell *mini, char **env)
 		return (-1);
 	split_command = NULL;
 	path = NULL;
-	if (is_buildin(mini->tokens[0]))//if it's buildin
+	if (is_buildin(mini->tokens[0], 0))//if it's buildin
 	{
 		if (!handle_files(mini, &r))//check for redirections
 			return (restore_dup(&r), -1);//reset the input and output if there's none

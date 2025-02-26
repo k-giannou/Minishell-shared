@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/25 20:37:47 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/26 17:44:39 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,10 +148,10 @@ void	here_doc(char *limiter);
 char	**splited_env(t_env *env);
 int		get_file(char *av, int i);
 char	*get_cmd(char **av, int i);
-void	execute(char *av, char **env);
 char	*find_path(char *cmd, char **env);
 void	read_stdin(int *fd, char *limiter);
 void	pipex(t_minishell *mini, char **env);
+void	execute(char *av, char **env, t_minishell *mini);
 
 //buildins
 void	pwd(t_env *env);
@@ -164,10 +164,10 @@ void	unset(char **vars, t_minishell *mini);
 void	export(char **vars, t_minishell *mini);
 
 //redirs
-int		is_buildin(char *tab);
 void	restore_dup(t_redirs *r);
 int		isredir(t_minishell *mini);
 char	**copy_tokens(char **tokens);
+int		is_buildin(char *tab, int to_free);
 int		redir(t_minishell *mini, char **env);
 int		valid_filename(char **tab, char **ntab);
 int		syntax_error_redir(char **tab, char **ntab);

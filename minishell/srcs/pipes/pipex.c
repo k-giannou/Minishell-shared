@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/25 18:51:27 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/26 17:48:40 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,14 @@ void	son_program(char *av, char **env, pid_t pid_son, t_minishell *mini)
 	{
 		close(fd[0]);//je ferme la lecture
 		dup2(fd[1], STDOUT_FILENO);//je redirige la sortie standard dans l'ecriture du pipe
-		if (is_buildin(get_first_arg(av)))
+		if (is_buildin(get_first_arg(av), 1))
 			exec_buildin(ft_split(av, " "), mini, 1);
 		else
-			execute(ft_strdup(av), env);//j'execute a commande
+			execute(ft_strdup(av), env, mini);//j'execute a commande
 		close(fd[1]);
+		free_all(mini, "all");
+		free_dbl_tab(env);
+		free(av);
 		exit(0);
 	}
 	close(fd[1]);//je ferme l'ecriture du pipe
@@ -64,11 +67,14 @@ void	last_cmd(char *av, char **env, pid_t pid_son, t_minishell *mini)
 	if (pid_son == 0)
 	{
 		close(fd[0]);//je ferme la lecture
-		if (is_buildin(get_first_arg(av)))
+		if (is_buildin(get_first_arg(av), 1))
 			exec_buildin(ft_split(av, " "), mini, 1);
 		else
-			execute(ft_strdup(av), env);//j'execute a commande
+			execute(ft_strdup(av), env, mini);//j'execute a commande
 		close(fd[1]);
+		free_all(mini, "all");
+		free_dbl_tab(env);
+		free(av);
 		exit(0);
 	}
 	close(fd[1]);//je ferme l'ecriture du pipe
@@ -133,4 +139,5 @@ void	pipex(t_minishell *mini, char **env)
 		son_program(cmd_s[i++], env, 0, mini);//j'execute
 	last_cmd(cmd_s[i], env, 0, mini);
 	free_dbl_tab(cmd_s);
+	free_dbl_tab(env);
 }

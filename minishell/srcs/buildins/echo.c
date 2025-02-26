@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 19:15:45 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/13 19:06:49 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/26 16:25:14 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ void	echo(char **line)
 	}
 	while (line[i])
 	{
-		ft_fprintf(1, "%s", line[i++]);
+		printf("%s", line[i++]);
 		if (line[i])
-			ft_fprintf(1, " ");
+			printf(" ");
 	}
 	if (ft_strcmp(line[1], "-n"))
 		printf("\n");

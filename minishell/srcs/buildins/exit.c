@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 21:07:06 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/26 15:33:28 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/26 16:25:47 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@
 	if (!ft_strcmp("yes", str))
 		return (free(str), free_all(mini, "all"), exit(0));
 	else if (!ft_strcmp("no", str))
-		ft_fprintf(1, "\nYeh, "UNDERLINE BOLD"you better NOT !"RESET" 😈\n");
+		printf("\nYeh, "UNDERLINE BOLD"you better NOT !"RESET" 😈\n");
 	else
-		ft_fprintf(1, "\nYou retard sh*t ! 💩\n", mini);
+		printf("\nYou retard sh*t ! 💩\n", mini);
 	free(str);
 } */
 

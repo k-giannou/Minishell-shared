@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:49:52 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/02/24 19:09:26 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/26 17:44:20 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,13 +106,15 @@ void	find_tab(int *y, char **tnulls, char **tokens)
 	}
 }
 
-int	is_buildin(char *tab)
+int	is_buildin(char *tab, int to_free)
 {
 	if (!ft_strcmp(tab, "pwd") || !ft_strcmp(tab, "echo")
 		|| !ft_strcmp(tab, "cd") || !ft_strcmp(tab, "export")
 		|| !ft_strcmp(tab, "unset") || !ft_strcmp(tab, "env")
 		|| !ft_strcmp(tab, "exit"))
 			return (1);
+	if (to_free)
+		free(tab);
 	return (0);
 }
 

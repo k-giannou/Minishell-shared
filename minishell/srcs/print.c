@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 20:17:08 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/26 17:06:19 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/26 19:11:21 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,15 @@ void	error(void)
 	exit(EXIT_FAILURE);
 }
 
-void	ft_print_dlb_tabs(char **tab)
+void	ft_print_dlb_tabs(char **tab, char *arg)
 {
 	int	i;
 
 	i = 0;
+	printf("%s : ", arg);
 	while (tab && tab[i])
 		printf("%s ", tab[i++]);
+	printf("\n");
 }
 
 void	ft_putcstr_fd(char *s, int fd, char c)

@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:21:49 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/02/26 17:45:01 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/26 19:36:04 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,24 +103,20 @@ int	handle_files(t_minishell *mini, t_redirs *r)
 int	redir(t_minishell *mini, char **env)
 {
 	char *path;
-	char	**split_command;
-	t_redirs	r;
 	
 	if (!mini)
 		return (-1);
 	if (syntax_error_redir(mini->tokens, mini->pipes_redirs) || !valid_filename(mini->tokens, mini->pipes_redirs))//verify if the synthaxe is good
 		return (-1);
-	r = mini->r;
-	if (!init_r(&r, mini))//init r
+	if (!init_r(&mini->r, mini))//init r
 		return (-1);
-	split_command = NULL;
 	path = NULL;
 	if (is_buildin(mini->tokens[0], 0))//if it's buildin
 	{
-		if (!handle_files(mini, &r))//check for redirections
-			return (restore_dup(&r), -1);//reset the input and output if there's none
-		split_command = join_command_free_tab(r.tab, mini);//join the arguments and the command together
-		exec_buildin(split_command, mini, 0);//go build this shit
+		if (!handle_files(mini, &mini->r))//check for redirections
+			return (restore_dup(&mini->r), -1);//reset the input and output if there's none
+		join_command_free_tab(mini->r.tab, mini->tokens);//join the arguments and the command together
+		exec_buildin(mini->r.tab, mini, 0);//go build this shit
 	}
 	else
  	{
@@ -129,22 +125,22 @@ int	redir(t_minishell *mini, char **env)
 			return (perror("fork"), -1);
 		if (pid == 0)
 		{
-			if (!handle_files(mini, &r))//check for redirections
-				return (restore_dup(&r), -1);//reset the input and output if there's none
-			split_command = join_command_free_tab(r.tab, mini);//join the arguments and the command together
-			path = find_path(split_command[0], env);//search for the path of the command
+			if (!handle_files(mini, &mini->r))//check for redirections
+				return (restore_dup(&mini->r), -1);//reset the input and output if there's none
+			join_command_free_tab(mini->r.tab, mini->tokens);//join the arguments and the command together
+			path = find_path(mini->r.tab[0], env);//search for the path of the command
 			if (!path)
 			{
 				perror(RED "Error -> issue finding path\n" RESET);
-				free_dbl_tab(split_command);
-				return (restore_dup(&r), -1);//reset the input and output
+				free_dbl_tab(mini->r.tab);
+				return (restore_dup(&mini->r), -1);//reset the input and output
 			}
-			if (execve(path, split_command, env) == -1)//execute this shit
+			if (execve(path, mini->r.tab, env) == -1)//execute this shit
 			{
 				free(path);
-				free_dbl_tab(split_command);
+				free_dbl_tab(mini->r.tab);
 				perror(RED "Error -> execution failure\n" RESET);
-				return (restore_dup(&r), -1);//reset the input and output
+				return (restore_dup(&mini->r), -1);//reset the input and output
 			}
 		}
 		else
@@ -152,5 +148,5 @@ int	redir(t_minishell *mini, char **env)
 	}
 	if (path)
 		free(path);
-	return (restore_dup(&r), free_dbl_tab(split_command), 0);//reset the input and output and free
+	return (restore_dup(&mini->r), free_dbl_tab(mini->r.tab), 0);//reset the input and output and free
 }

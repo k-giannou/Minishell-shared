@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:49:52 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/02/26 17:44:20 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/26 19:35:26 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	**copy_tokens(char **tokens)
 	char	**tab_copy;
 
 	i = ft_count_words(tokens);
-    tab_copy = (char **)malloc(sizeof(char *) * i + 1);
+    tab_copy = (char **)malloc(sizeof(char *) * (i + 1));
     if (!tab_copy) 
 	{
         perror("malloc failed");
@@ -36,11 +36,12 @@ char	**copy_tokens(char **tokens)
         }
 		i++;
     }
+	tab_copy[i] = NULL;
     return (tab_copy);
 }
 
 
-char **join_command_free_tab(char **tab, t_minishell *mini)
+/* char **join_command_free_tab(char **tab, t_minishell *mini)
 {
 	int y;
 	int	i;
@@ -68,31 +69,35 @@ char **join_command_free_tab(char **tab, t_minishell *mini)
 		}
 		y++;
 	}
-	free (tab);
+	free(tab);
 	tab = NULL;
 	new[i] = NULL;
 	return (new);
-}
+} */
 
-/* void	join_command_free_tab(char **tab, t_minishell *mini)
+void	join_command_free_tab(char **tab, char **tokens)
 {
 	int	i;
 	int	j;
 
 	i = 0;
 	j = 0;
-	while (mini->tokens[j] && j < ft_count_words(mini->tokens))
+	if (!tab || !tokens)
+		return ;
+	ft_print_dlb_tabs(tokens, "tokens");
+	while (tokens && tokens[j] && j < ft_count_words(tokens))
 	{
-		while (!tab[j] && j < ft_count_words(mini->tokens))
+		while (!tab[j] && j < ft_count_words(tokens))
 			j++;
 		if (i != j)
 			tab[i] = tab[j];
 		i++;
 		j++;
 	}
-	while (i < ft_count_words(mini->tokens))
+	while (i < ft_count_words(tokens))
 		tab[i++] = NULL;
-} */
+	ft_print_dlb_tabs(tab, "tab");
+}
 
 void	find_tab(int *y, char **tnulls, char **tokens)
 {
@@ -120,6 +125,8 @@ int	is_buildin(char *tab, int to_free)
 
 void	exec_buildin(char **tab, t_minishell *mini, int free)
 {
+	if (!tab || !tab[0])
+		return ;
 	if (!ft_strcmp(tab[0], "pwd"))
 		pwd(mini->env);
 	else if (!ft_strcmp(tab[0], "echo"))

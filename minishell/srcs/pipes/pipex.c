@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/26 17:51:00 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/26 19:27:31 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,17 @@ char	*get_first_arg(char *av)
 	char *first_arg;
 	int i;
 
+	if (!av)
+		return (NULL);//motherfucker
 	first_arg = malloc(sizeof(char) * (ft_strclen(av, ' ') + 1));
 	if (!first_arg)
 		return (printf("error : couldn't get first arg"), exit(1), NULL);
-	i = -1;
-	while (av[++i] && av[i] != ' ')
+	i = 0;
+	while (av[i] && av[i] != ' ')
+	{
 		first_arg[i] = av[i];
+		i++;
+	}
 	first_arg[i] = 0;
 	return (first_arg);
 }
@@ -105,30 +110,27 @@ char **get_cmd_s(t_minishell *mini, int i)
 	int j;
 	char **cmd_s;
 
+	if (!mini->tokens)
+		return (NULL);//fucker
 	cmd_s = (char **)malloc(sizeof(char *) * (pipe_count(mini->tokens) + 2));
 	if (!cmd_s)
-		return (printf("fail getting cmd's"), NULL);
+		return (printf("fail getting cmd's\n"), NULL);
 	j = 0;
 	while (j < pipe_count(mini->tokens) + 1)
 		cmd_s[j++] = NULL;
 	j = 0;
 	while (mini->tokens[i])
 	{
-		if (!ft_strncmp(mini->pipes_redirs[i], "|", 1))
+		if (!ft_strcmp(mini->pipes_redirs[i], "|"))
 			j++;
 		else
 		{
 			if (cmd_s[j])
 				cmd_s[j] = ft_strjoin_n_free(cmd_s[j], " ", 1);
-			if (cmd_s[j])
-				cmd_s[j] = ft_strjoin_n_free(cmd_s[j], mini->tokens[i], 1);
-			else
-				cmd_s[j] = ft_strdup(mini->tokens[i]);
-			
+			cmd_s[j] = ft_strjoin_n_free(cmd_s[j], mini->tokens[i], 1);
 		}
 		i++;
 	}
-	cmd_s[++j] = NULL;
 	return (cmd_s);
 }
 

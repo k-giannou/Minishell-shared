@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/26 17:44:39 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/26 19:35:49 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ char	*ft_substr_with_quotes(char *line, t_minishell *mini, int len);
 void	error(void);
 void	welcome(void);
 void	print_list(t_env *L);
-void	ft_print_dlb_tabs(char **tab);
+void	ft_print_dlb_tabs(char **tab, char *arg);
 void	print_pipes_redirs(char **split, int nb_words);
 void	ft_print_export(t_env *v, bool sign, bool inside);
 
@@ -174,7 +174,7 @@ int		syntax_error_redir(char **tab, char **ntab);
 void	find_tab(int *y, char **tab, char **tokens);
 int		last_file(int y, char **tab, char **tokens);
 void	exec_buildin(char **tab, t_minishell *mini, int free);
-char	**join_command_free_tab(char **tab, t_minishell *mini);
+void	join_command_free_tab(char **tab, char **tokens);
 
 //utils
 char	*hostname(void);

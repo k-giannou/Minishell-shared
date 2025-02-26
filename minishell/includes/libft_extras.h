@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:00:12 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/25 20:57:09 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/26 19:12:26 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void		*ft_upgrade_realloc(void *ptr, size_t size);
 void		ft_putnbr_fd(int n, int fd);
 void		ft_putstr_fd(char *s, int fd);
 void		ft_putchar_fd(char c, int fd);
-void		ft_print_dlb_tabs(char **tab);
 void		ft_putendl_fd(char *s, int fd);
 void		ft_putnbr_base(int nbr, char *base);
 void		ft_putnstr_fd(char *s, int fd, int n);

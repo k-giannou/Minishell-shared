@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/26 17:48:40 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/26 17:51:00 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,11 @@ char **get_cmd_s(t_minishell *mini, int i)
 		{
 			if (cmd_s[j])
 				cmd_s[j] = ft_strjoin_n_free(cmd_s[j], " ", 1);
-			cmd_s[j] = ft_strjoin_n_free(cmd_s[j], mini->tokens[i], 1);
+			if (cmd_s[j])
+				cmd_s[j] = ft_strjoin_n_free(cmd_s[j], mini->tokens[i], 1);
+			else
+				cmd_s[j] = ft_strdup(mini->tokens[i]);
+			
 		}
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 20:17:08 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/26 19:11:21 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/26 20:53:43 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ft_print_dlb_tabs(char **tab, char *arg)
 	i = 0;
 	printf("%s : ", arg);
 	while (tab && tab[i])
-		printf("%s ", tab[i++]);
+		printf("|%s| ", tab[i++]);
 	printf("\n");
 }
 
@@ -69,7 +69,7 @@ void	print_pipes_redirs(char **split, int nb_words)
 	while (j < nb_words)
 	{
 		if (split[j])
-			printf("%s ", split[j]);
+			printf("|%s| ", split[j]);
 		else
 			printf("(null) ");
 		j++;

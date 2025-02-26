@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/26 19:35:49 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/26 21:36:12 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,9 +148,11 @@ void	here_doc(char *limiter);
 char	**splited_env(t_env *env);
 int		get_file(char *av, int i);
 char	*get_cmd(char **av, int i);
+int		isredir_pipex(char *tokens);
 char	*find_path(char *cmd, char **env);
 void	read_stdin(int *fd, char *limiter);
 void	pipex(t_minishell *mini, char **env);
+char	**get_redir_split(t_minishell *mini, int *j);
 void	execute(char *av, char **env, t_minishell *mini);
 
 //buildins
@@ -195,5 +197,6 @@ void	ft_list_add_back(t_env **lst, t_env *new);
 char	*replace_var(t_minishell *mini, char *str);
 void	if_pipes_or_redirs(char *line, int *i, int *count);
 void	ft_substr_mini_2(char *line, t_minishell **mini, int *len);
+char	**ft_splitndup(char **split, int len_split, int start, int end);
 
 #endif

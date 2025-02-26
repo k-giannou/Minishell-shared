@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/26 20:25:40 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/26 21:36:40 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ char **get_cmd_s(t_minishell *mini, int i)
 	char **cmd_s;
 
 	if (!mini->tokens)
-		return (NULL);//fucker
+		return (NULL);
 	cmd_s = (char **)malloc(sizeof(char *) * (pipe_count(mini->tokens) + 2));
 	if (!cmd_s)
 		return (printf("fail getting cmd's\n"), NULL);
@@ -137,13 +137,27 @@ char **get_cmd_s(t_minishell *mini, int i)
 void	pipex(t_minishell *mini, char **env)
 {
 	int	i;
+	int j;
 	char	**cmd_s;
 
 	cmd_s = get_cmd_s(mini, 0);// je recupere un tableau de commandes a executer
 	ft_print_dlb_tabs(cmd_s, "cmd_s");
+	//redir(ft_split(cmd_s[i]), env);
 	i = 0;
+	j = 0;
 	while (i < ft_count_words(cmd_s) - 1)//tant que j'ai pas executer l'avant-derniere
+	{
+		/* if (isredir_pipex(cmd_s[i]))//if there's redirection
+			redir(ft_split(cmd_s[i]), get_redir_split(mini, &j), env);//i send the args
+		else//i go to the next cmd after pipe
+		{
+			while (mini->pipes_redirs[j] && !ft_strcmp(mini->pipes_redirs[j], "|"))
+				j++;
+			if (!ft_strcmp(mini->pipes_redirs[j], "|"))//if it's not the end i go on the cmd
+				j++;
+		} */
 		son_program(cmd_s[i++], env, 0, mini);//j'execute
+	}
 	last_cmd(cmd_s[i], env, 0, mini);
 	free_dbl_tab(cmd_s);
 	free_dbl_tab(env);

@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:33:34 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/26 19:48:23 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/26 20:51:44 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	exec_cmd(t_minishell *mini)
 {
-	if (isredir(mini))
-		redir(mini, splited_env(mini->env));
-	else if (pipe_count(mini->tokens))
+	if (pipe_count(mini->tokens))
 		pipex(mini, splited_env(mini->env));
+	else if (isredir(mini))
+		redir(mini, splited_env(mini->env));
 	else if (!ft_strcmp(mini->tokens[0], "pwd"))
 		pwd(mini->env);
 	else if (!ft_strcmp(mini->tokens[0], "echo"))

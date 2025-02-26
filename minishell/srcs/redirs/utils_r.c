@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:49:52 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/02/26 19:35:26 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/26 20:40:09 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,8 +156,8 @@ int	isredir(t_minishell *mini)
 	{
 		if (mini->pipes_redirs[y])
 		{
-			if (ft_strchr(mini->pipes_redirs[y], '>') == 0 || ft_strchr(mini->pipes_redirs[y], '<') == 0
-			|| ft_strsrch(mini->pipes_redirs[y], ">>") == 0 || ft_strsrch(mini->pipes_redirs[y], "<<") == 0) 
+			if (ft_strchr(mini->pipes_redirs[y], '>') || ft_strchr(mini->pipes_redirs[y], '<') 
+			|| ft_strsrch(mini->pipes_redirs[y], ">>") || ft_strsrch(mini->pipes_redirs[y], "<<")) 
 				return (1);
 		}
 		y++;

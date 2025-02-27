@@ -6,7 +6,7 @@
 /*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/27 14:21:58 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/02/27 14:32:48 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,7 @@ int	redir(t_minishell *mini, char **env, char **tokens, char **pipes_redirs);
 int		valid_filename(char **tab, char **ntab);
 int		syntax_error_redir(char **tab, char **ntab);
 void	find_tab(int *y, char **tab, char **tokens);
-int	handle_files(char **tokens, char **pipes_redirs, t_redirs *r);
+int	handle_files(char **tokens, char **pipes_redirs, t_redirs *r, int make_dup);
 void	exec_buildin(char **tab, t_minishell *mini, int free);
 void	join_command_free_tab(char **tab, char **tokens);
 

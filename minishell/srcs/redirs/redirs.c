@@ -6,7 +6,7 @@
 /*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:21:49 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/02/27 14:32:32 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:22:41 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,10 +142,13 @@ int	handle_files(char **tokens, char **pipes_redirs, t_redirs *r, int make_dup)
 			r->tab[r->y++] = ft_strdup(".heredoc.txt");
 			
 		}
-		free (r->tab[r->y]);
-		r->tab[r->y++] = NULL;
-		free (r->tab[r->y]);
-		r->tab[r->y++] = NULL;
+		else
+		{
+			free (r->tab[r->y]);
+			r->tab[r->y++] = NULL;
+			free (r->tab[r->y]);
+			r->tab[r->y++] = NULL;
+		}
 	}
 	return (1);
 }

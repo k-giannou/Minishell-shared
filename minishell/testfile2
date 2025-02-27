@@ -1,0 +1,3 @@
+tokens : |echo| |hi| |>>| |testfile| |>| |testfile2| 
+tab : |echo| |hi| 
+hi

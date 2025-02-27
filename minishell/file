@@ -1,9 +1,0 @@
-tokens : cat < file1 > file file1 
-tab : cat file1 
-tokens : cat < file > file1 file 
-tab : cat file 
-tokens : cat < file1 > file file1 
-tab : cat file1 
-tokens : cat < file > file1 file 
-tab : cat file 
-vwfwffwefwv

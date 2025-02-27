@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/26 21:36:12 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/27 14:21:58 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,11 +170,11 @@ void	restore_dup(t_redirs *r);
 int		isredir(t_minishell *mini);
 char	**copy_tokens(char **tokens);
 int		is_buildin(char *tab, int to_free);
-int		redir(t_minishell *mini, char **env);
+int	redir(t_minishell *mini, char **env, char **tokens, char **pipes_redirs);
 int		valid_filename(char **tab, char **ntab);
 int		syntax_error_redir(char **tab, char **ntab);
 void	find_tab(int *y, char **tab, char **tokens);
-int		last_file(int y, char **tab, char **tokens);
+int	handle_files(char **tokens, char **pipes_redirs, t_redirs *r);
 void	exec_buildin(char **tab, t_minishell *mini, int free);
 void	join_command_free_tab(char **tab, char **tokens);
 

@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/26 21:36:12 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:07:25 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,7 +184,6 @@ int		ft_charset(int c);
 long	len_list(t_env *list);
 char	*host_dup(char *name);
 void	init_v(t_variables v);
-int		ft_count_words(char **split);
 void	init_user(t_minishell *mini);
 int		first_letter_valid(char *str);
 int		ft_strrchr(const char *s, int c);
@@ -197,6 +196,5 @@ void	ft_list_add_back(t_env **lst, t_env *new);
 char	*replace_var(t_minishell *mini, char *str);
 void	if_pipes_or_redirs(char *line, int *i, int *count);
 void	ft_substr_mini_2(char *line, t_minishell **mini, int *len);
-char	**ft_splitndup(char **split, int len_split, int start, int end);
 
 #endif

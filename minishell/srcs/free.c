@@ -6,23 +6,11 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:46:16 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/26 20:06:20 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:06:32 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int	ft_count_words(char **split)
-{
-	int	i;
-
-	i = 0;
-	if (!split)
-		return (0);
-	while (split[i])
-		i++;
-	return (i);
-}
 
 void	free_dbl_tab(char **str)
 {

@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:00:12 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/26 19:12:26 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:07:07 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,11 @@ int			ft_toupper(int c);
 //* memory allocation
 void		ft_bzero(void *s, size_t n);
 char		*ft_strdup(const char *src);
+char		**ft_splitdup(char **split);
 char		*ft_strndup(const char *src, int n);
 void		*ft_calloc(size_t nmemb, size_t size);
 void		*ft_upgrade_realloc(void *ptr, size_t size);
+char		**ft_splitndup(char **split, int len_split, int start, int end);
 
 //* printing
 void		ft_putnbr_fd(int n, int fd);
@@ -81,6 +83,7 @@ int			ft_memcmp(const void *s1, const void *s2, size_t n);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 //	-lenght :
 size_t		ft_strlen(const char *s);
+int			ft_count_words(char **split);
 size_t		ft_strclen(const char *s, char c);
 //	-modifications :
 char		**ft_split(char *str, char *charset);

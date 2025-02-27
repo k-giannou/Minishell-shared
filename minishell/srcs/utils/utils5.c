@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 18:07:16 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/26 21:26:25 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:07:53 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,27 +38,4 @@ void	ft_substr_mini_2(char *line, t_minishell **mini, int *len)
 			&& line[*len] != '|')
 			(*len)++;
 	}
-}
-
-char	**ft_splitndup(char **split, int len_split, int start, int end)
-{
-	char	**dup;
-	int		i = 0;
-	
-	if (end > len_split)
-		end = len_split;
-	if (start > end || !split)
-		return (NULL);
-	dup = (char **)malloc(sizeof(char *) * (end - start + 1));
-	if (!dup)
-		return (NULL);
-	i = 0;
-	while (start < end)
-	{
-		dup[i++] = split[start++];
-		if (!dup[i - 1])
-			return (free_dbl_tab(dup), NULL);
-	}
-	dup[i] = NULL;
-	return (dup);
 }

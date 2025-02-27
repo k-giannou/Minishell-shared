@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/25 18:03:29 by locagnio          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/02/27 16:07:25 by locagnio         ###   ########.fr       */
-=======
-/*   Updated: 2025/02/27 14:32:48 by kgiannou         ###   ########.fr       */
->>>>>>> 7a49fd0865240a2372f23e14060ba2d39e380703
+/*   Created: 2025/02/27 16:31:08 by locagnio          #+#    #+#             */
+/*   Updated: 2025/02/27 16:43:30 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,8 +152,8 @@ int		isredir_pipex(char *tokens);
 char	*find_path(char *cmd, char **env);
 void	read_stdin(int *fd, char *limiter);
 void	pipex(t_minishell *mini, char **env);
-char	**get_redir_split(t_minishell *mini, int *j);
 void	execute(char *av, char **env, t_minishell *mini);
+char	**get_redir_split(t_minishell *mini, int *j, int len_split);
 
 //buildins
 void	pwd(t_env *env);

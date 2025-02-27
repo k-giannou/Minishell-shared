@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/27 16:07:41 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:53:40 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,16 +147,16 @@ void	pipex(t_minishell *mini, char **env)
 	j = 0;
 	while (i < ft_count_words(cmd_s) - 1)//tant que j'ai pas executer l'avant-derniere
 	{
-		/* if (isredir_pipex(cmd_s[i]))//if there's redirection
-			redir(ft_split(cmd_s[i]), get_redir_split(mini, &j), env);//i send the args
+		if (isredir_pipex(cmd_s[i]))//if there's redirection
+			redir(mini, env, ft_split(cmd_s[i], " "), get_redir_split(mini, &j, ft_count_words(mini->tokens)));//i send the args
 		else//i go to the next cmd after pipe
 		{
-			while (mini->pipes_redirs[j] && !ft_strcmp(mini->pipes_redirs[j], "|"))
+			while (j < ft_count_words(mini->tokens) && ft_strcmp(mini->pipes_redirs[j], "|"))
 				j++;
 			if (!ft_strcmp(mini->pipes_redirs[j], "|"))//if it's not the end i go on the cmd
 				j++;
-		} */
-		son_program(cmd_s[i++], env, 0, mini);//j'execute
+			son_program(cmd_s[i++], env, 0, mini);//j'execute
+		}
 	}
 	last_cmd(cmd_s[i], env, 0, mini);
 	free_dbl_tab(cmd_s);

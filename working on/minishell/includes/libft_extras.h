@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:00:12 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/12 19:46:44 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:07:07 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <unistd.h>
+# include <stdint.h>
+# include <limits.h>
 
 /* typedef struct s_list
 {
@@ -43,6 +45,7 @@ float		ft_atof(char *nptr);
 long		ft_atol(char *nptr);
 long long	ft_atold(char *nptr);
 int			ft_atoi(const char *nptr);
+int64_t		ft_atoi64(const char *nptr);
 int			ft_natoi(const char *nptr, int *i);
 int			ft_atoi_base(const char *nptr, char *base);
 char		*ft_convert_base(char *nbr, char *base_from, char *base_to);
@@ -53,15 +56,16 @@ int			ft_toupper(int c);
 //* memory allocation
 void		ft_bzero(void *s, size_t n);
 char		*ft_strdup(const char *src);
+char		**ft_splitdup(char **split);
 char		*ft_strndup(const char *src, int n);
 void		*ft_calloc(size_t nmemb, size_t size);
 void		*ft_upgrade_realloc(void *ptr, size_t size);
+char		**ft_splitndup(char **split, int len_split, int start, int end);
 
 //* printing
 void		ft_putnbr_fd(int n, int fd);
 void		ft_putstr_fd(char *s, int fd);
 void		ft_putchar_fd(char c, int fd);
-void		ft_print_dlb_tabs(char **tab);
 void		ft_putendl_fd(char *s, int fd);
 void		ft_putnbr_base(int nbr, char *base);
 void		ft_putnstr_fd(char *s, int fd, int n);
@@ -79,6 +83,7 @@ int			ft_memcmp(const void *s1, const void *s2, size_t n);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 //	-lenght :
 size_t		ft_strlen(const char *s);
+int			ft_count_words(char **split);
 size_t		ft_strclen(const char *s, char c);
 //	-modifications :
 char		**ft_split(char *str, char *charset);
@@ -100,7 +105,7 @@ void		*ft_memmove(void *dest, const void *src, size_t n);
 size_t		ft_strlcpy(char *dst, const char *src, size_t dsize);
 //		+ set a string :
 void		*ft_memset(void *s, int c, size_t n);
-char		*ft_remove_from_string(char *str, char *to_delete);
+char		*ft_remove_from_string(char *str, char *to_delete, int free_str);
 
 //* verifications
 int			ft_isalnum(int c);
@@ -108,6 +113,10 @@ int			ft_isalpha(int c);
 int			ft_isascii(int c);
 int			ft_isdigit(int c);
 int			ft_isprint(int c);
+int			ft_isupalpha(int c);
+int			ft_islowalpha(int c);
+int			ft_iswhitespace(int c);
+int			ft_isnum_equal_al(int c);
 int			ft_strnchr(const char *s, const char *to_find, int len);
 
 /* // chain lists

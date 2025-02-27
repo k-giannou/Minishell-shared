@@ -6,11 +6,11 @@
 /*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:50:09 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/02/23 15:26:50 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/02/27 14:33:57 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 int	valid_filename(char **tab, char **ntab)
 {
@@ -27,7 +27,7 @@ int	valid_filename(char **tab, char **ntab)
 				if (!tab[y + 1])//if there is not another tab, no filename
 					return (ft_fprintf(2, "bash: syntax error near unexpected token `newline'\n"), 0);		
 			}
-			if (tab[y][0] == '<')//the filename needs to exist
+			if (tab[y][0] == '<' && tab[y][1] != '<')//the filename needs to exist
 			{
 				y++;
 				if (stat(tab[y], &statbuf) != 0)//check if filename exist

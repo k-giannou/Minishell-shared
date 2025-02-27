@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 20:17:08 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/20 15:54:13 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:45:49 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 void	welcome(void)
 {
-	char	str[] = CYAN ITALIC" Welcome..."RESET CYAN"\n to...\n"BOLD GREEN" MINISHELL !\n\n"RESET;
+	char	*str;
 	int		i;
 	int		j;
 
 	i = 0;
 	j = 50000000;
+	str = CYAN ITALIC" Welcome..."RESET CYAN"\n to...\n"BOLD GREEN
+		" MINISHELL !\n\n"RESET;
 	while (str[i])
 	{
 		write(1, &str[i++], 1);
-		/* if (i == 26 || i == 36)
-			j *= 10; */
 		while (j > 0)
 			j--;
 		j = 50000000;
@@ -37,14 +37,14 @@ void	error(void)
 	exit(EXIT_FAILURE);
 }
 
-void	ft_print_dlb_tabs(char **tab)
+void	ft_print_dlb_tabs(char **tab, char *arg)
 {
 	int	i;
 
 	i = 0;
-	printf("split without quotes : ");
+	printf("%s : ", arg);
 	while (tab && tab[i])
-		printf("%s ", tab[i++]);
+		printf("|%s| ", tab[i++]);
 	printf("\n");
 }
 
@@ -69,7 +69,7 @@ void	print_pipes_redirs(char **split, int nb_words)
 	while (j < nb_words)
 	{
 		if (split[j])
-			printf("%s ", split[j]);
+			printf("|%s| ", split[j]);
 		else
 			printf("(null) ");
 		j++;

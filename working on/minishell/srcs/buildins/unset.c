@@ -6,48 +6,47 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 19:15:45 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/15 18:24:44 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:30:43 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-
-t_env    *free_at(t_env *L, int pos)
+t_env	*free_at(t_env *L, int pos)
 {
-    t_env    *prec;
-    t_env    *cur;
-    int        i;
+	t_env	*prec;
+	t_env	*cur;
+	int		i;
 
-    cur = L;
-    if (!L)
-        return (NULL);
-    else if (pos == 0)
-    {
-        L = L->next;
-        free(cur);
-        return (L);
-    }
-    i = 0;
-    while (i < pos)
-    {
-        i++;
-        prec = cur;
-        cur = cur->next;
-    }
-    prec->next = cur->next;
-    free(cur);
-    return (L);
+	cur = L;
+	if (!L)
+		return (NULL);
+	else if (pos == 0)
+	{
+		L = L->next;
+		free(cur);
+		return (L);
+	}
+	i = 0;
+	while (i < pos)
+	{
+		i++;
+		prec = cur;
+		cur = cur->next;
+	}
+	prec->next = cur->next;
+	free(cur);
+	return (L);
 }
 
 void	delete_from_env(char *var, t_env **v)
 {
-	int	i;
+	int		i;
 	t_env	*temp;
 
 	temp = *v;
 	i = 0;
-    while (temp != NULL)
+	while (temp != NULL)
 	{
 		if (ft_strncmp(var, temp->data, ft_strlen(var)) == 0)
 			return (free(temp->data), (void)free_at(*v, i));
@@ -63,14 +62,13 @@ void	unset(char **vars, t_minishell *mini)
 	i = 1;
 	if (just_export_or_unset(vars, "unset"))
 		return ;
-	else
-		while (vars[i])
-		{
-			if (!rest_letters_of_name(vars[i]))
-				break ;
-			delete_from_env(vars[i], &(mini->env));
-			delete_from_env(vars[i], &(mini->env_export));
-			i++;
-		}
-		return ;
+	while (vars[i])
+	{
+		if (!rest_letters_of_name(vars[i]))
+			break ;
+		delete_from_env(vars[i], &(mini->env));
+		delete_from_env(vars[i], &(mini->env_export));
+		i++;
+	}
+	return ;
 }

@@ -6,13 +6,13 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:01:31 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/14 17:14:20 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/24 18:39:01 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
-void sigint_handler(int sig)
+void	sigint_handler(int sig)
 {
 	g_signal = sig;
 	write(1, "\b\n", 2);

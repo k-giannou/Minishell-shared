@@ -7,15 +7,19 @@ HDRS			= includes
 SRCS			=  srcs/exec.c\
 				   srcs/free.c\
 				   srcs/print.c\
+				   srcs/print2.c\
 				   srcs/signals.c\
 				   srcs/minishell.c\
+				   srcs/ft_splitndup.c\
 				   srcs/optimized_argument.c\
 				   \
 				   srcs/utils/repl.c\
+				   srcs/utils/repl2.c\
 				   srcs/utils/utils.c\
 				   srcs/utils/utils2.c\
 				   srcs/utils/utils3.c\
 				   srcs/utils/utils4.c\
+				   srcs/utils/utils5.c\
 				   srcs/utils/ft_list_sort.c\
 				   \
 				   srcs/buildins/cd.c\
@@ -28,10 +32,11 @@ SRCS			=  srcs/exec.c\
 				   \
 				   srcs/pipes/pipex.c\
 				   srcs/pipes/pipex_utils.c\
+				   srcs/pipes/pipex_utils2.c\
 				   \
-					srcs/redirs/redirs.c\
-					srcs/redirs/syntax_r.c\
-					srcs/redirs/utils_r.c\
+				   srcs/redirs/redirs.c\
+				   srcs/redirs/syntax_r.c\
+				   srcs/redirs/utils_r.c\
 				   \
 				   srcs/gnl/get_next_line_bonus.c\
 				   srcs/gnl/get_next_line_utils_bonus.c

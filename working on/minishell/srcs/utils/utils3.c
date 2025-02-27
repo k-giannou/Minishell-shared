@@ -6,17 +6,17 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:45:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/19 20:53:10 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/26 20:07:24 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
 char	*host_dup(char *name)
 {
 	char	*dest;
-	int	i;
-	int	k;
+	int		i;
+	int		k;
 
 	i = ft_strlen(name);
 	dest = (char *)ft_calloc(sizeof(char), i + 2);
@@ -57,14 +57,17 @@ void	init_user(t_minishell *mini)
 	mini->user.hostname = hostname();
 	mini->user.name = NULL;
 	mini->user.name = getenv("USER");
-	mini->user.final = ft_strjoin_n_free(mini->user.name, mini->user.hostname, 2);
-	//printf("%s\n", mini->user.final);
+	mini->user.final = ft_strjoin_n_free(mini->user.name, mini->user.hostname,
+			2);
 }
+// printf("%s\n", mini->user.final);
 
 long	len_list(t_env *list)
 {
 	long	len;
 
+	if(!list)
+		return (0);
 	len = 0;
 	while (list)
 	{

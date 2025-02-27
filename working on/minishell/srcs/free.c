@@ -3,26 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:46:16 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/22 20:45:57 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:06:32 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int	ft_count_words(char **split)
-{
-	int i;
-	
-	i = 0;
-	if (!split)
-		return (0);
-	while (split[i])
-		i++;
-	return (i);
-}
 
 void	free_dbl_tab(char **str)
 {
@@ -66,6 +54,7 @@ void	ft_list_clear(t_env *begin_list)
 		free(begin_list);
 		begin_list = temp;
 	}
+	begin_list = NULL;
 }
 
 void	free_all(t_minishell *mini, char *str)
@@ -76,8 +65,8 @@ void	free_all(t_minishell *mini, char *str)
 			ft_list_clear(mini->env);
 		if (mini->env_export)
 			ft_list_clear(mini->env_export);
-		if (mini->current_location)
-			free(mini->current_location);
+		if (mini->cur_loc)
+			free(mini->cur_loc);
 		if (mini->user.final)
 			free(mini->user.final);
 		if (mini->pipes_redirs)
@@ -92,5 +81,7 @@ void	free_all(t_minishell *mini, char *str)
 			free_pipes_redirs(mini->pipes_redirs, ft_count_words(mini->tokens));
 		if (mini->tokens)
 			free_dbl_tab(mini->tokens);
+		mini->tokens = NULL;
+		mini->pipes_redirs = NULL;
 	}
 }

@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/kgiannou/cursus/minishell/srcs/utils",
-      "program": "/home/kgiannou/cursus/minishell/srcs/utils/build/Debug/outDebug",
+      "cwd": "/home/kgiannou/Github/Minishell-shared/minishell/srcs/buildins",
+      "program": "/home/kgiannou/Github/Minishell-shared/minishell/srcs/buildins/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

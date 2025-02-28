@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:25:54 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/26 19:49:46 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/28 17:01:51 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,10 @@ char	*replace_var(t_minishell *mini, char *str)
 	t_env		*current;
 	t_variables	v;
 
+	v = (t_variables){0};
 	if (!str)
 		return (ft_exit(mini), NULL);
 	v = mini->vars;
-	init_v(v);
 	current = mini->env;
 	if (!current)
 		return (NULL);

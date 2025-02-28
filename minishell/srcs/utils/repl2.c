@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:25:54 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/24 18:39:29 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/28 17:01:46 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,6 @@ int	ft_charset(int c)
 			return (1);
 	}
 	return (0);
-}
-
-void	init_v(t_variables v)
-{
-	v.dbl_quote = false;
-	v.quote_sum = 0;
-	v.i = 0;
-	v.k = 0;
-	v.t = 0;
 }
 
 void	handle_single(t_variables *v, char *str)

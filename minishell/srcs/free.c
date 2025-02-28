@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:46:16 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/27 16:06:32 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/28 16:14:48 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	free_dbl_tab(char **str)
 		free(str[j++]);
 	if (str)
 		free(str);
-	str = NULL;
 }
 
 void	free_pipes_redirs(char **str, int nb_words)
@@ -39,7 +38,6 @@ void	free_pipes_redirs(char **str, int nb_words)
 	}
 	if (str)
 		free(str);
-	str = NULL;
 }
 
 void	ft_list_clear(t_env *begin_list)

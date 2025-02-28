@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:45:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/28 12:23:21 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/02/28 15:02:04 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 char	*host_dup(char *name)
 {
-	char	*dest;
-	int		i;
-	int		k;
-	unsigned char unicode_flower[] = {0xF0, 0x9F, 0x8C, 0xB8};
+	char			*dest;
+	int				i;
+	int				k;
+	unsigned char	unicode_flower[] = {0xF0, 0x9F, 0x8C, 0xB8};
 
 	i = ft_strlen(name);
 	dest = (char *)ft_calloc(sizeof(char), i + 20);//i + 2

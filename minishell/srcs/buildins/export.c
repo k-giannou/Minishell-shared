@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 19:15:45 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/26 21:02:48 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/28 15:14:49 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	just_export_or_unset(char **vars, char *command)
 	i = 0;
 	while (vars[i])
 		i++;
-	if (i == 1 && ft_strcmp(vars[i], command) == 0)
+	if (i == 1 && ft_strcmp(vars[0], command) == 0)
 		return (1);
 	return (0);
 }

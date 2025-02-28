@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 17:11:55 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/26 20:12:37 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/28 16:34:14 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,27 +94,36 @@ char	*find_path(char *cmd, char **env)
 	return (0);
 }
 
-char	*check_path(char *path)
+char	*check_path(char **path, t_minishell *mini)
 {
-	if (access(path, F_OK) == 0 || access(path, X_OK) == 0)
-		return (path);
+	t_env	*tmp;
+
+	tmp = mini->env;
+	if (!ft_strncmp(*path, "./", 2) || !ft_strncmp(*path, "../", 3))
+	{
+		ft_get_env(&tmp, "PWD=");
+		*path = ft_strjoin_n_free(ft_strjoin(tmp->data + 4, "/"), *path, 1);
+	}
+	if (access(*path, F_OK) == 0 || access(*path, X_OK) == 0)
+		return (ft_strdup(*path));
 	return (NULL);
 }
 
-void	execute(char *av, char **env, t_minishell *mini)
+void	execute(char **av, char **env, t_minishell *mini)
 {
 	char	*path;
 	char	**cmd;
 
-	cmd = ft_split(av, " ");
-	free(av);
+	cmd = ft_split(av[mini->i], " ");
+	free_dbl_tab(av);
 	if (!cmd)
 		return (free_all(mini, "all"), free_dbl_tab(env),
 			perror(RED "Error -> issue spliting command\n" RESET), exit(1));
-	if (cmd[0][0] != '/')
+	if (!(cmd[0][0] == '/' || !ft_strncmp(cmd[0], "./", 2)	
+		|| !ft_strncmp(cmd[0], "../", 2)))
 		path = find_path(cmd[0], env);
 	else
-		path = check_path(cmd[0]);
+		path = check_path(&cmd[0], mini);
 	if (!path)
 		return (free_dbl_tab(cmd), free_all(mini, "all"), free_dbl_tab(env),
 			perror(RED "Error -> issue finding path\n" RESET), exit(1));

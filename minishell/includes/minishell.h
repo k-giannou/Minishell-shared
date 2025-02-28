@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:31:08 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/27 16:43:30 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/28 17:03:13 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@
 
 # define HOSTNAME "/etc/hostname"
 
-extern volatile sig_atomic_t	g_signal;
+extern sig_atomic_t	g_signal;
 
 typedef struct s_variables
 {
@@ -102,6 +102,7 @@ typedef struct s_minishell
 	bool		sgl_q;
 	bool		dbl_q;
 	int			fd;
+	int			i;
 	int			hist_lines;
 	char		*cur_loc;
 	char		**tokens;
@@ -141,6 +142,8 @@ void	ft_print_export(t_env *v, bool sign, bool inside);
 //frees
 void	ft_list_clear(t_env *begin_list);
 void	free_all(t_minishell *mini, char *str);
+void	free_pipes_redirs(char **str, int nb_words);
+
 
 //pipes
 int		pipe_count(char **line);
@@ -152,7 +155,7 @@ int		isredir_pipex(char *tokens);
 char	*find_path(char *cmd, char **env);
 void	read_stdin(int *fd, char *limiter);
 void	pipex(t_minishell *mini, char **env);
-void	execute(char *av, char **env, t_minishell *mini);
+void	execute(char **av, char **env, t_minishell *mini);
 char	**get_redir_split(t_minishell *mini, int *j, int len_split);
 
 //buildins
@@ -170,13 +173,13 @@ void	restore_dup(t_redirs *r);
 int		isredir(t_minishell *mini);
 char	**copy_tokens(char **tokens);
 int		is_buildin(char *tab, int to_free);
-int	redir(t_minishell *mini, char **env, char **tokens, char **pipes_redirs);
 int		valid_filename(char **tab, char **ntab);
 int		syntax_error_redir(char **tab, char **ntab);
 void	find_tab(int *y, char **tab, char **tokens);
-int	handle_files(char **tokens, char **pipes_redirs, t_redirs *r, int make_dup);
-void	exec_buildin(char **tab, t_minishell *mini, int free);
 void	join_command_free_tab(char **tab, char **tokens);
+void	exec_buildin(char **tab, t_minishell *mini, int free);
+int		redir(t_minishell *mini, char **env, char **tokens, char **pipes_redirs);
+int		handle_files(char **tokens, char **pipes_redirs, t_redirs *r, int make_dup);
 
 //utils
 char	*hostname(void);

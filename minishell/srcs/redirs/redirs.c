@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:21:49 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/02/27 17:11:19 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/27 17:18:59 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,10 @@ int	handle_files(char **tokens, char **pipes_redirs, t_redirs *r, int make_dup)
 int	redir(t_minishell *mini, char **env, char **tokens, char **pipes_redirs)
 {
 	char *path;
-	
+	int	i;
+	pid_t pid;
+	int	fd[2];
+
 	if (!mini || !env || !tokens || !pipes_redirs)
 		return (-1);
 	if (syntax_error_redir(tokens, pipes_redirs) || !valid_filename(tokens, pipes_redirs))//verify if the synthaxe is good
@@ -164,41 +167,48 @@ int	redir(t_minishell *mini, char **env, char **tokens, char **pipes_redirs)
 	if (!init_r(&mini->r, tokens))//init r
 		return (-1);
 	path = NULL;
-	if (is_buildin(tokens[0], 0))//if it's buildin
+	i = 0;
+	if (pipe(fd) == -1)
+		return (perror(RED "Error -> issue creating pipe\n" RESET), exit(1), 1);//je creer mon pipe
+	pid = fork();//create a process
+	if (pid == -1)
+		return (perror("fork"), -1);
+	if (pid == 0)
 	{
-		if (!handle_files(tokens, pipes_redirs, &mini->r, 0))//check for redirections
-			return (restore_dup(&mini->r), -1);//reset the input and output if there's none
+		close(fd[0]);//je ferme la lecture
+		dup2(fd[1], STDOUT_FILENO);//je redirige la sortie standard dans l'ecriture du pipe
+		if (!is_buildin(tokens[0], 0))//if it's buildin
+			i = 1;
+		if (!handle_files(tokens, pipes_redirs, &mini->r, i))//check for redirections
+			restore_dup(&mini->r);//reset the input and output if there's none
 		join_command_free_tab(mini->r.tab, tokens);//join the arguments and the command together
-		exec_buildin(mini->r.tab, mini, 0);//go build this shit
-	}
-	else
- 	{
-		pid_t pid = fork();//create a process
-		if (pid == -1)
-			return (perror("fork"), -1);
-		if (pid == 0)
-		{
-			if (!handle_files(tokens, pipes_redirs, &mini->r, 1))//check for redirections
-				return (restore_dup(&mini->r), -1);//reset the input and output if there's none
-			join_command_free_tab(mini->r.tab, tokens);//join the arguments and the command together
+		if (is_buildin(tokens[0], 0))//if it's buildin
+			exec_buildin(mini->r.tab, mini, 0);//go build this shit
+		else
+		{	
 			path = find_path(mini->r.tab[0], env);//search for the path of the command
 			if (!path)
 			{
 				perror(RED "Error -> issue finding path\n" RESET);
 				free_dbl_tab(mini->r.tab);
-				return (restore_dup(&mini->r), -1);//reset the input and output
+				restore_dup(&mini->r);//reset the input and output
 			}
 			if (execve(path, mini->r.tab, env) == -1)//execute this shit
 			{
 				free(path);
 				free_dbl_tab(mini->r.tab);
 				perror(RED "Error -> execution failure\n" RESET);
-				return (restore_dup(&mini->r), -1);//reset the input and output
+				restore_dup(&mini->r);//reset the input and output
 			}
+			close(fd[1]);
+			free_all(mini, "all");
+			free_dbl_tab(env);
+			free(pipes_redirs);
+			exit(0);
 		}
-		else
-			waitpid(pid, NULL, 0);
 	}
+	else
+		waitpid(pid, NULL, 0);
 	if (path)
 		free(path);
 	return (restore_dup(&mini->r), free_dbl_tab(mini->r.tab), 0);//reset the input and output and free

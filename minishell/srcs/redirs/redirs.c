@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:21:49 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/02/28 15:06:10 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/28 19:36:25 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	init_r(t_redirs *r, char **tokens)
 	r->saved_in = dup(STDOUT_FILENO);
 	if (r->saved_in == -1 || r->saved_out == -1)
 		return (perror("dup failed"), 0);
-	r->tab = copy_tokens(tokens);
+	r->tab = ft_splitdup(tokens);
 	r->y = 0;
 	r->fd = -1;
 	return (1);
@@ -212,11 +212,12 @@ int	redir(t_minishell *mini, char **env, char **tokens, char **pipes_redirs)
 	{
 		close(fd[1]);//je ferme l'ecriture du pipe
 		waitpid(pid, NULL, 0);//j'attends le processus enfant
-		close(fd[0]);//je ferme la lecture
 	}
 	if (path)
 		free(path);
-	free_pipes_redirs(pipes_redirs, ft_count_words(tokens));
-	free_dbl_tab(tokens);
+	if (pipes_redirs)
+		free_pipes_redirs(pipes_redirs, ft_count_words(tokens));
+	if (tokens)
+		free_dbl_tab(tokens);
 	return (restore_dup(&mini->r), free_dbl_tab(mini->r.tab), 0);//reset the input and output and free
 }

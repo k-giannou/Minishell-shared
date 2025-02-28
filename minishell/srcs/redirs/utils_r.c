@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:49:52 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/02/26 20:40:09 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/28 19:27:26 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,13 +151,15 @@ int	isredir(t_minishell *mini)
 	int	words;
 	
 	y = 0;
+	ft_print_dlb_tabs(mini->tokens, "mini->tokens");
 	words = ft_count_words(mini->tokens);
+	print_pipes_redirs(mini->pipes_redirs, words);
 	while(y < words)
 	{
 		if (mini->pipes_redirs[y])
 		{
-			if (ft_strchr(mini->pipes_redirs[y], '>') || ft_strchr(mini->pipes_redirs[y], '<') 
-			|| ft_strsrch(mini->pipes_redirs[y], ">>") || ft_strsrch(mini->pipes_redirs[y], "<<")) 
+			if (!ft_strcmp(mini->pipes_redirs[y], ">") || !ft_strcmp(mini->pipes_redirs[y], "<") 
+			|| !ft_strcmp(mini->pipes_redirs[y], ">>") || !ft_strcmp(mini->pipes_redirs[y], "<<")) 
 				return (1);
 		}
 		y++;

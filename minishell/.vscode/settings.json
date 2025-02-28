@@ -16,7 +16,9 @@
 	"signal.h": "c",
 	"wait.h": "c",
 	"cstdlib": "c",
-	"libft_extras.h": "c"
+	"libft_extras.h": "c",
+	"ft_fprintf.h": "c",
+	"get_next_line_bonus.h": "c"
 },
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "g++",

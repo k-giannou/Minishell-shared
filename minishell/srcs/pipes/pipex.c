@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/28 17:35:54 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/28 17:48:51 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,8 @@ void	son_program(char **av, char **env, pid_t pid_son, t_minishell *mini)
 		free_dbl_tab(av);
 		exit(0);
 	}
-	close(fd[1]);//je ferme l'ecriture du pipe
-	//waitpid(pid_son, NULL, 0);//j'attends le processus enfant
-	//close(fd[0]);//je ferme la lecture
+	close(fd[1]);  // On ferme l'écriture du pipe, car l'enfant lit dedans
+	//dup2(fd[0], STDIN_FILENO);  // On redirige l'entrée standard vers le pipe
 }
 
 void	last_cmd(char **av, char **env, pid_t pid_son, t_minishell *mini)
@@ -163,7 +162,6 @@ void	pipex(t_minishell *mini, char **env)
 	char	**cmd_s;
 
 	cmd_s = get_cmd_s(mini, 0);// je recupere un tableau de commandes a executer
-	ft_print_dlb_tabs(cmd_s, "cmd_s");
 	//redir(ft_split(cmd_s[i]), env);
 	mini->i = 0;
 	j = 0;

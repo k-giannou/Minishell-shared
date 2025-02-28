@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/28 17:31:56 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/28 17:35:54 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	son_program(char **av, char **env, pid_t pid_son, t_minishell *mini)
 	}
 	close(fd[1]);//je ferme l'ecriture du pipe
 	//waitpid(pid_son, NULL, 0);//j'attends le processus enfant
-	close(fd[0]);//je ferme la lecture
+	//close(fd[0]);//je ferme la lecture
 }
 
 void	last_cmd(char **av, char **env, pid_t pid_son, t_minishell *mini)
@@ -84,7 +84,7 @@ void	last_cmd(char **av, char **env, pid_t pid_son, t_minishell *mini)
 	}
 	close(fd[1]);//je ferme l'ecriture du pipe
 	//waitpid(pid_son, &g_signal, 0);//j'attends le processus enfant
-	close(fd[0]);//je ferme la lecture
+	//close(fd[0]);//je ferme la lecture
 }
 
 int	get_file(char *av, int i)

@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:21:49 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/02/28 19:36:25 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/28 21:09:57 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,7 +211,7 @@ int	redir(t_minishell *mini, char **env, char **tokens, char **pipes_redirs)
 	else
 	{
 		close(fd[1]);//je ferme l'ecriture du pipe
-		waitpid(pid, NULL, 0);//j'attends le processus enfant
+		close(fd[0]);//je ferme la lecture
 	}
 	if (path)
 		free(path);

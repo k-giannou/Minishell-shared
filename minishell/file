@@ -1,6 +1,4 @@
-tokens : |cat| |<<| |eof| |>| |file| 
-tab : |cat| |.heredoc.txt| 
-cwqwfewqwd
-qefwwqdefwvce
-wvdedewfvceddewvdce
-rv
+tokens : |echo| |nice| |
+×| |ºuq| |1| 
+tab : |echo| |nice| |1| 
+nice 1

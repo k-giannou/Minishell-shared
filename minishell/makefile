@@ -10,6 +10,7 @@ SRCS			=  srcs/exec.c\
 				   srcs/print2.c\
 				   srcs/signals.c\
 				   srcs/minishell.c\
+				   srcs/ft_splitdup.c\
 				   srcs/ft_splitndup.c\
 				   srcs/optimized_argument.c\
 				   \

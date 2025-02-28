@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/28 19:27:47 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/02/28 21:32:13 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,18 +45,19 @@ void	son_program(char **av, char **env, pid_t pid_son, t_minishell *mini)
 	{
 		close(fd[0]);//je ferme la lecture
 		dup2(fd[1], STDOUT_FILENO);//je redirige la sortie standard dans l'ecriture du pipe
+		close(fd[1]);
 		if (is_buildin(get_first_arg(av[mini->i]), 1))
 			exec_buildin(ft_split(av[mini->i], " "), mini, 1);
 		else
 			execute(av, env, mini);//j'execute a commande
-		close(fd[1]);
 		free_all(mini, "all");
 		free_dbl_tab(env);
 		free_dbl_tab(av);
 		exit(0);
 	}
-	close(fd[1]);  // On ferme l'écriture du pipe, car l'enfant lit dedans
-	//dup2(fd[0], STDIN_FILENO);  // On redirige l'entrée standard vers le pipe
+	close(fd[1]);// On ferme l'écriture du pipe, car l'enfant lit dedans
+	dup2(STDIN_FILENO, fd[0]);  // On redirige l'entrée standard vers le pipe
+	close(fd[0]);//je ferme la lecture
 }
 
 void	last_cmd(char **av, char **env, pid_t pid_son, t_minishell *mini)
@@ -82,8 +83,8 @@ void	last_cmd(char **av, char **env, pid_t pid_son, t_minishell *mini)
 		exit(0);
 	}
 	close(fd[1]);//je ferme l'ecriture du pipe
-	//waitpid(pid_son, &g_signal, 0);//j'attends le processus enfant
-	//close(fd[0]);//je ferme la lecture
+	//dup2(STDIN_FILENO, fd[0]);  // On redirige l'entrée standard vers le pipe
+	close(fd[0]);//je ferme la lecture
 }
 
 int	get_file(char *av, int i)
@@ -167,6 +168,7 @@ void	pipex(t_minishell *mini, char **env)
 	j = 0;
 	while (mini->i < ft_count_words(cmd_s) - 1)//tant que j'ai pas executer l'avant-derniere
 	{
+		printf("%d\n", isredir_pipex(cmd_s[mini->i]));
 		if (isredir_pipex(cmd_s[mini->i]))//if there's redirection
 			redir(mini, env, ft_split(cmd_s[mini->i], " "), get_redir_split(mini, &j, ft_count_words(mini->tokens)));//i send the args
 		else//i go to the next cmd after pipe
@@ -176,8 +178,8 @@ void	pipex(t_minishell *mini, char **env)
 			if (!ft_strcmp(mini->pipes_redirs[j], "|"))//if it's not the end i go on the cmd
 				j++;
 			son_program(cmd_s, env, 0, mini);//j'execute
-			mini->i++;
 		}
+		mini->i++;
 	}
 	last_cmd(cmd_s, env, 0, mini);
 	check_exit_status();

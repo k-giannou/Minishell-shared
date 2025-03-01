@@ -6,7 +6,7 @@
 /*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:50:09 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/03/01 09:49:33 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/01 15:03:40 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,13 @@ int	syntax_error_redir(char **tab, char **ntab)
 		if (ntab[y + 1])
 		{
 			x = 0;
-			if ((ft_strcmp(tab[y], ">") == 0 || ft_strcmp(tab[y], ">>") == 0 || ft_strcmp(tab[y], "<") == 0 
-				|| ft_strcmp(tab[y], "<<") == 0 || ft_strcmp(tab[y], "<>") == 0)
-				&& (ft_strcmp(tab[y + 1], ">") == 0 || ft_strcmp(tab[y + 1], ">>") == 0
-				|| ft_strcmp(tab[y + 1], "<" ) == 0 
-				|| ft_strcmp(tab[y + 1], "<<") == 0  || ft_strcmp(tab[y + 1], "<>") == 0))
-					return (ft_fprintf(2, "bash: syntax error near unexpected token `%s'\n", tab[y]), 1);
+			// if ((ft_strcmp(tab[y], ">") == 0 || ft_strcmp(tab[y], ">>") == 0 || ft_strcmp(tab[y], "<") == 0 
+			// 	|| ft_strcmp(tab[y], "<<") == 0 || ft_strcmp(tab[y], "<>") == 0)
+			// 	&& (ft_strcmp(tab[y + 1], ">") == 0 || ft_strcmp(tab[y + 1], ">>") == 0
+			// 	|| ft_strcmp(tab[y + 1], "<" ) == 0 
+			// 	|| ft_strcmp(tab[y + 1], "<<") == 0  || ft_strcmp(tab[y + 1], "<>") == 0))
+			if (ntab[y] && ntab[y + 1])
+					return (ft_fprintf(2, "bash: syntax error near unexpected token `%s'\n", tab[y + 1]), 1);
 		}
 		y++;
 	}

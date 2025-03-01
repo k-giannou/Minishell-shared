@@ -6,7 +6,7 @@
 /*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:21:49 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/03/01 14:12:02 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/01 16:01:02 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,23 +108,23 @@ int	redir(t_minishell *mini, char **env, char **tokens, char **pipes_redirs)
 	char *path;
 	
 	if (!mini || !env || !tokens || !pipes_redirs)
-		return (-1);
+		return (free_dbl_tab(env), -1);
 	if (heredoc(tokens, pipes_redirs))
 	{
 		if (!handle_heredoc(tokens, pipes_redirs)) 
-			return (free_dbl_tab(env), 0);
+			return (free_dbl_tab(env), -1);
 	}
 	//printf(" <<< valid >>>\n");
 	//return (1);
 	if (syntax_error_redir(tokens, pipes_redirs) || !valid_filename(tokens, pipes_redirs))//verify if the synthaxe is good
-		return (-1);
+		return (free_dbl_tab(env), -1);
 	if (!init_r(&mini->r, tokens))//init r
-		return (-1);
+		return (free_dbl_tab(env), -1);
 	path = NULL;
 	if (is_buildin(tokens[0], 0))//if it's buildin
 	{
 		if (!handle_files(tokens, pipes_redirs, &mini->r, 0))//check for redirections
-			return (restore_dup(&mini->r), -1);//reset the input and output if there's none
+			return (free_dbl_tab(env), restore_dup(&mini->r), -1);//reset the input and output if there's none
 		join_command_free_tab(mini->r.tab, tokens);//join the arguments and the command together
 		exec_buildin(mini->r.tab, mini, 0);//go build this shit
 	}
@@ -132,7 +132,7 @@ int	redir(t_minishell *mini, char **env, char **tokens, char **pipes_redirs)
  	{
 		pid_t pid = fork();//create a process
 		if (pid == -1)
-			return (perror("fork"), -1);
+			return (free_dbl_tab(env), perror("fork"), -1);
 		if (pid == 0)
 		{
 			if (!handle_files(tokens, pipes_redirs, &mini->r, 1))//check for redirections

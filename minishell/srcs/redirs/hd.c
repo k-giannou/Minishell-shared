@@ -6,7 +6,7 @@
 /*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 13:12:44 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/03/01 14:11:45 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/01 15:56:37 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	heredoc (char **tokens, char **pipes_redirs)
 	return (0);
 }
 
+
 void	copy_eofs(int *sum, char **eofs, char **tokens, char **pipes_redirs)
 {
 	int	y;
@@ -36,13 +37,15 @@ void	copy_eofs(int *sum, char **eofs, char **tokens, char **pipes_redirs)
 
 	y = 0;
 	i = 0;
-	while (tokens[y + 1])
+	while (tokens[y] && tokens[y + 1])
 	{
 		if (pipes_redirs[y] && !ft_strcmp(pipes_redirs[y], "<<"))
 		{
-			if (ft_strcmp(pipes_redirs[y + 1], ">") || ft_strcmp(pipes_redirs[y + 1], ">>")
-				|| ft_strcmp(pipes_redirs[y + 1], "<") || ft_strcmp(pipes_redirs[y + 1], "<<")
-				|| ft_strcmp(pipes_redirs[y + 1], "<>"))
+			
+			// if (ft_strcmp(tokens[y + 1], ">") || ft_strcmp(tokens[y + 1], ">>")
+			// 	|| ft_strcmp(tokens[y + 1], "<") || ft_strcmp(tokens[y + 1], "<<")
+			// 	|| ft_strcmp(tokens[y + 1], "<>") || ft_strcmp(tokens[y + 1], "><"))
+			if (!pipes_redirs[y + 1] && tokens[y + 1])
 				{
 					eofs[i] = ft_strdup(tokens[y + 1]);
 					if (!eofs[i])
@@ -80,17 +83,20 @@ char	**find_eofs(int *sum, char **tokens, char **pipes_redirs)
 	if (!tokens)
 		return (NULL);
 	y = 0;
-	while (tokens[y + 1])
+	while (tokens[y] && tokens[y + 1])
 	{
 		if (pipes_redirs[y] && !ft_strcmp(pipes_redirs[y], "<<"))
 		{
-			if (ft_strcmp(pipes_redirs[y + 1], ">") || ft_strcmp(pipes_redirs[y + 1], ">>")
-				|| ft_strcmp(pipes_redirs[y + 1], "<") || ft_strcmp(pipes_redirs[y + 1], "<<")
-				|| ft_strcmp(pipes_redirs[y + 1], "<>"))
+			// if (ft_strcmp(tokens[y + 1], ">") || ft_strcmp(tokens[y + 1], ">>")
+			// 	|| ft_strcmp(tokens[y + 1], "<") || ft_strcmp(tokens[y + 1], "<<")
+			// 	|| ft_strcmp(tokens[y + 1], "<>"))
+			if (!pipes_redirs[y + 1])
 					(*sum)++;
 		}
 		y++;
 	}
+	if (sum == 0)
+		return (NULL);
 	eofs = (char **)malloc(sizeof(char*) * (*sum + 1));
 	if (!eofs)
 		return (NULL);
@@ -119,6 +125,28 @@ int	hd_filename(char **tokens, char ** pipes_redirs)
 	return (0);
 }
 
+int	syntax_error_before_hd(char **tokens, char **pipes_redirs)
+{
+	int	i;
+	
+	i = 0;
+	while (tokens[i] && tokens[i + 1])
+	{
+		if (pipes_redirs[i] && !ft_strcmp(pipes_redirs[i], "<<"))
+		{
+			if (pipes_redirs[i + 1])
+				return (ft_fprintf(2, "bash: syntax error near unexpected token `%s'\n", pipes_redirs[i + 1]), 1);
+			break ;
+		}
+		else if (pipes_redirs[i] && pipes_redirs[i + 1])
+			// if (syntax_error_redir(tokens, pipes_redirs))
+				return (ft_fprintf(2, "bash: syntax error near unexpected token `%s'\n", pipes_redirs[i + 1]), 1);
+
+		i++;
+	}
+	return (0);
+}
+
 int	handle_heredoc (char **tokens, char **pipes_redirs)
 {
 	bool	error;
@@ -141,6 +169,8 @@ int	handle_heredoc (char **tokens, char **pipes_redirs)
 	
 	if (!hd_filename(tokens, pipes_redirs))
 		return (ft_fprintf(2, "bash: syntax error near unexpected token `newline'\n"), 0);
+	if (syntax_error_before_hd(tokens, pipes_redirs))
+		return (0);
 	if (syntax_error_redir(tokens, pipes_redirs))
 		error = true;
 	eofs = find_eofs(&sum, tokens, pipes_redirs);
@@ -179,6 +209,7 @@ int	handle_heredoc (char **tokens, char **pipes_redirs)
 		line = NULL;
 		line = get_next_line(STDIN_FILENO);
 	}
+	//ft_print_dlb_tabs(eofs, "eof =");
 	free_dbl_tab(eofs);
 	
 	

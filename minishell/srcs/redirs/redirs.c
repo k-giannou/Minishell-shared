@@ -6,7 +6,7 @@
 /*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:21:49 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/03/01 16:01:02 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/01 17:38:48 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,21 +136,29 @@ int	redir(t_minishell *mini, char **env, char **tokens, char **pipes_redirs)
 		if (pid == 0)
 		{
 			if (!handle_files(tokens, pipes_redirs, &mini->r, 1))//check for redirections
-				return (restore_dup(&mini->r), -1);//reset the input and output if there's none
+			{
+				restore_dup(&mini->r);
+				exit (-1);
+			}
+			//return (restore_dup(&mini->r), -1);//reset the input and output if there's none
 			join_command_free_tab(mini->r.tab, tokens);//join the arguments and the command together
 			path = find_path(mini->r.tab[0], env);//search for the path of the command
 			if (!path)
 			{
 				perror(RED "Error -> issue finding path\n" RESET);
 				free_dbl_tab(mini->r.tab);
-				return (restore_dup(&mini->r), -1);//reset the input and output
+				restore_dup(&mini->r);
+				exit (-1);
+				//return (restore_dup(&mini->r), -1);//reset the input and output
 			}
 			if (execve(path, mini->r.tab, env) == -1)//execute this shit
 			{
 				free(path);
 				free_dbl_tab(mini->r.tab);
 				perror(RED "Error -> execution failure\n" RESET);
-				return (restore_dup(&mini->r), -1);//reset the input and output
+				restore_dup(&mini->r);
+				exit (-1);
+				//return (restore_dup(&mini->r), -1);//reset the input and output
 			}
 		}
 		else

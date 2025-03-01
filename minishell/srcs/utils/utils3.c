@@ -17,7 +17,9 @@ char	*host_dup(char *name)
 	char			*dest;
 	int				i;
 	int				k;
-	unsigned char	unicode_flower[] = {0xF0, 0x9F, 0x8C, 0xB8};
+	//unsigned char	unicode_flower[] = {0xF0, 0x9F, 0x8C, 0xB8};
+	//unsigned char	unicode_poop[] = {0xF0, 0x9F, 0x92, 0xA9};
+	unsigned char	unicode_fire[] = {0xF0, 0x9F, 0x94, 0xA5};
 
 	i = ft_strlen(name);
 	dest = (char *)ft_calloc(sizeof(char), i + 20);//i + 2
@@ -27,7 +29,7 @@ char	*host_dup(char *name)
 	//k = 1;
 	k = 0;
 	for (int j = 0; j < 4; j++)
-        dest[k++] = unicode_flower[j];
+        dest[k++] = unicode_fire[j];
 	//dest[0] = '@';
 	while (name[i] != '.' && name[i] != '\0')
 		dest[k++] = name[i++];

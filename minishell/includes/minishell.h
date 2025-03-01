@@ -43,6 +43,7 @@
 # define CYAN        "\033[36m"  // Couleur cyan
 # define BRIGHT_GREEN  "\033[92m"  // Couleur verte claire
 # define BROWN	"\033[38;5;94m"
+# define ORANGE "\033[38;5;214m"
 
 # define DBL_Q '"'
 # define SGL_Q '\''

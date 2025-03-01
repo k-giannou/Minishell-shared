@@ -6,7 +6,7 @@
 /*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 13:12:44 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/03/01 15:56:37 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/01 18:06:05 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,24 @@ int	heredoc (char **tokens, char **pipes_redirs)
 	return (0);
 }
 
+void	free_strs(char **str1, char **str2, char **str3)
+{
+	if (*str1)
+	{
+		free(*str1);
+		*str1 = NULL;
+	}
+	if (*str2)
+	{
+		free(*str2);
+		*str2 = NULL;
+	}
+	if (*str3)
+	{
+		free(*str3);
+		*str3 = NULL;
+	}
+}
 
 void	copy_eofs(int *sum, char **eofs, char **tokens, char **pipes_redirs)
 {
@@ -39,37 +57,22 @@ void	copy_eofs(int *sum, char **eofs, char **tokens, char **pipes_redirs)
 	i = 0;
 	while (tokens[y] && tokens[y + 1])
 	{
-		if (pipes_redirs[y] && !ft_strcmp(pipes_redirs[y], "<<"))
-		{
-			
-			// if (ft_strcmp(tokens[y + 1], ">") || ft_strcmp(tokens[y + 1], ">>")
-			// 	|| ft_strcmp(tokens[y + 1], "<") || ft_strcmp(tokens[y + 1], "<<")
-			// 	|| ft_strcmp(tokens[y + 1], "<>") || ft_strcmp(tokens[y + 1], "><"))
-			if (!pipes_redirs[y + 1] && tokens[y + 1])
+		if (pipes_redirs[y] && !ft_strcmp(pipes_redirs[y], "<<") 
+			&& !pipes_redirs[y + 1] && tokens[y + 1])//if next is null it means there is a name eof so we take it
+			{
+				eofs[i] = ft_strdup(tokens[y + 1]);
+				if (!eofs[i])
+					return (free_dbl_tab(eofs));
+				free_strs(&pipes_redirs[y], &tokens[y], &tokens[y + 1]);//free the symbol <<, symbol << from tokens, eof worlds from tokens
+				if (i++ < *sum - 1)//need to delete  << eof if its not he last-one
+					y++;
+				else//keep the last and put symbol <
 				{
-					eofs[i] = ft_strdup(tokens[y + 1]);
-					if (!eofs[i])
-						return (free_dbl_tab(eofs));
-					if (i++ < *sum - 1)//need to delete  << eof if its not he last-one
-					{
-						free(pipes_redirs[y]);//free the symbol <<
-						pipes_redirs[y] = NULL;
-						free(tokens[y]);//symbol << from tokens
-						tokens[y] = NULL;
-						free(tokens[y + 1]);//eof worlds from tokens
-						tokens[y++ + 1] = NULL;
-					}
-					else//keep the last and put symbol <
-					{
-						free(pipes_redirs[y]);//symbol <<
-						pipes_redirs[y] = ft_strdup("<");//put <
-						free(tokens[y]);//symbol << from tokens
-						tokens[y] = ft_strdup("<");//put <
-						free(tokens[y + 1]);//eof word from tokens
-						tokens[y++ + 1] = ft_strdup(".heredoc.txt");//put file name
-					}	
-				}
-		}
+					pipes_redirs[y] = ft_strdup("<");//put <
+					tokens[y] = ft_strdup("<");//put <
+					tokens[y++ + 1] = ft_strdup(".heredoc.txt");//put file name
+				}	
+			}
 		y++;
 	}
 	eofs[i] = NULL;
@@ -147,35 +150,14 @@ int	syntax_error_before_hd(char **tokens, char **pipes_redirs)
 	return (0);
 }
 
-int	handle_heredoc (char **tokens, char **pipes_redirs)
+int	create_heredoc(char **eofs)
 {
-	bool	error;
-	int	y;
-	char	**eofs;
 	int	fd;
 	char	*line;
-	int	sum;
+	int	y;
 	int	first;
-	int	size_tokens;
-	int	i;
-
 	
-	if (!tokens)
-		return (0);
-	size_tokens = ft_count_words(tokens);
-	sum = 0;
 	first = 0;
-	error = false;
-	
-	if (!hd_filename(tokens, pipes_redirs))
-		return (ft_fprintf(2, "bash: syntax error near unexpected token `newline'\n"), 0);
-	if (syntax_error_before_hd(tokens, pipes_redirs))
-		return (0);
-	if (syntax_error_redir(tokens, pipes_redirs))
-		error = true;
-	eofs = find_eofs(&sum, tokens, pipes_redirs);
-	if (!eofs)
-		return (0);
 	fd = open(".heredoc.txt", O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	if (fd < 0)
 	{
@@ -209,23 +191,26 @@ int	handle_heredoc (char **tokens, char **pipes_redirs)
 		line = NULL;
 		line = get_next_line(STDIN_FILENO);
 	}
-	//ft_print_dlb_tabs(eofs, "eof =");
-	free_dbl_tab(eofs);
-	
-	
+	return (1);
+}
+
+void	correct_null_tabs(int size_tokens, char **tokens, char **pipes_redirs)
+{
+	int	y;
+	int	i;
+	char	*tmp;
+
 	y = 0;
 	i = 0;
-	while (i < size_tokens)//correct null tabs between tokens because we free eof words
+	while (i < size_tokens)//correct null tabs between tokens because we free eof words, same at redirs
 	{
 		if (tokens[i])
 		{
 			if (i != y)
 			{
-				char	*tmp;
 				tmp = tokens[i];
 				tokens[i] = tokens[y];
 				tokens[y] = tmp;
-
 				tmp = pipes_redirs[i];
 				pipes_redirs[i] = pipes_redirs[y];
 				pipes_redirs[y] = tmp;
@@ -234,14 +219,39 @@ int	handle_heredoc (char **tokens, char **pipes_redirs)
 		}
 		i++;		
 	}
-	//ft_print_dlb_tabs(tokens, "tokens after");
-	//print_pipes_redirs(pipes_redirs, size_tokens);
-	
-	
-	if ( !error && !valid_filename(tokens, pipes_redirs))
+}
+
+int	handle_heredoc (char **tokens, char **pipes_redirs)
+{
+	bool	error;
+	char	**eofs;
+	int	sum;
+	int	size_tokens;
+
+	if (!tokens)
+		return (0);
+	size_tokens = ft_count_words(tokens);
+	sum = 0;
+	error = false;
+	if (!hd_filename(tokens, pipes_redirs))
+		return (ft_fprintf(2, "bash: syntax error near unexpected token `newline'\n"), 0);
+	if (syntax_error_before_hd(tokens, pipes_redirs))
+		return (0);
+	if (syntax_error_redir(tokens, pipes_redirs))
+		error = true;
+	eofs = find_eofs(&sum, tokens, pipes_redirs);
+	if (!eofs)
+		return (0);
+	if (!create_heredoc(eofs))
+		return (free_dbl_tab(eofs), 0);
+	correct_null_tabs(size_tokens, tokens, pipes_redirs);
+	ft_print_dlb_tabs(tokens, "tokens after");
+	print_pipes_redirs(pipes_redirs, size_tokens);
+	if (!error && !valid_filename(tokens, pipes_redirs))
 		error = true;
 	if (error)
-		return (0);
+		return (free_dbl_tab(eofs), 0);
 	else
-		return (1);
+		return (free_dbl_tab(eofs), 1);
 }
+

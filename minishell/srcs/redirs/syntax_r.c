@@ -6,7 +6,7 @@
 /*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:50:09 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/03/01 15:03:40 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/01 16:34:02 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,20 +45,12 @@ int	valid_filename(char **tab, char **ntab)
 int	syntax_error_redir(char **tab, char **ntab)
 {
 	int	y;
-	int	x;
-	int	sum;
 	
 	y = 0;
 	while(tab[y + 1])
 	{
 		if (ntab[y + 1])
 		{
-			x = 0;
-			// if ((ft_strcmp(tab[y], ">") == 0 || ft_strcmp(tab[y], ">>") == 0 || ft_strcmp(tab[y], "<") == 0 
-			// 	|| ft_strcmp(tab[y], "<<") == 0 || ft_strcmp(tab[y], "<>") == 0)
-			// 	&& (ft_strcmp(tab[y + 1], ">") == 0 || ft_strcmp(tab[y + 1], ">>") == 0
-			// 	|| ft_strcmp(tab[y + 1], "<" ) == 0 
-			// 	|| ft_strcmp(tab[y + 1], "<<") == 0  || ft_strcmp(tab[y + 1], "<>") == 0))
 			if (ntab[y] && ntab[y + 1])
 					return (ft_fprintf(2, "bash: syntax error near unexpected token `%s'\n", tab[y + 1]), 1);
 		}
@@ -69,17 +61,8 @@ int	syntax_error_redir(char **tab, char **ntab)
 	{
 		if (ntab[y])
 		{
-			x = 0;
-			sum = 0;
-			if (ft_strcmp(tab[y], "><") == 0 || ft_strcmp(tab[y], "<>") == 0)
-				return (ft_fprintf(2, "bash: syntax error near unexpected token `%c'\n", tab[y][x]), 1);
-			while (tab[y][x] == '>' || tab[y][x] == '<')
-			{
-				sum++;
-				if (sum > 2)
-					return (ft_fprintf(2, "bash: syntax error near unexpected token `%c'\n", tab[y][x]), 1);
-				x++;
-			}
+			if (!ft_strcmp(tab[y], "><") || !ft_strcmp(tab[y], "<>") || ft_strsrch(tab[y], "<<<") || ft_strsrch(tab[y], ">>>"))
+				return (ft_fprintf(2, "bash: syntax error near unexpected token `%c'\n", tab[y][1]), 1);
 		}
 		y++;
 	}

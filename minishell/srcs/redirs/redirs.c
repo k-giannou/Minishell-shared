@@ -6,7 +6,7 @@
 /*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:21:49 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/03/01 10:58:13 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/01 14:12:02 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int	redir(t_minishell *mini, char **env, char **tokens, char **pipes_redirs)
 	if (heredoc(tokens, pipes_redirs))
 	{
 		if (!handle_heredoc(tokens, pipes_redirs)) 
-			return (0);
+			return (free_dbl_tab(env), 0);
 	}
 	//printf(" <<< valid >>>\n");
 	//return (1);

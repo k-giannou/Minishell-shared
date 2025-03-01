@@ -6,7 +6,7 @@
 /*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 13:12:44 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/03/01 10:34:55 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/01 14:11:45 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	copy_eofs(int *sum, char **eofs, char **tokens, char **pipes_redirs)
 
 	y = 0;
 	i = 0;
-	while (tokens[y])
+	while (tokens[y + 1])
 	{
 		if (pipes_redirs[y] && !ft_strcmp(pipes_redirs[y], "<<"))
 		{
@@ -80,7 +80,7 @@ char	**find_eofs(int *sum, char **tokens, char **pipes_redirs)
 	if (!tokens)
 		return (NULL);
 	y = 0;
-	while (tokens[y])
+	while (tokens[y + 1])
 	{
 		if (pipes_redirs[y] && !ft_strcmp(pipes_redirs[y], "<<"))
 		{

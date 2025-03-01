@@ -6,7 +6,7 @@
 /*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:50:09 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/02/27 14:33:57 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/01 09:49:33 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	valid_filename(char **tab, char **ntab)
 				if (!tab[y + 1])//if there is not another tab, no filename
 					return (ft_fprintf(2, "bash: syntax error near unexpected token `newline'\n"), 0);		
 			}
-			if (tab[y][0] == '<' && tab[y][1] != '<')//the filename needs to exist
+			if (tab[y][0] == '<')//filename needs to exist
 			{
 				y++;
 				if (stat(tab[y], &statbuf) != 0)//check if filename exist
@@ -58,8 +58,8 @@ int	syntax_error_redir(char **tab, char **ntab)
 				|| ft_strcmp(tab[y], "<<") == 0 || ft_strcmp(tab[y], "<>") == 0)
 				&& (ft_strcmp(tab[y + 1], ">") == 0 || ft_strcmp(tab[y + 1], ">>") == 0
 				|| ft_strcmp(tab[y + 1], "<" ) == 0 
-				|| ft_strcmp(tab[y + 1], "<") == 0  || ft_strcmp(tab[y + 1], "<>") == 0))
-					return (ft_fprintf(2, "bash: syntax error near unexpected token `%c'\n", tab[y][0]), 1);
+				|| ft_strcmp(tab[y + 1], "<<") == 0  || ft_strcmp(tab[y + 1], "<>") == 0))
+					return (ft_fprintf(2, "bash: syntax error near unexpected token `%s'\n", tab[y]), 1);
 		}
 		y++;
 	}

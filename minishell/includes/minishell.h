@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:31:08 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/28 19:26:25 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/01 11:07:03 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,13 +173,17 @@ void	restore_dup(t_redirs *r);
 int		isredir(t_minishell *mini);
 char	**copy_tokens(char **tokens);
 int		is_buildin(char *tab, int to_free);
+int	redir(t_minishell *mini, char **env, char **tokens, char **pipes_redirs);
 int		valid_filename(char **tab, char **ntab);
 int		syntax_error_redir(char **tab, char **ntab);
 void	find_tab(int *y, char **tab, char **tokens);
-void	join_command_free_tab(char **tab, char **tokens);
+int	handle_files(char **tokens, char **pipes_redirs, t_redirs *r, int make_dup);
 void	exec_buildin(char **tab, t_minishell *mini, int free);
-int		redir(t_minishell *mini, char **env, char **tokens, char **pipes_redirs);
-int		handle_files(char **tokens, char **pipes_redirs, t_redirs *r, int make_dup);
+void	join_command_free_tab(char **tab, char **tokens);
+int	handle_heredoc (char **tokens, char **pipes_redirs);
+char	**find_eofs(int *sum, char **tokens, char **pipes_redirs);
+void	copy_eofs(int *sum, char **eofs, char **tokens, char **pipes_redirs);
+int	heredoc (char **tokens, char **pipes_redirs);
 
 //utils
 char	*hostname(void);

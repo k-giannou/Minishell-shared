@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_r.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:49:52 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/02/28 19:27:26 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/01 10:49:17 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,63 +40,49 @@ char	**copy_tokens(char **tokens)
     return (tab_copy);
 }
 
-
-/* char **join_command_free_tab(char **tab, t_minishell *mini)
-{
-	int y;
-	int	i;
-	char	**new;
-
-	y = 0;
-	i = 0;
-	while (mini->tokens[y])
-	{
-		if (tab[y] != NULL)
-			i++;
-		y++;
-	}
-	new = (char **)malloc((i + 1) * sizeof(char *));
-	if (!new)
-		return (NULL);
-	y = 0;
-	i = 0;
-	while (mini->tokens[y])
-	{
-		if (tab[y] != NULL)
-		{
-			new[i++] = ft_strdup(tab[y]);
-			free(tab[y]);
-		}
-		y++;
-	}
-	free(tab);
-	tab = NULL;
-	new[i] = NULL;
-	return (new);
-} */
-
 void	join_command_free_tab(char **tab, char **tokens)
 {
-	int	i;
-	int	j;
+	// int	i;
+	// int	j;
 
+	// i = 0;
+	// j = 0;
+	// if (!tab || !tokens)
+	// 	return ;
+	// //ft_print_dlb_tabs(tokens, "tokens");
+	// while (tokens && tokens[j] && j < ft_count_words(tokens))
+	// {
+	// 	while (!tab[j] && j < ft_count_words(tokens))
+	// 		j++;
+	// 	if (i != j)
+	// 		tab[i] = tab[j];
+	// 	i++;
+	// 	j++;
+	// }
+	// while (i < ft_count_words(tokens))
+	// 	tab[i++] = NULL;
+	// //ft_print_dlb_tabs(tab, "tab");
+	
+	int	y;
+	int	i;
+	
+	y = 0;
 	i = 0;
-	j = 0;
-	if (!tab || !tokens)
-		return ;
-	ft_print_dlb_tabs(tokens, "tokens");
-	while (tokens && tokens[j] && j < ft_count_words(tokens))
+	while (i < ft_count_words(tokens))//correct null tabs between tokens because we free eof words
 	{
-		while (!tab[j] && j < ft_count_words(tokens))
-			j++;
-		if (i != j)
-			tab[i] = tab[j];
-		i++;
-		j++;
+		if (tab[i])
+		{
+			if (i != y)
+			{
+				char	*tmp;
+				tmp = tab[i];
+				tab[i] = tab[y];
+				tab[y] = tmp;
+			}
+			y++;
+		}
+		i++;		
 	}
-	while (i < ft_count_words(tokens))
-		tab[i++] = NULL;
-	ft_print_dlb_tabs(tab, "tab");
 }
 
 void	find_tab(int *y, char **tnulls, char **tokens)
@@ -151,15 +137,13 @@ int	isredir(t_minishell *mini)
 	int	words;
 	
 	y = 0;
-	ft_print_dlb_tabs(mini->tokens, "mini->tokens");
 	words = ft_count_words(mini->tokens);
-	print_pipes_redirs(mini->pipes_redirs, words);
 	while(y < words)
 	{
 		if (mini->pipes_redirs[y])
 		{
-			if (!ft_strcmp(mini->pipes_redirs[y], ">") || !ft_strcmp(mini->pipes_redirs[y], "<") 
-			|| !ft_strcmp(mini->pipes_redirs[y], ">>") || !ft_strcmp(mini->pipes_redirs[y], "<<")) 
+			if (ft_strchr(mini->pipes_redirs[y], '>') || ft_strchr(mini->pipes_redirs[y], '<') 
+			|| ft_strsrch(mini->pipes_redirs[y], ">>") || ft_strsrch(mini->pipes_redirs[y], "<<")) 
 				return (1);
 		}
 		y++;

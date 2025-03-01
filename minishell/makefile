@@ -38,6 +38,8 @@ SRCS			=  srcs/exec.c\
 				   srcs/redirs/redirs.c\
 				   srcs/redirs/syntax_r.c\
 				   srcs/redirs/utils_r.c\
+				   srcs/redirs/hd.c\
+				   srcs/redirs/utils_hd.c\
 				   \
 				   srcs/gnl/get_next_line_bonus.c\
 				   srcs/gnl/get_next_line_utils_bonus.c

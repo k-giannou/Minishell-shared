@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:45:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/24 18:39:45 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/01 17:04:46 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,21 @@ char	*ft_strsrch(const char *s, char *c)
 	return (0);
 }
 
-int	pipe_count(char **line)
+int	pipe_count(t_minishell *mini)
 {
 	int	i;
 	int count;
+	int len_split;
 
 	i = 0;
 	count = 0;
-	while (line[i])
-		if (!ft_strcmp(line[i++], "|"))
+	len_split = ft_count_words(mini->tokens);
+	while (i < len_split)
+	{
+		if (mini->pipes_redirs[i] && !ft_strcmp(mini->pipes_redirs[i], "|"))
 			count++;
+		i++;
+	}
 	return (count);
 }
 

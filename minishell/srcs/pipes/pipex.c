@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/28 21:32:13 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/01 18:42:33 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,77 +32,47 @@ char	*get_first_arg(char *av)
 	return (first_arg);
 }
 
-void	son_program(char **av, char **env, pid_t pid_son, t_minishell *mini)
+void	exec_child(char **av, char **env, t_minishell *mini, int *fd)
 {
-	int	fd[2];
-
-	if (pipe(fd) == -1)
-		return (perror(RED "Error -> issue creating pipe\n" RESET), exit(1));//je creer mon pipe
-	pid_son = fork();
-	if (pid_son == -1)
-		return (perror(RED "Error -> pid failure\n" RESET), exit(1));//je creer mon processus
-	if (pid_son == 0)
-	{
-		close(fd[0]);//je ferme la lecture
-		dup2(fd[1], STDOUT_FILENO);//je redirige la sortie standard dans l'ecriture du pipe
-		close(fd[1]);
-		if (is_buildin(get_first_arg(av[mini->i]), 1))
-			exec_buildin(ft_split(av[mini->i], " "), mini, 1);
-		else
-			execute(av, env, mini);//j'execute a commande
-		free_all(mini, "all");
-		free_dbl_tab(env);
-		free_dbl_tab(av);
-		exit(0);
-	}
-	close(fd[1]);// On ferme l'écriture du pipe, car l'enfant lit dedans
-	dup2(STDIN_FILENO, fd[0]);  // On redirige l'entrée standard vers le pipe
-	close(fd[0]);//je ferme la lecture
-}
-
-void	last_cmd(char **av, char **env, pid_t pid_son, t_minishell *mini)
-{
-	int	fd[2];
-
-	if (pipe(fd) == -1)
-		return (perror(RED "Error -> issue creating pipe\n" RESET), exit(1));//je creer mon pipe
-	pid_son = fork();
-	if (pid_son == -1)
-		return (perror(RED "Error -> pid failure\n" RESET), exit(1));//je creer mon processus
-	if (pid_son == 0)
-	{
-		close(fd[0]);//je ferme la lecture
-		if (is_buildin(get_first_arg(av[mini->i]), 1))
-			exec_buildin(ft_split(av[mini->i], " "), mini, 1);
-		else
-			execute(av, env, mini);//j'execute a commande
-		close(fd[1]);
-		free_all(mini, "all");
-		free_dbl_tab(env);
-		free_dbl_tab(av);
-		exit(0);
-	}
-	close(fd[1]);//je ferme l'ecriture du pipe
-	//dup2(STDIN_FILENO, fd[0]);  // On redirige l'entrée standard vers le pipe
-	close(fd[0]);//je ferme la lecture
-}
-
-int	get_file(char *av, int i)
-{
-	int	file;
-
-	if (i == 0)
-		file = open(av, O_WRONLY | O_CREAT | O_APPEND, 0777);
-	else if (i == 1)
-		file = open(av, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	close(fd[0]);//i don't need lecture pipe
+	if (mini->p.i < mini->p.nb_pipes)//if it's not the last pipe i redirect the output of the command into the pipe
+		dup2(fd[1], STDOUT_FILENO);
+	close(fd[1]);//i close it
+	if (is_buildin(get_first_arg(av[mini->p.i]), 1))//if it's buildin i execute it
+		exec_buildin(ft_split(av[mini->p.i], " "), mini, 1);
 	else
-		file = open(av, O_RDONLY);
-	if (file == -1)
+		execute(av, env, mini);//else i use execve
+	free_all(mini, "all");
+	free_dbl_tab(env);
+	free_dbl_tab(av);
+	exit(0);//i free everything and exit
+}
+
+int	son_program(char **av, char **env, t_minishell *mini)
+{
+	int	signal;
+	int fd[2];
+
+	signal = 0;
+	if (pipe(fd) == -1)//I create a pipe
+		return (perror(RED "Error -> issue creating pipe\n" RESET), 0);
+	mini->p.pids[mini->p.i] = fork();//i create a fork
+	if (mini->p.pids[mini->p.i] == -1)
+		return (perror(RED "Error -> pid failure\n" RESET), 0);
+	if (mini->p.pids[mini->p.i] == 0)//i go into the child process
+		exec_child(av, env, mini, fd);
+	close(fd[1]);//i don't need to write
+	if (mini->p.i >= mini->p.nb_pipes)//if it's the last pipe
 	{
-		perror(RED "Error -> cannot open file\n" RESET);
-		exit(EXIT_FAILURE);
+		dup2(STDOUT_FILENO, fd[0]);
+		waitpid(mini->p.pids[mini->p.i], &signal, 0);//i take the signal
+		return(signal);//i return it
 	}
-	return (file);
+	dup2(STDIN_FILENO, fd[0]);//else i redirect what's in the pipe in the standard input
+	mini->p.i++;//i go to the next pipe and command
+	signal += son_program(av, env, mini);//here we go again
+	waitpid(mini->p.pids[mini->p.i - 1], NULL, 0);//i wait for every pipe when everything has been executed in the recursive
+	return (signal);//i return the signal
 }
 
 char **get_cmd_s(t_minishell *mini, int i)
@@ -112,7 +82,7 @@ char **get_cmd_s(t_minishell *mini, int i)
 
 	if (!mini->tokens)
 		return (NULL);
-	cmd_s = (char **)ft_calloc(sizeof(char *), (pipe_count(mini->tokens) + 2));
+	cmd_s = (char **)ft_calloc(sizeof(char *), (mini->p.nb_pipes + 2));
 	if (!cmd_s)
 		return (printf("fail getting cmd's\n"), NULL);
 	j = 0;
@@ -131,58 +101,23 @@ char **get_cmd_s(t_minishell *mini, int i)
 	return (cmd_s);
 }
 
-void	check_exit_status(void)
-{
-	int		status;
-	int		signal;
-	pid_t	result;
-	pid_t	tmp;
-
-	tmp = 0;
-	result = 0;
-	status = 0;
-	while (1)
-	{
-		tmp = waitpid(-1, &signal, 0);
-		status = WIFEXITED(g_signal);
-		if (!status)
-			ft_fprintf(2, RED"The child terminated abnormally.\n"RESET);
-		if (tmp <= 0)
-			break ;
-		if (!result || result < tmp)
-		{
-			result = tmp;
-			g_signal = signal;
-		}
-    }
-}
-
 void	pipex(t_minishell *mini, char **env)
 {
 	int j;
-	char	**cmd_s;
 
-	cmd_s = get_cmd_s(mini, 0);// je recupere un tableau de commandes a executer
+	mini->cmd_s = get_cmd_s(mini, 0);//i take the commands and their arguments together in a splited tab
+	mini->p.i = 0;
 	//redir(ft_split(cmd_s[i]), env);
-	mini->i = 0;
 	j = 0;
-	while (mini->i < ft_count_words(cmd_s) - 1)//tant que j'ai pas executer l'avant-derniere
+	mini->p.pids = (pid_t *)ft_calloc(sizeof(pid_t), (mini->p.nb_pipes + 1));//i malloc and initialise a string of process
+	if (!mini->p.pids)
+		return((void)ft_fprintf(2, RED"Error : fail initiate pipes or pid's\n"RESET));
+	else
 	{
-		printf("%d\n", isredir_pipex(cmd_s[mini->i]));
-		if (isredir_pipex(cmd_s[mini->i]))//if there's redirection
-			redir(mini, env, ft_split(cmd_s[mini->i], " "), get_redir_split(mini, &j, ft_count_words(mini->tokens)));//i send the args
-		else//i go to the next cmd after pipe
-		{
-			while (j < ft_count_words(mini->tokens) && ft_strcmp(mini->pipes_redirs[j], "|"))
-				j++;
-			if (!ft_strcmp(mini->pipes_redirs[j], "|"))//if it's not the end i go on the cmd
-				j++;
-			son_program(cmd_s, env, 0, mini);//j'execute
-		}
-		mini->i++;
+		j = 0;
+		g_signal = son_program(mini->cmd_s, env, mini);//i execute the pipes and get the last signal
+		free(mini->p.pids);
 	}
-	last_cmd(cmd_s, env, 0, mini);
-	check_exit_status();
-	free_dbl_tab(cmd_s);
-	free_dbl_tab(env);
+	free_dbl_tab(mini->cmd_s);
+	free_dbl_tab(env);//i free everything
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:31:08 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/01 11:58:51 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/01 18:30:49 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,13 +98,20 @@ typedef struct s_env
 	struct s_env	*next;
 } t_env,	t_cell;
 
+typedef struct s_pipes
+{
+	int		nb_pipes;
+	pid_t	*pids;
+	int		i;
+}	t_pipes;
+
 typedef struct s_minishell
 {
 	bool		sgl_q;
 	bool		dbl_q;
 	int			fd;
-	int			i;
 	int			hist_lines;
+	char		**cmd_s;
 	char		*cur_loc;
 	char		**tokens;
 	char		**pipes_redirs;
@@ -113,6 +120,7 @@ typedef struct s_minishell
 	t_user		user;
 	t_variables	vars;
 	t_redirs	r;
+	t_pipes		p;
 }	t_minishell;
 
 void	sig_init(void);
@@ -147,12 +155,11 @@ void	free_pipes_redirs(char **str, int nb_words);
 
 
 //pipes
-int		pipe_count(char **line);
-void	here_doc(char *limiter);
 char	**splited_env(t_env *env);
 int		get_file(char *av, int i);
 char	*get_cmd(char **av, int i);
 int		isredir_pipex(char *tokens);
+int		pipe_count(t_minishell *mini);
 char	*find_path(char *cmd, char **env);
 void	read_stdin(int *fd, char *limiter);
 void	pipex(t_minishell *mini, char **env);

@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 17:11:55 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/28 19:27:44 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/01 18:06:32 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void	execute(char **av, char **env, t_minishell *mini)
 	char	*path;
 	char	**cmd;
 
-	cmd = ft_split(av[mini->i], " ");
+	cmd = ft_split(av[mini->p.i], " ");
 	free_dbl_tab(av);
 	if (!cmd)
 		return (free_all(mini, "all"), free_dbl_tab(env),

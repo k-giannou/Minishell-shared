@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:33:34 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/01 11:08:32 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/01 17:01:54 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	**ft_splitdup_pipes_redirs(char **split, int len_split)
 
 void	exec_cmd(t_minishell *mini)
 {
-	if (pipe_count(mini->tokens))
+	if (mini->p.nb_pipes > 0)
 		pipex(mini, splited_env(mini->env));
 	else if (isredir(mini))
 		redir(mini, splited_env(mini->env), mini->tokens, mini->pipes_redirs);

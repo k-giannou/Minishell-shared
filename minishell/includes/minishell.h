@@ -6,7 +6,7 @@
 /*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:31:08 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/01 11:07:03 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/01 11:58:51 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@
 # define MAGENTA     "\033[35m"  // Couleur magenta
 # define CYAN        "\033[36m"  // Couleur cyan
 # define BRIGHT_GREEN  "\033[92m"  // Couleur verte claire
+# define BROWN	"\033[38;5;94m"
 
 # define DBL_Q '"'
 # define SGL_Q '\''

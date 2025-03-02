@@ -75,7 +75,7 @@ char	*toprint(t_minishell *mini, char *cur_loc)
 {
 	char	*str;
 
-	str = ft_strdup(BOLD ORANGE);
+	str = ft_strdup(BOLD MAGENTA);
 	if (mini->user.final)
 		str = ft_strjoin_n_free(str, mini->user.final, 1);
 	str = ft_strjoin_n_free(str, cur_loc, 1);

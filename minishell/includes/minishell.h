@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:31:08 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/01 18:30:49 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/02 20:12:57 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,9 +179,9 @@ void	export(char **vars, t_minishell *mini);
 
 //redirs
 void	restore_dup(t_redirs *r);
-int		isredir(t_minishell *mini);
+int	isredir(t_minishell *mini);
 char	**copy_tokens(char **tokens);
-int		is_buildin(char *tab, int to_free);
+int	is_buildin(char *tab, int to_free);
 int	redir(t_minishell *mini, char **env, char **tokens, char **pipes_redirs);
 int		valid_filename(char **tab, char **ntab);
 int		syntax_error_redir(char **tab, char **ntab);
@@ -193,6 +193,10 @@ int	handle_heredoc (char **tokens, char **pipes_redirs);
 char	**find_eofs(int *sum, char **tokens, char **pipes_redirs);
 void	copy_eofs(int *sum, char **eofs, char **tokens, char **pipes_redirs);
 int	heredoc (char **tokens, char **pipes_redirs);
+void	free_strs(char **str1, char **str2, char **str3);
+int	hd_filename(char **tokens, char ** pipes_redirs);
+void	correct_null_tabs(int size_tokens, char **tokens, char **pipes_redirs);
+int	syntax_error_before_hd(char **tokens, char **pipes_redirs);
 
 //utils
 char	*hostname(void);

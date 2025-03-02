@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:45:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/01 17:46:44 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/02 20:14:30 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ char	*host_dup(char *name)
 	int				k;
 	//unsigned char	unicode_flower[] = {0xF0, 0x9F, 0x8C, 0xB8};
 	//unsigned char	unicode_poop[] = {0xF0, 0x9F, 0x92, 0xA9};
-	unsigned char	unicode_fire[] = {0xF0, 0x9F, 0x94, 0xA5};
+	unsigned char	unicode_heart[] = {0xF0, 0x9F, 0x92, 0x9C};
+	//unsigned char	unicode_diamond[] = {0xF0, 0x9F, 0x92, 0x8E};
+	//unsigned char	unicode_fire[] = {0xF0, 0x9F, 0x94, 0xA5};
 
 	i = ft_strlen(name);
 	dest = (char *)ft_calloc(sizeof(char), i + 20);//i + 2
@@ -29,7 +31,7 @@ char	*host_dup(char *name)
 	//k = 1;
 	k = 0;
 	for (int j = 0; j < 4; j++)
-        dest[k++] = unicode_fire[j];
+        dest[k++] = unicode_heart[j];
 	//dest[0] = '@';
 	while (name[i] != '.' && name[i] != '\0')
 		dest[k++] = name[i++];

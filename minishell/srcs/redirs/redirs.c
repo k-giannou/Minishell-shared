@@ -6,7 +6,7 @@
 /*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:21:49 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/03/01 17:38:48 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/02 20:02:35 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,61 @@ int	handle_files(char **tokens, char **pipes_redirs, t_redirs *r, int make_dup)
 	return (1);
 }
 
+void	restore_and_free(char **tab1, char *path, t_redirs *r)
+{
+	perror(RED "Error -> issue finding path or execve\n" RESET);
+	free_dbl_tab(tab1);
+	restore_dup(r);
+	if (path)
+		free(path);
+}
+
+int	handle_no_buildin_redir(char **env, char **tokens, char **pipes_redirs, t_minishell *mini)
+{
+	char	*path;
+	pid_t	pid;
+	
+	path = NULL;
+	pid = fork();//create a process
+	if (pid == -1)
+		return (free_dbl_tab(env), perror("fork"), 0);
+	if (pid == 0)
+	{
+		if (!handle_files(tokens, pipes_redirs, &mini->r, 1))//check for redirections
+		{
+			restore_dup(&mini->r);
+			exit (-1);
+		}
+		join_command_free_tab(mini->r.tab, tokens);//join the arguments and the command together
+		path = find_path(mini->r.tab[0], env);//search for the path of the command
+		if (!path)
+		{
+			restore_and_free(mini->r.tab, NULL, &mini->r);
+			//perror(RED "Error -> issue finding path\n" RESET);
+			//free_dbl_tab(mini->r.tab);
+			//restore_dup(&mini->r);
+			exit (-1);
+		}
+		if (execve(path, mini->r.tab, env) == -1)//execute this shit
+		{
+			restore_and_free(mini->r.tab, path, &mini->r);
+			//free(path);
+			//free_dbl_tab(mini->r.tab);
+			//perror(RED "Error -> execution failure\n" RESET);
+			//restore_dup(&mini->r);
+			exit (-1);
+		}
+	}
+	else
+		waitpid(pid, NULL, 0);
+	if (path)
+		free(path);
+	return (1);
+}
+
+
 int	redir(t_minishell *mini, char **env, char **tokens, char **pipes_redirs)
 {
-	char *path;
-	
 	if (!mini || !env || !tokens || !pipes_redirs)
 		return (free_dbl_tab(env), -1);
 	if (heredoc(tokens, pipes_redirs))
@@ -114,13 +165,9 @@ int	redir(t_minishell *mini, char **env, char **tokens, char **pipes_redirs)
 		if (!handle_heredoc(tokens, pipes_redirs)) 
 			return (free_dbl_tab(env), -1);
 	}
-	//printf(" <<< valid >>>\n");
-	//return (1);
-	if (syntax_error_redir(tokens, pipes_redirs) || !valid_filename(tokens, pipes_redirs))//verify if the synthaxe is good
-		return (free_dbl_tab(env), -1);
-	if (!init_r(&mini->r, tokens))//init r
-		return (free_dbl_tab(env), -1);
-	path = NULL;
+	if (syntax_error_redir(tokens, pipes_redirs) || !valid_filename(tokens, pipes_redirs)
+		|| !init_r(&mini->r, tokens))//verify if the synthaxe is good
+			return (free_dbl_tab(env), -1);
 	if (is_buildin(tokens[0], 0))//if it's buildin
 	{
 		if (!handle_files(tokens, pipes_redirs, &mini->r, 0))//check for redirections
@@ -128,44 +175,8 @@ int	redir(t_minishell *mini, char **env, char **tokens, char **pipes_redirs)
 		join_command_free_tab(mini->r.tab, tokens);//join the arguments and the command together
 		exec_buildin(mini->r.tab, mini, 0);//go build this shit
 	}
-	else
- 	{
-		pid_t pid = fork();//create a process
-		if (pid == -1)
-			return (free_dbl_tab(env), perror("fork"), -1);
-		if (pid == 0)
-		{
-			if (!handle_files(tokens, pipes_redirs, &mini->r, 1))//check for redirections
-			{
-				restore_dup(&mini->r);
-				exit (-1);
-			}
-			//return (restore_dup(&mini->r), -1);//reset the input and output if there's none
-			join_command_free_tab(mini->r.tab, tokens);//join the arguments and the command together
-			path = find_path(mini->r.tab[0], env);//search for the path of the command
-			if (!path)
-			{
-				perror(RED "Error -> issue finding path\n" RESET);
-				free_dbl_tab(mini->r.tab);
-				restore_dup(&mini->r);
-				exit (-1);
-				//return (restore_dup(&mini->r), -1);//reset the input and output
-			}
-			if (execve(path, mini->r.tab, env) == -1)//execute this shit
-			{
-				free(path);
-				free_dbl_tab(mini->r.tab);
-				perror(RED "Error -> execution failure\n" RESET);
-				restore_dup(&mini->r);
-				exit (-1);
-				//return (restore_dup(&mini->r), -1);//reset the input and output
-			}
-		}
-		else
-			waitpid(pid, NULL, 0);
-	}
-	if (path)
-		free(path);
+	else if (!handle_no_buildin_redir(env, tokens, pipes_redirs, mini))
+		return (-1);
 	free_dbl_tab(env);
 	return (restore_dup(&mini->r), free_dbl_tab(mini->r.tab), 0);//reset the input and output and free
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   optimized_argument.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:31:28 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/20 18:12:46 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/03 23:06:26 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,8 @@ static char	*ft_substr_mini(char *line, t_minishell **mini, int *new_i, int tab)
 void	split_line(char *line, t_minishell **mini, int i)
 {
 	int	j;
-	int	k;
 
 	j = 0;
-	k = 0;
 	while (line[i])
 	{
 		while (line[i] && line[i] != ' ')
@@ -107,7 +105,6 @@ void	split_line(char *line, t_minishell **mini, int i)
 				break ;
 		}
 		j++;
-		k = 0;
 		while (line[i] == ' ')
 			i++;
 	}

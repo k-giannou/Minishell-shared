@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:45:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/02 20:14:30 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/03 22:52:34 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,23 @@ char	*host_dup(char *name)
 {
 	char			*dest;
 	int				i;
+	int				j;
 	int				k;
-	//unsigned char	unicode_flower[] = {0xF0, 0x9F, 0x8C, 0xB8};
-	//unsigned char	unicode_poop[] = {0xF0, 0x9F, 0x92, 0xA9};
-	unsigned char	unicode_heart[] = {0xF0, 0x9F, 0x92, 0x9C};
-	//unsigned char	unicode_diamond[] = {0xF0, 0x9F, 0x92, 0x8E};
-	//unsigned char	unicode_fire[] = {0xF0, 0x9F, 0x94, 0xA5};
+	unsigned char	unicode_heart[4];
 
 	i = ft_strlen(name);
-	dest = (char *)ft_calloc(sizeof(char), i + 20);//i + 2
+	unicode_heart[0] = 0xF0;
+	unicode_heart[1] = 0x9F;
+	unicode_heart[2] = 0x92;
+	unicode_heart[3] = 0x9C;
+	dest = (char *)ft_calloc(sizeof(char), i + 20);
 	if (!dest)
 		return (NULL);
 	i = 0;
-	//k = 1;
+	j = 0;
 	k = 0;
-	for (int j = 0; j < 4; j++)
-        dest[k++] = unicode_heart[j];
-	//dest[0] = '@';
+	while (j < 4)
+		dest[k++] = unicode_heart[j++];
 	while (name[i] != '.' && name[i] != '\0')
 		dest[k++] = name[i++];
 	dest[k++] = ':';
@@ -68,13 +68,12 @@ void	init_user(t_minishell *mini)
 	mini->user.final = ft_strjoin_n_free(mini->user.name, mini->user.hostname,
 			2);
 }
-// printf("%s\n", mini->user.final);
 
 long	len_list(t_env *list)
 {
 	long	len;
 
-	if(!list)
+	if (!list)
 		return (0);
 	len = 0;
 	while (list)

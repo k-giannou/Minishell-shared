@@ -3,28 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 17:11:55 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/01 18:06:32 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/03 22:18:57 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-char	*get_cmd(char **av, int i)
-{
-	char	*cmd;
-
-	if (!av || !av[i])
-		return (NULL);
-	cmd = ft_strdup(av[i++]);
-	while (av[i] || ft_strcmp(av[i], ">") || ft_strcmp(av[i], ">>")
-		|| ft_strcmp(av[i], "<") || ft_strcmp(av[i], "<<") || ft_strcmp(av[i],
-			"|"))
-		cmd = ft_strjoin_n_free(ft_strjoin_n_free(cmd, " ", 1), av[i++], 1);
-	return (cmd);
-}
 
 char	**splited_env(t_env *env)
 {
@@ -32,7 +18,7 @@ char	**splited_env(t_env *env)
 	char	**tab_env;
 
 	if (!env)
-		return (NULL);//retard shit
+		return (NULL);
 	i = len_list(env);
 	tab_env = (char **)malloc(sizeof(char *) * (i + 1));
 	if (!tab_env)
@@ -42,7 +28,8 @@ char	**splited_env(t_env *env)
 	{
 		tab_env[i] = ft_strdup(env->data);
 		if (!tab_env[i])
-			return (free_dbl_tab(tab_env), printf("Error : changing env into split failed\n"), NULL);
+			return (free_dbl_tab(tab_env),
+				printf("Error : changing env into split failed\n"), NULL);
 		env = env->next;
 		i++;
 	}
@@ -119,15 +106,15 @@ void	execute(char **av, char **env, t_minishell *mini)
 	if (!cmd)
 		return (free_all(mini, "all"), free_dbl_tab(env),
 			perror(RED "Error -> issue spliting command\n" RESET), exit(1));
-	if (!(cmd[0][0] == '/' || !ft_strncmp(cmd[0], "./", 2)	
+	if (!(cmd[0][0] == '/' || !ft_strncmp(cmd[0], "./", 2)
 		|| !ft_strncmp(cmd[0], "../", 2)))
 		path = find_path(cmd[0], env);
 	else
 		path = check_path(&cmd[0], mini);
+	(free(mini->p.pids), free_all(mini, "all"));
 	if (!path)
-		return (free_dbl_tab(cmd), free_all(mini, "all"), free_dbl_tab(env),
-			perror(RED "Error -> issue finding path\n" RESET), exit(1));
-	free_all(mini, "all");
+		return (ft_fprintf(2, RED "%s: command not found\n" RESET, cmd[0]),
+			free_dbl_tab(cmd), free_dbl_tab(env), exit(1));
 	if (execve(path, cmd, env) == -1)
 	{
 		free(path);

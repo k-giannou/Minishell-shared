@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:45:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/24 18:39:39 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/03 23:14:56 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ int	check_quotes(char *str)
 	if (!str)
 		return (0);
 	add_history(str);
+	if (!ft_strcmp(str, ""))
+		return (free(str), 1);
 	i = 0;
 	sgl_q = 0;
 	dbl_q = 0;
@@ -74,22 +76,22 @@ int	check_quotes(char *str)
 	return (0);
 }
 
-t_env	*add_at(t_env *L, char *data, int pos)
+t_env	*add_at(t_env *env, char *data, int pos)
 {
 	t_env	*prec;
 	t_env	*cur;
 	int		i;
 	t_cell	*cell;
 
-	cur = L;
+	cur = env;
 	cell = create_cell(data);
 	if (!cell)
 		return (NULL);
-	if (!L)
+	if (!env)
 		return (cell);
 	else if (pos == 0)
 	{
-		cell->next = L;
+		cell->next = env;
 		return (cell);
 	}
 	i = 0;
@@ -100,7 +102,7 @@ t_env	*add_at(t_env *L, char *data, int pos)
 	}
 	prec->next = cell;
 	cell->next = cur;
-	return (L);
+	return (env);
 }
 
 t_env	*ft_envdup(t_env *src)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 17:48:48 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/02 20:13:58 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/03 16:06:14 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ char	*ft_line_save(char *line_save, int fd)
 	while (!ft_strchr((const char *)line_save, '\n'))
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
-		//if (bytes_read == -1)//you had this
-		if (bytes_read <= 0)//need it for signal in heredoc.
-			return (free(buffer), free(line_save), NULL);
+		if (bytes_read <= 0)
+			return (free(buffer), free(line_save), printf("\nexit\n"), exit(1),
+				NULL);
 		if (!line_save[0] && bytes_read == 0)
 			return (free(buffer), free(line_save), printf("\nexit\n"), exit(1),
 				NULL);

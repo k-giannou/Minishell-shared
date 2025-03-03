@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:17 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/01 17:46:55 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/03 23:15:03 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ int	main(int ac, char **av, char **env)
 	t_minishell	*mini;
 
 	(void)av;
-	//welcome();
 	str = NULL;
 	mini = init_vals(env);
 	signal(SIGQUIT, SIG_IGN);
@@ -104,7 +103,7 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		str = replace_var(mini, str);
 		optimised_line(str, &mini);
-		is_redir_or_pipes(mini->pipes_redirs, 0, 0);
+		is_redir_or_pipes(mini->pipes_redirs);
 		mini->p.nb_pipes = pipe_count(mini);
 		if (!mini->tokens || !mini->tokens[0] || mini->tokens[0][0] == 0)
 			continue ;
@@ -112,6 +111,3 @@ int	main(int ac, char **av, char **env)
 	}
 	return (ac * 0);
 }
-
-		/* ft_print_dlb_tabs(mini->tokens);
-		print_pipes_redirs(mini->pipes_redirs, ft_count_words(mini->tokens)); */

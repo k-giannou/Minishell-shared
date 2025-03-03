@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:21:49 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/03/02 20:02:35 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/03 16:06:57 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	init_r(t_redirs *r, char **tokens)
 {
 	r->saved_in = dup(STDIN_FILENO);
-	r->saved_in = dup(STDOUT_FILENO);
+	r->saved_out = dup(STDOUT_FILENO);
 	if (r->saved_in == -1 || r->saved_out == -1)
 		return (perror("dup failed"), 0);
 	r->tab = copy_tokens(tokens);
@@ -133,18 +133,11 @@ int	handle_no_buildin_redir(char **env, char **tokens, char **pipes_redirs, t_mi
 		if (!path)
 		{
 			restore_and_free(mini->r.tab, NULL, &mini->r);
-			//perror(RED "Error -> issue finding path\n" RESET);
-			//free_dbl_tab(mini->r.tab);
-			//restore_dup(&mini->r);
 			exit (-1);
 		}
 		if (execve(path, mini->r.tab, env) == -1)//execute this shit
 		{
 			restore_and_free(mini->r.tab, path, &mini->r);
-			//free(path);
-			//free_dbl_tab(mini->r.tab);
-			//perror(RED "Error -> execution failure\n" RESET);
-			//restore_dup(&mini->r);
 			exit (-1);
 		}
 	}

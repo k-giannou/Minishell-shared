@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:31:08 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/02 20:12:57 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/03 22:48:51 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ typedef struct s_redirs
 typedef struct s_user
 {
 	char	*name;
-	char	*hostname;
 	char	*final;
+	char	*hostname;
 }	t_user;
 
 typedef struct s_env
@@ -101,44 +101,45 @@ typedef struct s_env
 
 typedef struct s_pipes
 {
-	int		nb_pipes;
-	pid_t	*pids;
 	int		i;
+	pid_t	*pids;
+	int		**pipes;
+	int		nb_pipes;
 }	t_pipes;
 
 typedef struct s_minishell
 {
+	int			fd;
+	t_redirs	r;
+	t_pipes		p;
+	t_user		user;
+	t_variables	vars;
+	t_env		*env;
 	bool		sgl_q;
 	bool		dbl_q;
-	int			fd;
-	int			hist_lines;
 	char		**cmd_s;
 	char		*cur_loc;
 	char		**tokens;
-	char		**pipes_redirs;
-	t_env		*env;
+	int			hist_lines;
 	t_env		*env_export;
-	t_user		user;
-	t_variables	vars;
-	t_redirs	r;
-	t_pipes		p;
+	char		**pipes_redirs;
 }	t_minishell;
 
 void	sig_init(void);
 t_env	*ft_envdup(t_env *src);
 int		check_quotes(char *str);
 t_env	*create_cell(char *data);
+void	is_redir_or_pipes(char **raw);
 void	ft_env_sort(t_env **begin_list);
 int		rest_letters_of_name(char *str);
-t_env	*add_at(t_env *L, char *data, int pos);
 void	ft_get_env(t_env **env, char *env_var);
+t_env	*add_at(t_env *env, char *data, int pos);
 char	*replace_by_tilde(t_env *env, char *str);
 char	*replace_var(t_minishell *mini, char *str);
 void	valid_quotes(char c, bool *sgl_q, bool *dbl_q);
 void	optimised_line(char *line, t_minishell **mini);
 int		just_export_or_unset(char **vars, char *command);
 char	*ft_strjoinm(char *s1, char *s2, int tab_to_free);
-void	is_redir_or_pipes(char **raw, bool sgl_q, bool dbl_q);
 char	*ft_substr_with_quotes(char *line, t_minishell *mini, int len);
 
 //print
@@ -151,6 +152,7 @@ void	ft_print_export(t_env *v, bool sign, bool inside);
 
 //frees
 void	ft_list_clear(t_env *begin_list);
+void	free_pipes(int **pipes, int nb_pipes);
 void	free_all(t_minishell *mini, char *str);
 void	free_pipes_redirs(char **str, int nb_words);
 
@@ -163,9 +165,12 @@ int		isredir_pipex(char *tokens);
 int		pipe_count(t_minishell *mini);
 char	*find_path(char *cmd, char **env);
 void	read_stdin(int *fd, char *limiter);
+void	create_pipes(t_pipes *pipes_struct);
 void	pipex(t_minishell *mini, char **env);
 void	execute(char **av, char **env, t_minishell *mini);
+void	close_all_pipes(t_pipes *pipes_struct, int current_pipe);
 char	**get_redir_split(t_minishell *mini, int *j, int len_split);
+void	close_and_redirect_pipes(t_pipes *pipes_struct, int current_pipe);
 
 //buildins
 void	pwd(t_env *env);

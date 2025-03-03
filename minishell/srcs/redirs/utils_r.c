@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_r.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:49:52 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/03/01 10:49:17 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/03 22:43:39 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,55 +14,34 @@
 
 char	**copy_tokens(char **tokens)
 {
-	int	i;
+	int		i;
 	char	**tab_copy;
 
 	i = ft_count_words(tokens);
-    tab_copy = (char **)malloc(sizeof(char *) * (i + 1));
-    if (!tab_copy) 
+	tab_copy = (char **)malloc(sizeof(char *) * (i + 1));
+	if (!tab_copy) 
 	{
-        perror("malloc failed");
-        return (NULL);
-    }
+		perror("malloc failed");
+		return (NULL);
+	}
 	i = 0;
 	while (tokens[i])
 	{
-        tab_copy[i] = ft_strdup(tokens[i]);
-        if (!tab_copy[i]) 
+		tab_copy[i] = ft_strdup(tokens[i]);
+		if (!tab_copy[i]) 
 		{
-            perror("strdup failed");
+			perror("strdup failed");
 			free_dbl_tab(tab_copy);
-            return (NULL);
-        }
+			return (NULL);
+		}
 		i++;
-    }
+	}
 	tab_copy[i] = NULL;
-    return (tab_copy);
+	return (tab_copy);
 }
 
 void	join_command_free_tab(char **tab, char **tokens)
 {
-	// int	i;
-	// int	j;
-
-	// i = 0;
-	// j = 0;
-	// if (!tab || !tokens)
-	// 	return ;
-	// //ft_print_dlb_tabs(tokens, "tokens");
-	// while (tokens && tokens[j] && j < ft_count_words(tokens))
-	// {
-	// 	while (!tab[j] && j < ft_count_words(tokens))
-	// 		j++;
-	// 	if (i != j)
-	// 		tab[i] = tab[j];
-	// 	i++;
-	// 	j++;
-	// }
-	// while (i < ft_count_words(tokens))
-	// 	tab[i++] = NULL;
-	// //ft_print_dlb_tabs(tab, "tab");
-	
 	int	y;
 	int	i;
 	
@@ -103,7 +82,7 @@ int	is_buildin(char *tab, int to_free)
 		|| !ft_strcmp(tab, "cd") || !ft_strcmp(tab, "export")
 		|| !ft_strcmp(tab, "unset") || !ft_strcmp(tab, "env")
 		|| !ft_strcmp(tab, "exit"))
-			return (1);
+			return (free(tab), 1);
 	if (to_free)
 		free(tab);
 	return (0);

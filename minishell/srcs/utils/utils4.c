@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils4.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:45:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/01 17:04:46 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/03 16:13:29 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ char	*ft_strsrch(const char *s, char *c)
 int	pipe_count(t_minishell *mini)
 {
 	int	i;
-	int count;
-	int len_split;
+	int	count;
+	int	len_split;
 
 	i = 0;
 	count = 0;

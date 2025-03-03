@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:46:16 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/28 19:31:22 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/03 17:07:13 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	free_pipes(int **pipes, int nb_pipes)
+{
+	int	j;
+
+	j = 0;
+	while (j < nb_pipes)
+		free(pipes[j++]);
+	free(pipes);
+}
 
 void	free_dbl_tab(char **str)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/03 23:08:43 by marvin           ###   ########.fr       */
+/*   Updated: 2025/03/04 16:37:39 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ char	**get_cmd_s(t_minishell *mini, int i)
 	j = 0;
 	while (mini->tokens[i])
 	{
-		if (!ft_strcmp(mini->pipes_redirs[i], "|"))
+		if (!ft_strncmp(mini->pipes_redirs[i], "|", 1))
 			j++;
 		else
 		{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 20:38:24 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/03 22:42:32 by marvin           ###   ########.fr       */
+/*   Updated: 2025/03/04 16:32:23 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,22 +99,31 @@ int	check_valid_quotes(char *str, bool *sgl_q, bool *dbl_q)
 	return (0);
 }
 
-void	is_redir_or_pipes(char **raw)
+void	is_redir_or_pipes(char **raw, int i, int j)
 {
-	int	i;
-
-	i = 0;
 	while (raw[i])
 	{
-		if (!((ft_strlen(raw[i]) == 2 && (!ft_strcmp(raw[i], "<<")
+		if (raw[i][j] == '|')
+		{
+			while (raw[i][j])
+			{
+				if (raw[i][j++] != '|')
+				{
+					free(raw[i]);
+					raw[i] = NULL;
+					break ;
+				}
+			}
+		}
+		else if (!((ft_strlen(raw[i]) == 2 && (!ft_strcmp(raw[i], "<<")
 						|| !ft_strcmp(raw[i], ">>")))
 				|| (ft_strlen(raw[i]) == 1 && (!ft_strcmp(raw[i], "<")
-						|| !ft_strcmp(raw[i], ">")
-						|| !ft_strcmp(raw[i], "|")))))
+						|| !ft_strcmp(raw[i], ">")))))
 		{
 			free(raw[i]);
 			raw[i] = NULL;
 		}
 		i++;
+		j = 0;
 	}
 }

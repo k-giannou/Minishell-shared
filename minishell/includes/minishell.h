@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:31:08 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/03 22:48:51 by marvin           ###   ########.fr       */
+/*   Updated: 2025/03/04 16:31:53 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,13 +129,13 @@ void	sig_init(void);
 t_env	*ft_envdup(t_env *src);
 int		check_quotes(char *str);
 t_env	*create_cell(char *data);
-void	is_redir_or_pipes(char **raw);
 void	ft_env_sort(t_env **begin_list);
 int		rest_letters_of_name(char *str);
 void	ft_get_env(t_env **env, char *env_var);
 t_env	*add_at(t_env *env, char *data, int pos);
 char	*replace_by_tilde(t_env *env, char *str);
 char	*replace_var(t_minishell *mini, char *str);
+void	is_redir_or_pipes(char **raw, int i, int j);
 void	valid_quotes(char c, bool *sgl_q, bool *dbl_q);
 void	optimised_line(char *line, t_minishell **mini);
 int		just_export_or_unset(char **vars, char *command);

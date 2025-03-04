@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 21:07:06 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/03 23:17:41 by marvin           ###   ########.fr       */
+/*   Updated: 2025/03/04 16:03:44 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,30 +63,25 @@ int	valid_nb(char *str)
 			return (0);
 	return (1);
 }
-
 void	ft_exit(t_minishell *mini)
 {
-	long long	exit_code;
+	int		i;
+	int64_t	nb;
 
-	if (!(mini->tokens && mini->tokens[0] && mini->tokens[1]))
+	i = 1;
+	nb = 0;
+	if (mini->tokens && mini->tokens[0] && mini->tokens[0][0]
+		&& mini->tokens[1])
 	{
-		free_all(mini, "all");
-		printf("exit\n");
-		exit(0);
+		if (!valid_nb(mini->tokens[1])
+			|| strcmp_64(
+					ft_remove_from_string(mini->tokens[1], " \n\v\f\r+", 0)))
+			return (error_exit(mini->tokens[1], 1), free_all(mini, "all"),
+				exit(2));
+		nb = ft_atoi64(mini->tokens[1]);
 	}
-	if (!valid_nb(mini->tokens[1]))
-	{
-		ft_fprintf(2, "bash: exit: %s: numeric argument required\n",
-			mini->tokens[1]);
-		free_all(mini, "all");
-		exit(2);
-	}
-	exit_code = ft_atoi(mini->tokens[1]);
-	if (mini->tokens[2])
-	{
-		ft_fprintf(2, "bash: exit: too many arguments\n");
-		return ;
-	}
-	free_all(mini, "all");
-	exit(exit_code % 256);
+	if (mini->tokens && mini->tokens[0] && mini->tokens[0][0] && mini->tokens[1]
+		&& mini->tokens[2])
+		return (error_exit(mini->tokens[2], 2));
+	return (printf("exit\n"), free_all(mini, "all"), exit(nb % 256));
 }

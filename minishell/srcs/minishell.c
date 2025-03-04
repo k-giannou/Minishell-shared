@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:17 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/03 23:15:03 by marvin           ###   ########.fr       */
+/*   Updated: 2025/03/04 16:32:08 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		str = replace_var(mini, str);
 		optimised_line(str, &mini);
-		is_redir_or_pipes(mini->pipes_redirs);
+		is_redir_or_pipes(mini->pipes_redirs, 0, 0);
 		mini->p.nb_pipes = pipe_count(mini);
 		if (!mini->tokens || !mini->tokens[0] || mini->tokens[0][0] == 0)
 			continue ;

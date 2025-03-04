@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/03 22:19:42 by marvin           ###   ########.fr       */
+/*   Updated: 2025/03/04 16:09:26 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void	create_pipes(t_pipes *pipes_struct)
 		i++;
 	}
 }
+
+//cat | cat | ls
 
 void	close_and_redirect_pipes(t_pipes *pipes_struct, int current_pipe)
 {

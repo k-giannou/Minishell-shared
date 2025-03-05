@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/27 16:31:08 by locagnio          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/03/05 15:23:55 by kgiannou         ###   ########.fr       */
-=======
-/*   Updated: 2025/03/05 15:26:05 by locagnio         ###   ########.fr       */
->>>>>>> 25b92092ce8517528cc9a19f7aeee1e454aab1f6
+/*   Created: 2025/03/05 15:38:50 by kgiannou          #+#    #+#             */
+/*   Updated: 2025/03/05 15:38:54 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,27 +184,27 @@ void	export(char **vars, t_minishell *mini);
 
 //redirs
 void	restore_dup(t_redirs *r);
-int	isredir(t_minishell *mini);
+int		isredir(t_minishell *mini);
 char	**copy_tokens(char **tokens);
-int	is_buildin(char *tab, int to_free);
-int	redir(t_minishell *mini, char **env, char **tokens, char **pipes_redirs);
+int		is_buildin(char *tab, int to_free);
+int		redir(t_minishell *mini, char **env, char **tokens, char **pipes_redirs);
 int		valid_filename(char **tab, char **ntab);
 int		syntax_error_redir(char **tab, char **ntab);
 void	find_tab(int *y, char **tab, char **tokens);
-int	handle_files(char **tokens, char **pipes_redirs, t_redirs *r, int make_dup);
+int		handle_files(char **tokens, char **pipes_redirs, t_redirs *r, int make_dup);
 void	exec_buildin(char **tab, t_minishell *mini, int free);
 void	join_command_free_tab(char **tab, char **tokens);
-int	handle_heredoc (char **tokens, char **pipes_redirs);
+int		handle_heredoc (char **tokens, char **pipes_redirs);
 char	**find_eofs(int *sum, char **tokens, char **pipes_redirs);
 void	copy_eofs(int *sum, char **eofs, char **tokens, char **pipes_redirs);
-int	heredoc (char **tokens, char **pipes_redirs);
+int		heredoc (char **tokens, char **pipes_redirs);
 void	free_strs(char **str1, char **str2, char **str3);
-int	hd_filename(char **tokens, char ** pipes_redirs);
+int		hd_filename(char **tokens, char ** pipes_redirs);
 void	correct_null_tabs(int size_tokens, char **tokens, char **pipes_redirs);
-int	syntax_error_before_hd(char **tokens, char **pipes_redirs);
-int	error_in_heredoc(char **tokens, char **pipes_redirs, bool *error);
+int		syntax_error_before_hd(char **tokens, char **pipes_redirs);
+int		error_in_heredoc(char **tokens, char **pipes_redirs, bool *error);
 void	write_in_heredoc(int *first, int fd, char *line, char **eofs);
-int	init_r(t_redirs *r, char **tokens);
+int		init_r(t_redirs *r, char **tokens);
 void	restore_and_free(char **tab1, char *path, t_redirs *r);
 
 //utils

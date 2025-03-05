@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 19:15:45 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/26 16:25:14 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/05 18:04:07 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	echo(char **line)
 
 	i = 1;
 	if (!line[i])
-		return ((void)printf("\n"));
+		return (g_signal = 0, (void)printf("\n"));
 	while (line[i] && !ft_strncmp(line[i], "-n", 2))
 	{
 		if (echo_n(line[i]))
@@ -48,4 +48,5 @@ void	echo(char **line)
 	}
 	if (ft_strcmp(line[1], "-n"))
 		printf("\n");
+	g_signal = 0;
 }

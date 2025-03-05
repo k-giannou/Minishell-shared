@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 20:38:24 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/04 17:41:41 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/05 19:20:32 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,18 @@ char	*replace_by_tilde(t_env *env, char *str)
 	i = 0;
 	j = 0;
 	ft_bzero(cpy, 10000);
-	while (ft_strncmp(env->data, "HOME=", 5))
+	while (env && ft_strncmp(env->data, "HOME=", 5))
 		env = env->next;
-	home = env->data + 5;
-	if (str && home && !ft_strncmp(str, home, ft_strlen(home)))
+	if (env)
+		home = env->data + 5;
+	if (!env && str)
+	{
+		home = str;
+		str = ft_strdup(str + 2);
+		free(home);
+		return (str);
+	}
+	if (env && str && home && !ft_strncmp(str, home, ft_strlen(home)))
 	{
 		while (str[i] && home[i] && str[i] == home[i])
 			i++;

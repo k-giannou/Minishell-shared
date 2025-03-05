@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/05 17:05:57 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/05 18:01:11 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	son_program(char **env, t_minishell *mini)
 	if (mini->p.i == mini->p.nb_pipes)
 		return (waitpid(mini->p.pids[mini->p.i - 1], &signal, 0), signal);
 	mini->p.i++;
-	signal += son_program(env, mini);
+	signal = son_program(env, mini);
 	waitpid(mini->p.pids[mini->p.i - 1], NULL, 0);
 	return (signal);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:33:34 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/03 23:11:04 by marvin           ###   ########.fr       */
+/*   Updated: 2025/03/05 18:24:01 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,12 @@ char	**ft_splitdup_pipes_redirs(char **split, int len_split)
 
 void	exec_cmd(t_minishell *mini)
 {
+	ft_print_dlb_tabs(mini->tokens, "tokens");
 	if (mini->p.nb_pipes > 0)
 		pipex(mini, splited_env(mini->env));
 	else if (isredir(mini))
 		redir(mini, splited_env(mini->env), mini->tokens, mini->pipes_redirs);
-	else if (!ft_strcmp(mini->tokens[0], "pwd"))
+	else if (!ft_strncmp(mini->tokens[0], "pwd", 4))
 		pwd(mini->env);
 	else if (!ft_strcmp(mini->tokens[0], "echo"))
 		echo(mini->tokens);

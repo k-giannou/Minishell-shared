@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 21:07:06 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/05 15:30:07 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/05 18:03:30 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,12 @@ void	ft_exit(t_minishell *mini)
 		if (!valid_nb(mini->tokens[1])
 			|| strcmp_64(
 				ft_remove_from_string(mini->tokens[1], " \n\v\f\r+", 0)))
-			return (error_exit(mini->tokens[1], 1), free_all(mini, "all"),
-				exit(2));
+			return (g_signal = 2, error_exit(mini->tokens[1], 1),
+				free_all(mini, "all"), exit(2));
 		nb = ft_atoi64(mini->tokens[1]);
 	}
 	if (mini->tokens && mini->tokens[0] && mini->tokens[0][0] && mini->tokens[1]
 		&& mini->tokens[2])
-		return (error_exit(mini->tokens[2], 2));
-	return (printf("exit\n"), free_all(mini, "all"), exit(nb % 256));
+		return (g_signal = 0, error_exit(mini->tokens[2], 2));
+	return (g_signal = 0, /* printf("exit\n"),  */free_all(mini, "all"), exit(nb % 256));
 }

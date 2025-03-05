@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:45:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/03 23:14:56 by marvin           ###   ########.fr       */
+/*   Updated: 2025/03/05 19:35:05 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	remove_multiple_slashs(char *path, int i)
 	int	j;
 
 	j = 0;
+	if (!path)
+		return ;
 	while (path[j])
 	{
 		if (path[j] == '/' && path[j + 1] == '/')

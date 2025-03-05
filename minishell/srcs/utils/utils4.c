@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:45:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/04 16:56:09 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/05 18:49:12 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ int	pipe_count(t_minishell *mini)
 
 void	ft_get_env(t_env **env, char *env_var)
 {
-	while (ft_strncmp((*env)->data, env_var, ft_strlen(env_var)))
+	while ((*env) && (*env)->data
+		&& ft_strncmp((*env)->data, env_var, ft_strlen(env_var)))
 		(*env) = (*env)->next;
 }
 

@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 19:15:45 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/20 17:59:32 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/05 20:09:19 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	change_old_pwd(char *data, t_minishell **mini)
 {
 	t_env	*tmp;
 
+	return ;
 	tmp = (*mini)->env;
 	ft_get_env(&tmp, "OLDPWD=");
 	free(tmp->data);
@@ -62,8 +63,10 @@ char	*new_location(t_minishell **mini, char *path, int i)
 
 	tmp = (*mini)->env;
 	ft_get_env(&tmp, "PWD=");
+	if (!tmp)
+		return (NULL);
 	change_old_pwd(tmp->data, mini);
-	while (path[++i] && i < (int)ft_strlen(path))
+	while (path && path[++i] && i < (int)ft_strlen(path))
 	{
 		if ((i == 0 && path[i] == '/'))
 		{
@@ -82,7 +85,7 @@ char	*new_location(t_minishell **mini, char *path, int i)
 		else if (path[i + 1] != '.')
 			add_directory(&tmp, path, &i);
 	}
-	return (tmp->data + 4);
+	return (g_signal = 0, tmp->data + 4);
 }
 
 void	cd(char **path, t_minishell **mini)
@@ -91,19 +94,26 @@ void	cd(char **path, t_minishell **mini)
 	t_env		*tmp;
 	char		*str;
 
+	tmp = (*mini)->env;
 	if (path[1] && path[2])
-		return ((void)ft_fprintf(2, "bash: cd: too many arguments\n"));
+		return (g_signal = 0, (void)ft_fprintf(2, "bash: cd: too many arguments\n"));
 	str = path[1];
 	if (!path[1])
-		str = getenv("HOME");
+	{
+		ft_get_env(&tmp, "HOME");
+		if (tmp)
+			str = ft_strdup(tmp->data + 5);
+		else
+			str = NULL;
+	}
 	if (access(str, F_OK) == -1)
-		return (perror("Error "));
+		return (g_signal = 0, perror("Error "));
 	if (stat(str, &info) == -1)
-		return (perror("Error : Cannot acces to infos of directory\n"));
+		return (g_signal = 0, perror("Error : Cannot acces to infos of directory\n"));
 	if (!S_ISDIR(info.st_mode))
-		return ((void)ft_fprintf(2, "bash: cd: %s: Not a directory\n", str));
+		return (g_signal = 0, (void)ft_fprintf(2, "bash: cd: %s: Not a directory\n", str));
 	if (chdir(str) == -1)
-		return (perror("Error while changing repository\n"));
+		return (g_signal = 0, perror("Error while changing repository\n"));
 	remove_multiple_slashs(str, 0);
 	free((*mini)->cur_loc);
 	(*mini)->cur_loc = new_location(mini, str, -1);

@@ -6,14 +6,14 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/05 17:39:33 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/05 18:28:04 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 //(null) < (null) | (null) (null) > (null) | (null)
-//cat    <  file  |  echo   nice  >  file  |  ls
+// cat   <  file  |  echo   nice  >  file  |  ls
 
 char	**get_redir_split(t_minishell *mini, int cur_cmd)
 {

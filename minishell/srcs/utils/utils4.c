@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils4.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:45:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/03 16:13:29 by marvin           ###   ########.fr       */
+/*   Updated: 2025/03/04 16:56:09 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	pipe_count(t_minishell *mini)
 	len_split = ft_count_words(mini->tokens);
 	while (i < len_split)
 	{
-		if (mini->pipes_redirs[i] && !ft_strcmp(mini->pipes_redirs[i], "|"))
+		if (mini->pipes_redirs[i] && !ft_strncmp(mini->pipes_redirs[i], "|", 1))
 			count++;
 		i++;
 	}

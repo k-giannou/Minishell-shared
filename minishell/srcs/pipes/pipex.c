@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/04 16:37:39 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/05 15:26:13 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,14 @@ char	*get_first_arg(char *av)
 
 void	exec_child(char **env, t_minishell *mini)
 {
+	char *prev_cmd;
+	
+	prev_cmd = NULL;
+	if (mini->p.i - 1 >= 0)
+		prev_cmd = get_first_arg(mini->cmd_s[mini->p.i - 1]);
 	if (mini->p.nb_pipes != 0)
-		close_and_redirect_pipes(&mini->p, mini->p.i);
+		close_and_redirect_pipes(&mini->p, mini->p.i, prev_cmd);
+	free(prev_cmd);
 	if (is_buildin(get_first_arg(mini->cmd_s[mini->p.i]), 1))
 		exec_buildin(ft_split(mini->cmd_s[mini->p.i], " "), mini, 1);
 	else
@@ -61,19 +67,10 @@ int	son_program(char **env, t_minishell *mini)
 		return (perror(RED "Error -> pid failure\n" RESET), 0);
 	if (mini->p.pids[mini->p.i] == 0)
 		exec_child(env, mini);
-	close_all_pipes(&mini->p, mini->p.i);
+	else
+		close_curr_pipe(&mini->p, mini->p.i);
 	if (mini->p.i == mini->p.nb_pipes)
-	{
-		waitpid(mini->p.pids[mini->p.i], &signal, 0);
-		if (mini->p.nb_pipes > 0)
-		{
-			close(mini->p.pipes[mini->p.i - 1][1]);
-			close(mini->p.pipes[mini->p.i - 1][0]);
-		}
-		if (mini->p.nb_pipes > 1)
-			close(mini->p.pipes[mini->p.i - 2][0]);
-		return (signal);
-	}
+		return (waitpid(mini->p.pids[mini->p.i - 1], &signal, 0), signal);
 	mini->p.i++;
 	signal += son_program(env, mini);
 	waitpid(mini->p.pids[mini->p.i - 1], NULL, 0);
@@ -108,9 +105,9 @@ char	**get_cmd_s(t_minishell *mini, int i)
 
 void	pipex(t_minishell *mini, char **env)
 {
+	mini->p.nb_pipes = pipe_count(mini);
 	mini->cmd_s = get_cmd_s(mini, 0);
 	mini->p.i = 0;
-	mini->p.nb_pipes = pipe_count(mini);
 	mini->p.pids = (pid_t *)ft_calloc(sizeof(pid_t), (mini->p.nb_pipes + 1));
 	if (!mini->p.pids)
 		return ((void)ft_fprintf(2, RED"Error : fail initiate pid's\n"RESET));

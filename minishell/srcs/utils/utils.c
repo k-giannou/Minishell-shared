@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 20:38:24 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/04 16:32:23 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/04 17:41:41 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,31 +99,42 @@ int	check_valid_quotes(char *str, bool *sgl_q, bool *dbl_q)
 	return (0);
 }
 
-void	is_redir_or_pipes(char **raw, int i, int j)
+void	pipe_only(char **str, int i)
+{
+	int j;
+
+	j = 0;
+	while (str[i][j])
+	{
+		if (str[i][j++] != '|')
+		{
+			free(str[i]);
+			str[i] = NULL;
+			break ;
+		}
+	}
+}
+
+
+int	is_redir_or_pipes(char **raw, int i)
 {
 	while (raw[i])
 	{
-		if (raw[i][j] == '|')
-		{
-			while (raw[i][j])
-			{
-				if (raw[i][j++] != '|')
-				{
-					free(raw[i]);
-					raw[i] = NULL;
-					break ;
-				}
-			}
-		}
-		else if (!((ft_strlen(raw[i]) == 2 && (!ft_strcmp(raw[i], "<<")
-						|| !ft_strcmp(raw[i], ">>")))
-				|| (ft_strlen(raw[i]) == 1 && (!ft_strcmp(raw[i], "<")
+		if (raw[i][0] == '|')
+			pipe_only(raw, i);
+		else if (!((ft_strlen(raw[i]) == 2 &&
+					(!ft_strcmp(raw[i], "<<") || !ft_strcmp(raw[i], ">>")))
+					|| (ft_strlen(raw[i]) == 1 && (!ft_strcmp(raw[i], "<")
 						|| !ft_strcmp(raw[i], ">")))))
 		{
 			free(raw[i]);
 			raw[i] = NULL;
 		}
+		if (i > 0 && raw[i] && raw[i - 1] && raw[i][0] == '|'
+			&& raw[i - 1][0] == '|')
+			return (ft_fprintf(2, "bash: syntax error"),
+				ft_fprintf(2, " near unexpected token `|'\n"));
 		i++;
-		j = 0;
 	}
+	return (0);
 }

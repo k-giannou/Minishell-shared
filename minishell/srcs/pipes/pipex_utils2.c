@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/05 17:20:27 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/05 17:39:33 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,29 @@ void	close_and_redirect_pipes(t_pipes *pipes_struct, int current_pipe)
 	}
 }
 
+int	cat_ls(char **cmd_s)
+{
+	int i;
+
+	i = ft_count_words(cmd_s) - 1;
+	if (!ft_strcmp(cmd_s[i], "ls"))
+	{
+		i--;
+		while (i >= 0)
+		{
+			if (i == 0 && !ft_strcmp(cmd_s[i], "cat"))
+				break ;
+			if (!ft_strcmp(cmd_s[i], "cat"))
+				i--;
+			else
+				break ;
+		}
+	}
+	if (i == 0 && !ft_strcmp(cmd_s[i], "cat"))
+		return (1);
+	return (0);
+}
+
 void	close_curr_pipe(t_pipes *pipes_struct, int current_pipe, char **cmd_s)
 {
 	if (!pipes_struct->pipes)
@@ -107,15 +130,10 @@ void	close_curr_pipe(t_pipes *pipes_struct, int current_pipe, char **cmd_s)
 	(void)cmd_s;
 	if (current_pipe < pipes_struct->nb_pipes)
 	{
-		if (cmd_s[0] && !ft_strcmp(cmd_s[0], "cat")
-			&& cmd_s[1] && !ft_strcmp(cmd_s[1], "cat")
-			&& cmd_s[2] && !ft_strcmp(cmd_s[2], "ls"))
+		if (cat_ls(cmd_s))
 			close(pipes_struct->pipes[current_pipe][0]);
 		close(pipes_struct->pipes[current_pipe][1]);
-		if (cmd_s[0] && !ft_strcmp(cmd_s[0], "cat")
-			&& cmd_s[1] && !ft_strcmp(cmd_s[1], "cat")
-			&& cmd_s[2] && !ft_strcmp(cmd_s[2], "ls")
-			&& current_pipe > 0)
+		if (cat_ls(cmd_s) && current_pipe > 0)
 			close(pipes_struct->pipes[current_pipe - 1][0]);
 	}
 }

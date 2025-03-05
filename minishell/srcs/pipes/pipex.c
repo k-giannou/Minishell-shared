@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/05 15:26:13 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/05 16:24:27 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,8 @@ char	*get_first_arg(char *av)
 
 void	exec_child(char **env, t_minishell *mini)
 {
-	char *prev_cmd;
-	
-	prev_cmd = NULL;
-	if (mini->p.i - 1 >= 0)
-		prev_cmd = get_first_arg(mini->cmd_s[mini->p.i - 1]);
 	if (mini->p.nb_pipes != 0)
-		close_and_redirect_pipes(&mini->p, mini->p.i, prev_cmd);
-	free(prev_cmd);
+		close_and_redirect_pipes(&mini->p, mini->p.i);
 	if (is_buildin(get_first_arg(mini->cmd_s[mini->p.i]), 1))
 		exec_buildin(ft_split(mini->cmd_s[mini->p.i], " "), mini, 1);
 	else
@@ -68,7 +62,7 @@ int	son_program(char **env, t_minishell *mini)
 	if (mini->p.pids[mini->p.i] == 0)
 		exec_child(env, mini);
 	else
-		close_curr_pipe(&mini->p, mini->p.i);
+		close_curr_pipe(&mini->p, mini->p.i, mini->cmd_s);
 	if (mini->p.i == mini->p.nb_pipes)
 		return (waitpid(mini->p.pids[mini->p.i - 1], &signal, 0), signal);
 	mini->p.i++;

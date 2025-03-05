@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   repl.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:25:54 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/03 17:53:55 by marvin           ###   ########.fr       */
+/*   Updated: 2025/03/05 15:39:13 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	start_replace(t_variables *v, char *str, t_minishell *mini,
 				while (num[i])
 					v->line[v->k++] = num[i++];
 				free (num);
-				num == NULL;
+				num = NULL;
 			}
 			else if (str[v->i + 1] == '\"' && v->dbl_quote)
 				v->line[v->k++] = str[v->i++];

@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/05 15:26:02 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/05 16:24:36 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,11 @@ void	create_pipes(t_pipes *pipes_struct)
 
 //cat | cat | ls
 
-void	close_and_redirect_pipes(t_pipes *pipes_struct, int current_pipe,
-	char *prev_cmd)
+void	close_and_redirect_pipes(t_pipes *pipes_struct, int current_pipe)
 {
 	int	i;
 
 	i = 0;
-	(void)prev_cmd;
 	while (pipes_struct->pipes && i < pipes_struct->nb_pipes)
 	{
 		if (i == current_pipe)
@@ -91,10 +89,11 @@ void	close_and_redirect_pipes(t_pipes *pipes_struct, int current_pipe,
 	}
 }
 
-void	close_curr_pipe(t_pipes *pipes_struct, int current_pipe)
+void	close_curr_pipe(t_pipes *pipes_struct, int current_pipe, char **cmd_s)
 {
 	if (!pipes_struct->pipes)
 		return ;
+	(void)cmd_s;
 	if (current_pipe < pipes_struct->nb_pipes)
 	{
 		close(pipes_struct->pipes[current_pipe][0]);

@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:31:08 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/05 15:26:05 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/05 16:02:33 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,7 @@ void	free_pipes_redirs(char **str, int nb_words);
 
 
 //pipes
+char	*get_first_arg(char *av);
 char	**splited_env(t_env *env);
 int		get_file(char *av, int i);
 char	*get_cmd(char **av, int i);
@@ -168,9 +169,9 @@ void	read_stdin(int *fd, char *limiter);
 void	create_pipes(t_pipes *pipes_struct);
 void	pipex(t_minishell *mini, char **env);
 void	execute(char **av, char **env, t_minishell *mini);
-void	close_curr_pipe(t_pipes *pipes_struct, int current_pipe);
 char	**get_redir_split(t_minishell *mini, int *j, int len_split);
-void	close_and_redirect_pipes(t_pipes *pipes_struct, int current_pipe, char *last_cmd);
+void	close_and_redirect_pipes(t_pipes *pipes_struct, int current_pipe);
+void	close_curr_pipe(t_pipes *pipes_struct, int current_pipe, char **cmd_s);
 
 //buildins
 void	pwd(t_env *env);

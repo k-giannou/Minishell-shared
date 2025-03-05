@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_r.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:49:52 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/03/03 22:43:39 by marvin           ###   ########.fr       */
+/*   Updated: 2025/03/05 15:57:39 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,11 @@ int	is_buildin(char *tab, int to_free)
 		|| !ft_strcmp(tab, "cd") || !ft_strcmp(tab, "export")
 		|| !ft_strcmp(tab, "unset") || !ft_strcmp(tab, "env")
 		|| !ft_strcmp(tab, "exit"))
-			return (free(tab), 1);
+	{
+		if (to_free)
+			free(tab);
+		return (1);
+	}
 	if (to_free)
 		free(tab);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/05 17:18:11 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/05 17:20:27 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,5 +112,10 @@ void	close_curr_pipe(t_pipes *pipes_struct, int current_pipe, char **cmd_s)
 			&& cmd_s[2] && !ft_strcmp(cmd_s[2], "ls"))
 			close(pipes_struct->pipes[current_pipe][0]);
 		close(pipes_struct->pipes[current_pipe][1]);
+		if (cmd_s[0] && !ft_strcmp(cmd_s[0], "cat")
+			&& cmd_s[1] && !ft_strcmp(cmd_s[1], "cat")
+			&& cmd_s[2] && !ft_strcmp(cmd_s[2], "ls")
+			&& current_pipe > 0)
+			close(pipes_struct->pipes[current_pipe - 1][0]);
 	}
 }

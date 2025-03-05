@@ -53,6 +53,17 @@ void	start_replace(t_variables *v, char *str, t_minishell *mini,
 			if (str[v->i + 1] == '\0' || str[v->i + 1] == 32 || str[v->i
 					+ 1] == '$')
 				v->line[v->k++] = str[v->i++];
+			else if (str[v->i + 1] == '?')
+			{
+				v->i += 2;//pass the ?
+				char *num = ft_itoa(g_signal);
+				//printf("itoa = %s", num);
+				int i = 0;
+				while (num[i])
+					v->line[v->k++] = num[i++];
+				free (num);
+				num == NULL;
+			}
 			else if (str[v->i + 1] == '\"' && v->dbl_quote)
 				v->line[v->k++] = str[v->i++];
 			else if ((str[v->i + 1] == '\"' || str[v->i + 1] == '\'')

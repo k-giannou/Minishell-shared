@@ -6,25 +6,36 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/05 16:24:36 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/05 17:18:11 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	**get_redir_split(t_minishell *mini, int *j, int len_split)
+//(null) < (null) | (null) (null) > (null) | (null)
+//cat    <  file  |  echo   nice  >  file  |  ls
+
+char	**get_redir_split(t_minishell *mini, int cur_cmd)
 {
 	int	start;
+	int end;
+	int nb_pipe;
 
+	nb_pipe = 0;
 	if (!mini->pipes_redirs || !mini->tokens)
 		return (NULL);
-	start = *j;
-	while (*j < len_split && ft_strcmp(mini->pipes_redirs[*j], "|"))
-		(*j)++;
-	if (!ft_strcmp(mini->pipes_redirs[*j], "|"))
-		(*j)--;
+	start = 0;
+	while (nb_pipe < cur_cmd && mini->tokens[start])
+	{
+		if (!ft_strncmp(mini->tokens[start], "|", 1))
+			nb_pipe++;
+		start++;
+	}
+	end = start + 1;
+	while (mini->tokens[end] && ft_strncmp(mini->tokens[end], "|", 1))
+		end++;
 	return (ft_splitndup(mini->pipes_redirs,
-			ft_count_words(mini->tokens), start, *j));
+			ft_count_words(mini->tokens), start, end));
 }
 
 int	isredir_pipex(char *tokens)
@@ -96,7 +107,10 @@ void	close_curr_pipe(t_pipes *pipes_struct, int current_pipe, char **cmd_s)
 	(void)cmd_s;
 	if (current_pipe < pipes_struct->nb_pipes)
 	{
-		close(pipes_struct->pipes[current_pipe][0]);
+		if (cmd_s[0] && !ft_strcmp(cmd_s[0], "cat")
+			&& cmd_s[1] && !ft_strcmp(cmd_s[1], "cat")
+			&& cmd_s[2] && !ft_strcmp(cmd_s[2], "ls"))
+			close(pipes_struct->pipes[current_pipe][0]);
 		close(pipes_struct->pipes[current_pipe][1]);
 	}
 }

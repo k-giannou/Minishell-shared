@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/05 16:24:27 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/05 17:05:57 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,19 @@ char	*get_first_arg(char *av)
 	return (first_arg);
 }
 
-void	exec_child(char **env, t_minishell *mini)
+void	exec_child(char **env, t_minishell *mini, char **split, char **redirs)
 {
 	if (mini->p.nb_pipes != 0)
 		close_and_redirect_pipes(&mini->p, mini->p.i);
-	if (is_buildin(get_first_arg(mini->cmd_s[mini->p.i]), 1))
+	if (isredir_pipex(mini->cmd_s[mini->p.i]))
+	{
+		split = ft_split(mini->cmd_s[mini->p.i], " ");
+		redirs = get_redir_split(mini, mini->p.i);
+		redir(mini, env, split, redirs);
+		free_pipes_redirs(redirs, ft_count_words(split));
+		free_dbl_tab(split);
+	}
+	else if (is_buildin(get_first_arg(mini->cmd_s[mini->p.i]), 1))
 		exec_buildin(ft_split(mini->cmd_s[mini->p.i], " "), mini, 1);
 	else
 		execute(mini->cmd_s, env, mini);
@@ -60,7 +68,7 @@ int	son_program(char **env, t_minishell *mini)
 	if (mini->p.pids[mini->p.i] == -1)
 		return (perror(RED "Error -> pid failure\n" RESET), 0);
 	if (mini->p.pids[mini->p.i] == 0)
-		exec_child(env, mini);
+		exec_child(env, mini, NULL, NULL);
 	else
 		close_curr_pipe(&mini->p, mini->p.i, mini->cmd_s);
 	if (mini->p.i == mini->p.nb_pipes)

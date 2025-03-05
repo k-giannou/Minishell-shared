@@ -3,15 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-<<<<<<< HEAD
-/*   Created: 2025/02/27 16:31:08 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/05 16:02:33 by locagnio         ###   ########.fr       */
-=======
-/*   Created: 2025/03/05 15:38:50 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/03/05 15:38:54 by kgiannou         ###   ########.fr       */
->>>>>>> 75fd9508efe331307b8f832369f89961c15a5834
+/*   Created: 2025/03/05 17:03:22 by locagnio          #+#    #+#             */
+/*   Updated: 2025/03/05 17:03:23 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +169,7 @@ void	read_stdin(int *fd, char *limiter);
 void	create_pipes(t_pipes *pipes_struct);
 void	pipex(t_minishell *mini, char **env);
 void	execute(char **av, char **env, t_minishell *mini);
-char	**get_redir_split(t_minishell *mini, int *j, int len_split);
+char	**get_redir_split(t_minishell *mini, int cur_cmd);
 void	close_and_redirect_pipes(t_pipes *pipes_struct, int current_pipe);
 void	close_curr_pipe(t_pipes *pipes_struct, int current_pipe, char **cmd_s);
 

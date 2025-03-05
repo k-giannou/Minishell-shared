@@ -3,17 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_r.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-<<<<<<< HEAD
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/20 13:49:52 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/03/05 15:57:39 by locagnio         ###   ########.fr       */
-=======
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/20 13:49:52 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/03/05 15:33:41 by kgiannou         ###   ########.fr       */
->>>>>>> 75fd9508efe331307b8f832369f89961c15a5834
+/*   Created: 2025/03/05 17:04:54 by locagnio          #+#    #+#             */
+/*   Updated: 2025/03/05 17:04:55 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,15 +81,11 @@ int	is_buildin(char *tab, int to_free)
 		|| !ft_strcmp(tab, "cd") || !ft_strcmp(tab, "export")
 		|| !ft_strcmp(tab, "unset") || !ft_strcmp(tab, "env")
 		|| !ft_strcmp(tab, "exit"))
-<<<<<<< HEAD
 	{
 		if (to_free)
 			free(tab);
 		return (1);
 	}
-=======
-		return (free(tab), 1);
->>>>>>> 75fd9508efe331307b8f832369f89961c15a5834
 	if (to_free)
 		free(tab);
 	return (0);

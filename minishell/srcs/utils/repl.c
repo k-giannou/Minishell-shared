@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   repl.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:25:54 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/03 17:53:55 by marvin           ###   ########.fr       */
+/*   Updated: 2025/03/05 15:35:34 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,9 @@ void	search_and_change(t_variables *v, char *str, t_minishell *mini,
 void	start_replace(t_variables *v, char *str, t_minishell *mini,
 		t_env *current)
 {
+	char	*num;
+	int		i;
+
 	while (str[v->i] != '\0')
 	{
 		if (str[v->i] == '\'' && (!v->dbl_quote))
@@ -55,14 +58,13 @@ void	start_replace(t_variables *v, char *str, t_minishell *mini,
 				v->line[v->k++] = str[v->i++];
 			else if (str[v->i + 1] == '?')
 			{
-				v->i += 2;//pass the ?
-				char *num = ft_itoa(g_signal);
-				//printf("itoa = %s", num);
-				int i = 0;
+				v->i += 2;
+				num = ft_itoa(g_signal);
+				i = 0;
 				while (num[i])
 					v->line[v->k++] = num[i++];
 				free (num);
-				num == NULL;
+				num = NULL;
 			}
 			else if (str[v->i + 1] == '\"' && v->dbl_quote)
 				v->line[v->k++] = str[v->i++];

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:31:08 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/04 16:31:53 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/05 15:23:55 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,10 @@ void	free_strs(char **str1, char **str2, char **str3);
 int	hd_filename(char **tokens, char ** pipes_redirs);
 void	correct_null_tabs(int size_tokens, char **tokens, char **pipes_redirs);
 int	syntax_error_before_hd(char **tokens, char **pipes_redirs);
+int	error_in_heredoc(char **tokens, char **pipes_redirs, bool *error);
+void	write_in_heredoc(int *first, int fd, char *line, char **eofs);
+int	init_r(t_redirs *r, char **tokens);
+void	restore_and_free(char **tab1, char *path, t_redirs *r);
 
 //utils
 char	*hostname(void);

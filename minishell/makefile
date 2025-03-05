@@ -38,6 +38,8 @@ SRCS			=  srcs/exec.c\
 				   srcs/redirs/redirs.c\
 				   srcs/redirs/syntax_r.c\
 				   srcs/redirs/utils_r.c\
+				   srcs/redirs/utils_r2.c\
+				   srcs/redirs/utils_r3.c\
 				   srcs/redirs/hd.c\
 				   srcs/redirs/utils_hd.c\
 				   \

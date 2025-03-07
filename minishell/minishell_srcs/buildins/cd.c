@@ -6,41 +6,11 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 19:15:45 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/07 19:07:49 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/07 20:51:25 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void	add_directory(t_env **tmp, char *path, int *i)
-{
-	char	str[257];
-	int		j;
-
-	j = 0;
-	ft_bzero(str, 257);
-	if (ft_strcmp((*tmp)->data, "PWD=/"))
-		str[j++] = '/';
-	if (path[*i] == '/')
-		(*i)++;
-	while (path[*i] != '/' && path[*i])
-		str[j++] = path[(*i)++];
-	(*tmp)->data = ft_strjoin_n_free((*tmp)->data, ft_strdup(str), 12);
-}
-
-void	new_location2(t_env **tmp)
-{
-	char	*str;
-
-	str = (*tmp)->data;
-	(*tmp)->data = ft_strndup(str, ft_strrchr(str, '/'));
-	free(str);
-	if (!ft_strcmp((*tmp)->data, "PWD="))
-	{
-		free((*tmp)->data);
-		(*tmp)->data = ft_strdup("PWD=/");
-	}
-}
 
 void	change_old_pwd(char *data, t_minishell **mini)
 {
@@ -119,4 +89,5 @@ void	cd(char **path, t_minishell **mini)
 	(*mini)->cur_loc = replace_by_tilde((*mini)->env, (*mini)->cur_loc, 1);
 	if (!(*mini)->cur_loc || new_location(mini))
 		return (free_all(*mini, "all"), exit(1));
+	g_signal = 0;
 }

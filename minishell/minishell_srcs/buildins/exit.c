@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 21:07:06 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/07 17:37:34 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/07 20:40:26 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	ft_exit(t_minishell *mini)
 	}
 	if (mini->tokens && mini->tokens[0] && mini->tokens[0][0] && mini->tokens[1]
 		&& mini->tokens[2])
-		return (g_signal = 0, error_exit(mini->tokens[2], 2));
-	return (g_signal = 0, /* printf("exit\n"),  */free_all(mini, "all"), exit(nb % 256));
+		return (g_signal = 1, error_exit(mini->tokens[2], 2));
+	return (g_signal = nb % 256, printf("exit\n"), free_all(mini, "all"),
+			exit(nb % 256));
 }

@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 20:38:24 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/07 18:27:46 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/07 20:59:49 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,10 @@ char	*replace_by_tilde(t_env *env, char *str, int free_str)
 			NULL);
 	tmp = env;
 	ft_get_env(&tmp, "HOME=");
+	if (!tmp)
+		printf("tmp = (NULL)\n");
+	else
+		printf("env = %s\n", tmp->data);
 	if (tmp && !ft_strncmp(str, tmp->data + 5, ft_strlen(tmp->data + 5)))
 	{
 		new_str = ft_strjoin("~", str + ft_strlen(tmp->data + 5));

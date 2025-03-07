@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 19:15:45 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/07 17:37:39 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/07 21:02:26 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,6 @@ void	export(char **vars, t_minishell *mini)
 		i++;
 	}
 	ft_env_sort(&mini->env_export);
+	mini->cur_loc = replace_by_tilde(mini->env, mini->cur_loc, 1);
 	g_signal = 0;
-	return ;
 }

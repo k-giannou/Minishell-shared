@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:03:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/07 20:24:59 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/07 20:41:42 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ void	close_and_redirect_pipes(t_pipes *pipes_struct, int current_pipe);
 void	close_curr_pipe(t_pipes *pipes_struct, int current_pipe, char **cmd_s);
 
 //buildins
-void	pwd(t_env *env);
+void	pwd(void);
 void	echo(char **line);
 void	ft_env(t_env *env);
 void	ft_exit(t_minishell *mini);

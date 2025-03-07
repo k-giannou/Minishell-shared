@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_r3.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 15:33:04 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/03/05 15:34:02 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/07 20:44:22 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	exec_buildin(char **tab, t_minishell *mini, int free)
 	if (!tab || !tab[0])
 		return ;
 	if (!ft_strcmp(tab[0], "pwd"))
-		pwd(mini->env);
+		pwd();
 	else if (!ft_strcmp(tab[0], "echo"))
 		echo(tab);
 	else if (!ft_strcmp(tab[0], "cd"))

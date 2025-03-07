@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:00:12 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/28 19:26:33 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/07 19:41:21 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@
 # include <stdint.h>
 # include <limits.h>
 
+# ifndef RED
+#  define RED		"\033[31m"   //Couleur rouge
+# endif
+# ifndef RESET
+#  define RESET		"\033[0m"   //Réinitialisation
+# endif
 /* typedef struct s_list
 {
 	void			*data;

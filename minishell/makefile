@@ -1,51 +1,17 @@
 MAKEFLAGS += -s  # Active le mode silencieux globalement
 
-# Définition des variables
 CC				= cc
 FLAGS			= -Wall -Wextra -Werror -g
 HDRS			= includes
-SRCS			=  srcs/exec.c\
-				   srcs/free.c\
-				   srcs/print.c\
-				   srcs/print2.c\
-				   srcs/signals.c\
-				   srcs/minishell.c\
-				   srcs/ft_splitdup.c\
-				   srcs/ft_splitndup.c\
-				   srcs/optimized_argument.c\
-				   \
-				   srcs/utils/repl.c\
-				   srcs/utils/repl2.c\
-				   srcs/utils/utils.c\
-				   srcs/utils/utils2.c\
-				   srcs/utils/utils3.c\
-				   srcs/utils/utils4.c\
-				   srcs/utils/utils5.c\
-				   srcs/utils/ft_list_sort.c\
-				   \
-				   srcs/buildins/cd.c\
-				   srcs/buildins/pwd.c\
-				   srcs/buildins/env.c\
-				   srcs/buildins/exit.c\
-				   srcs/buildins/echo.c\
-				   srcs/buildins/unset.c\
-				   srcs/buildins/export.c\
-				   \
-				   srcs/pipes/pipex.c\
-				   srcs/pipes/pipex_utils.c\
-				   srcs/pipes/pipex_utils2.c\
-				   \
-				   srcs/redirs/redirs.c\
-				   srcs/redirs/syntax_r.c\
-				   srcs/redirs/utils_r.c\
-				   srcs/redirs/utils_r2.c\
-				   srcs/redirs/utils_r3.c\
-				   srcs/redirs/hd.c\
-				   srcs/redirs/utils_hd.c\
-				   \
-				   srcs/gnl/get_next_line_bonus.c\
-				   srcs/gnl/get_next_line_utils_bonus.c
-SRC_O			= $(SRCS:srcs/.c=.o)
+LIBFT_DIR		= libft+extras
+LIBFT			= $(LIBFT_DIR)/libft.a
+SRCS_DIR		= ./
+OBJ_DIR			= obj
+
+SRCS			= $(shell find $(SRCS_DIR)/minishell_srcs -type f -name '*.c')
+
+SRC_O			= $(SRCS:$(SRCS_DIR)%.c=$(OBJ_DIR)/%.o)
+
 NAME			= minishell
 RM				= rm -f
 CYAN			= "\033[36m"
@@ -53,32 +19,40 @@ RED				= "\033[31m"
 GREEN			= "\033[32m"
 RESET			= "\033[0m"
 
-# Règle par défaut : création de l'exécutable
 all: $(NAME)
 
 # Création de l'exécutable
-$(NAME): $(SRC_O)
-	@echo $(CYAN)"Création de l'exécutable $(NAME)..."$(RESET)
-	@$(CC) $(FLAGS) $(SRC_O) -L lib -lfprintf -lft -I $(HDRS) -o $(NAME) -lreadline
+$(NAME): $(LIBFT) $(SRC_O)
+	@echo $(CYAN)"Compilation de minishell..."$(RESET)
+	@$(CC) $(FLAGS) $(SRC_O) -L libs -lfprintf -lft -I $(HDRS) -o $(NAME) -lreadline
 	@echo $(GREEN)"Exécutable $(NAME) créé !"$(RESET)
 
-# Compilation des fichiers sources en objets
-# On compiles les fichiers .c dans srcs/ en .o dans le répertoire racine
-%.o: philo\ /%.c $(HDRS)/*.h
-	@echo $(CYAN)"Compilation de $<..."$(RESET)
+# Règle pour compiler la libft (appelle le Makefile dans libft+extras)
+$(LIBFT):
+	@mkdir -p $(OBJ_DIR)
+	$(MAKE) -C $(LIBFT_DIR)
+	@mv $(LIBFT_DIR)/libft.a libs/
+
+# Compilation des fichiers sources en objets dans le répertoire obj/
+$(OBJ_DIR)/%.o: $(SRCS_DIR)%.c $(HDRS)/*.h
+	@mkdir -p $(dir $@)
 	@$(CC) $(FLAGS) -I $(HDRS) -c $< -o $@
+
 
 # Nettoyage des objets
 clean:
 	@echo $(CYAN)"Suppression des fichiers objets..."$(RESET)
-	@$(RM) *.o */*.o */*/*.o
+	@rm -rf $(OBJ_DIR)
+	$(MAKE) -C $(LIBFT_DIR) clean
 
 # Nettoyage complet
 fclean: clean
 	@echo $(CYAN)"Suppression de l'exécutable..."$(RESET)
 	@$(RM) $(NAME)
+	@echo $(CYAN)"Suppression de la libft..."$(RESET)
+	@$(RM) libs/libft.a
 
-# Récompilation depuis zéro
+# Récompilation complète depuis zéro
 re: fclean all
 
 # Sécurité des règles

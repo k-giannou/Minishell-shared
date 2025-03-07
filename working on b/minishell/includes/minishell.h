@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:03:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/05 17:03:23 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/07 19:59:16 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <termios.h>
 # include <signal.h>
 # include <stdint.h>
+# include <dirent.h>
 
 # include "libft_extras.h"
 # include "ft_fprintf.h"
@@ -226,5 +227,16 @@ void	ft_list_add_back(t_env **lst, t_env *new);
 char	*replace_var(t_minishell *mini, char *str);
 void	if_pipes_or_redirs(char *line, int *i, int *count);
 void	ft_substr_mini_2(char *line, t_minishell **mini, int *len);
+
+
+//bonus
+int		search_for_patterns(char *pattern, t_variables *v);
+int		wildcars_exist_at(char *str, int i, bool parse);
+char	*handle_wildcards(char *str, t_minishell *mini);
+int		find_start(char *str, int point);
+int		find_end(char *str, int point);
+int		ft_fnmatch_rec(const char *pattern, const char *str);
+void	replace_file_in_str(t_variables *v, char *file);
+void	search_test(void);
 
 #endif

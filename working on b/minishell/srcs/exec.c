@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:33:34 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/05 18:24:01 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/07 18:10:08 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	**ft_splitdup_pipes_redirs(char **split, int len_split)
 
 void	exec_cmd(t_minishell *mini)
 {
-	ft_print_dlb_tabs(mini->tokens, "tokens");
+	//ft_print_dlb_tabs(mini->tokens, "tokens");
 	if (mini->p.nb_pipes > 0)
 		pipex(mini, splited_env(mini->env));
 	else if (isredir(mini))

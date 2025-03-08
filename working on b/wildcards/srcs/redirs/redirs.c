@@ -6,7 +6,7 @@
 /*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:21:49 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/03/05 15:27:51 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/08 11:31:08 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,16 +110,16 @@ int	handle_no_buildin_redir(char **env, char **tokens,
 		}
 		join_command_free_tab(mini->r.tab, tokens);
 		path = find_path(mini->r.tab[0], env);
-		if (!path)
-		{
-			restore_and_free(mini->r.tab, NULL, &mini->r);
-			exit (-1);
-		}
-		if (execve(path, mini->r.tab, env) == -1)
+		if (!path || execve(path, mini->r.tab, env) == -1)
 		{
 			restore_and_free(mini->r.tab, path, &mini->r);
 			exit (-1);
 		}
+		// if (execve(path, mini->r.tab, env) == -1)
+		// {
+		// 	restore_and_free(mini->r.tab, path, &mini->r);
+		// 	exit (-1);
+		// }
 	}
 	else
 		waitpid(pid, NULL, 0);

@@ -6,11 +6,27 @@
 /*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:50:09 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/03/05 15:26:39 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/08 11:36:56 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+int check_file_permissions(char **tab, int y)
+{
+    struct stat statbuf;
+
+    if (tab[y][0] == '<')
+    {
+        y++;
+        if (stat(tab[y], &statbuf) != 0)
+            return (ft_fprintf(2, "bash: %s: No \
+					such file or directory\n", tab[y]), 0);
+        if (access(tab[y], R_OK) != 0)
+            return (ft_fprintf(2, "bash: %s: Permission denied\n", tab[y]), 0);
+    }
+    return 1;
+}
 
 int	valid_filename(char **tab, char **ntab)
 {
@@ -30,14 +46,8 @@ int	valid_filename(char **tab, char **ntab)
 			}
 			if (tab[y][0] == '<')
 			{
-				y++;
-				if (stat(tab[y], &statbuf) != 0)
-					return (ft_fprintf(2,
-							"bash: %s: No such file \
-							or directory\n", tab[y]), 0);
-				if (access(tab[y], R_OK) != 0)
-					return (ft_fprintf(2,
-							"bash: %s: Permission denied\n", tab[y]), 0);
+				if (!check_file_permissions(tab, y))
+					return (0);
 			}
 		}
 		y++;

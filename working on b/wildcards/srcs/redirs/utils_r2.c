@@ -6,7 +6,7 @@
 /*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 15:20:47 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/03/05 15:32:32 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/08 11:30:37 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	restore_and_free(char **tab1, char *path, t_redirs *r)
 	perror(RED "Error -> issue finding path or execve\n" RESET);
 	free_dbl_tab(tab1);
 	restore_dup(r);
-	if (path)
+	if (path && *path)
 		free(path);
 }
 

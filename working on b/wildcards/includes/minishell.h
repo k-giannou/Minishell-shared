@@ -6,7 +6,7 @@
 /*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:03:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/07 19:59:16 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/08 10:48:50 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,8 +235,7 @@ int		wildcars_exist_at(char *str, int i, bool parse);
 char	*handle_wildcards(char *str, t_minishell *mini);
 int		find_start(char *str, int point);
 int		find_end(char *str, int point);
-int		ft_fnmatch_rec(const char *pattern, const char *str);
-void	replace_file_in_str(t_variables *v, char *file);
+int		ft_fnmatch_rec(const char *pattern, const char *str, int *i);
 void	search_test(void);
 
 #endif

@@ -6,33 +6,31 @@
 /*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 09:57:59 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/03/07 21:19:12 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/08 11:19:57 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	ft_fnmatch_rec(const char *pattern, const char *str)
+int	ft_fnmatch_rec(const char *pattern, const char *str, int *i)
 {
-	static int	i;
-
-	if (*pattern == '\"')
+	while (*pattern == '\"')
 	{
-		i++;
+		(*i)++;
 		pattern++;
 	}
 	if (*pattern == '\0')
         return *str == '\0';
-	if (*pattern == '*' && (i % 2 != 0))
+	if (*pattern == '*' && (*i % 2 != 0))
 	{
-		int	result1 = ft_fnmatch_rec(pattern + 1, str);
+		int	result1 = ft_fnmatch_rec(pattern + 1, str, i);
 		int	result2 = 0;
 		if (*str != '\0')
-			result2 = ft_fnmatch_rec(pattern, str + 1);
+			result2 = ft_fnmatch_rec(pattern, str + 1, i);
 		return (result1 || result2);
 	}
 	if (*pattern == *str)
-		return (ft_fnmatch_rec(pattern + 1, str + 1));
+		return (ft_fnmatch_rec(pattern + 1, str + 1, i));
 	return (0);
 }
 
@@ -56,6 +54,9 @@ void	replace_file_in_str(t_variables *v, char *file)
 
 int	search_for_patterns(char *pattern, t_variables *v)
 {
+	int	i;
+
+	i = 1;
 	(void)v;
 	struct dirent *entry;
 	DIR *dp = opendir(".");
@@ -66,7 +67,8 @@ int	search_for_patterns(char *pattern, t_variables *v)
 		return (perror("opendir"), 0);
 	while ((entry = readdir(dp)) != NULL)
 	{
-		if (entry->d_name[0] != '.' && ft_fnmatch_rec(pattern, entry->d_name))
+		i = 1;
+		if (entry->d_name[0] != '.' && ft_fnmatch_rec(pattern, entry->d_name, &i))
 		{
 			replace_file_in_str(v, entry->d_name);
 			found = true;

@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi_base.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:32:27 by locagnio          #+#    #+#             */
-/*   Updated: 2025/01/18 16:37:04 by marvin           ###   ########.fr       */
+/*   Updated: 2025/03/08 17:37:02 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_extras.h"
-
-/* turn a decimal string into an int in a certain base */
 
 static void	error_msg(char *msg)
 {
@@ -49,6 +47,7 @@ static int	ft_error(char *base)
 	return (0);
 }
 
+/* turn a decimal string into an int in a certain base */
 int	ft_atoi_base(const char *nptr, char *base)
 {
 	int		i;

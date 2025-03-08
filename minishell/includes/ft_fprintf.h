@@ -31,7 +31,7 @@ typedef struct s_struct
 int			ft_digits(long n);
 int			ft_atoi(const char *nptr);
 int			srch_flag(char *s, char c);
-int			ft_strcmp(char *s1, char *s2);
+int			ft_strcmp(const char *s1, const char *s2);
 int			ft_fprintf(int fd, const char *str, ...);
 int			standard_conds(t_struct v, int i);
 int			print_this_bs(va_list args, t_struct v);

@@ -6,13 +6,11 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:31:37 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/26 17:12:16 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/08 17:17:43 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_extras.h"
-
-/* split a string into a chain of strings depending on a character */
 
 int	skip_charset(char i, char *charset)
 {
@@ -87,6 +85,7 @@ char	**write_split(char *str, char **split, char *charset, int i)
 	return (split);
 }
 
+/* split a string into a chain of strings depending on the characters of "charset" */
 char	**ft_split(char *str, char *charset)
 {
 	char	**split;

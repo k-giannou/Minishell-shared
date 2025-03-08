@@ -6,13 +6,11 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:31:07 by locagnio          #+#    #+#             */
-/*   Updated: 2025/01/17 17:31:30 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/08 17:31:05 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_extras.h"
-
-/* turn a number into an string */
 
 static int	init_vals(long nb, int *sign)
 {
@@ -35,6 +33,7 @@ static int	init_vals(long nb, int *sign)
 	return (i);
 }
 
+/* turn a number into an string */
 char	*ft_itoa(int n)
 {
 	char	*cpy;

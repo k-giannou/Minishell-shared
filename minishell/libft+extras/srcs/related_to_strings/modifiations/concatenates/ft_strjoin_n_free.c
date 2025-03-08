@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 16:07:25 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/07 19:51:12 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/08 17:21:39 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 /* join 2 strings and free whatever used string you want to free :
 	- 1 : free s1
 	- 2 : free s2
-	- 12 : free both s1 and s2
-	- else : doesnt't free */
-
+	- 12 : free both s1 and s2 */
 char	*ft_strjoin_n_free(char *s1, char *s2, int tab_to_free)
 {
 	char	*new_string;

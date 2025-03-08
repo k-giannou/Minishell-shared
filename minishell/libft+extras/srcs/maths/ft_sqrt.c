@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_sqrt.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 19:36:44 by locagnio          #+#    #+#             */
-/*   Updated: 2025/01/18 16:21:55 by marvin           ###   ########.fr       */
+/*   Updated: 2025/03/08 17:30:42 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_extras.h"
 
 /* return the square root of a number */
-
 int	ft_sqrt(int nb)
 {
 	int	i;

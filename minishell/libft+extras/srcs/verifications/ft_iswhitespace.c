@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_iswritespace.c                                  :+:      :+:    :+:   */
+/*   ft_iswhitespace.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:32:58 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/24 00:14:52 by marvin           ###   ########.fr       */
+/*   Updated: 2025/03/08 17:18:19 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_extras.h"
 
 /* return true if the argument is an number */
-
 int	ft_iswhitespace(int c)
 {
 	if (c == ' ' || (c >= 9 && c <= 13))

@@ -6,14 +6,13 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:34:18 by locagnio          #+#    #+#             */
-/*   Updated: 2025/01/17 18:25:56 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/08 17:37:47 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_extras.h"
 
 /* return the lowercase version of an uppercase */
-
 int	ft_tolower(int c)
 {
 	if (c >= 'A' && c <= 'Z')

@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 17:23:02 by locagnio          #+#    #+#             */
-/*   Updated: 2025/01/17 17:52:29 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/08 17:30:57 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 /* turn every numbers contained in a string separated with white spaces into a
 	list of numbers */
-
 int	ft_natoi(const char *nptr, int *i)
 {
 	int		sign;

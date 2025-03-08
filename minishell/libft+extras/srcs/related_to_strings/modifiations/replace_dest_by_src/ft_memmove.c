@@ -6,14 +6,13 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:33:27 by locagnio          #+#    #+#             */
-/*   Updated: 2025/01/17 17:51:37 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/08 17:19:08 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_extras.h"
 
 /* copies n bytes from src to dest and avoid overlaps */
-
 void	*ft_memmove(void *dest, const void *src, size_t n)
 {
 	int	i;

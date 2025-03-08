@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:03:42 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/05 18:12:54 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/08 21:03:16 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	search_and_change(t_variables *v, char *str, t_minishell *mini,
 	v->i++;
 	v->t = 0;
 	current = mini->env;
-	while (ft_isalpha(str[v->i]) || ft_isdigit(str[v->i]) || str[v->i] == '_')
+	while (ft_isalpha(str[v->i]) || ft_isnum(str[v->i]) || str[v->i] == '_')
 		v->to_search[v->t++] = str[v->i++];
 	v->to_search[v->t++] = '\0';
 	dest = ft_strdup(v->to_search);
@@ -71,7 +71,7 @@ void	start_replace(t_variables *v, char *str, t_minishell *mini,
 			else if ((str[v->i + 1] == '\"' || str[v->i + 1] == '\'')
 				&& (!v->dbl_quote))
 				v->i++;
-			else if (ft_isalpha(str[v->i + 1]) || ft_isdigit(str[v->i + 1])
+			else if (ft_isalpha(str[v->i + 1]) || ft_isnum(str[v->i + 1])
 				|| str[v->i + 1] == '_')
 				search_and_change(v, str, mini, current);
 			else

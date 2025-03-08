@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:32:21 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/06 17:21:04 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/08 17:24:25 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 /* returns a new string that started at start, and end at len or the end of s.
 	If start is greater than the lenght of s or if s doesn't exist, it returns
 	an empty string */
-
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	int				i;

@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atof.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:32:27 by locagnio          #+#    #+#             */
-/*   Updated: 2025/01/18 13:49:18 by marvin           ###   ########.fr       */
+/*   Updated: 2025/03/08 17:37:13 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_extras.h"
-
-/* turn a decimal number string into an float */
 
 static float	decimal(char *nptr)
 {
@@ -32,6 +30,7 @@ static float	decimal(char *nptr)
 	return (result);
 }
 
+/* turn a decimal number string into an float */
 float	ft_atof(char *nptr)
 {
 	int		i;

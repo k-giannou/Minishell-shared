@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 20:38:24 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/07 20:59:49 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/08 16:14:12 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,10 +124,7 @@ int	is_redir_or_pipes(char **raw, int i)
 	{
 		if (raw[i][0] == '|')
 			pipe_only(raw, i);
-		else if (!((ft_strlen(raw[i]) == 2 &&
-					(!ft_strcmp(raw[i], "<<") || !ft_strcmp(raw[i], ">>")))
-					|| (ft_strlen(raw[i]) == 1 && (!ft_strcmp(raw[i], "<")
-						|| !ft_strcmp(raw[i], ">")))))
+		else if (str_multi_cmp(raw[i], "<<", ">>", "<", ">"))
 		{
 			free(raw[i]);
 			raw[i] = NULL;

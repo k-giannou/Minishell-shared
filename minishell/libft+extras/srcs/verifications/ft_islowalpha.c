@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_islowalpha.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:32:49 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/24 00:09:13 by marvin           ###   ########.fr       */
+/*   Updated: 2025/03/08 17:18:40 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_extras.h"
 
 /* return true if the argument is an alphabetic lowercase argument */
-
 int	ft_islowalpha(int c)
 {
 	if (c >= 'a' && c <= 'z')

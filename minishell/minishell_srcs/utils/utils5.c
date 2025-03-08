@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils5.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 18:07:16 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/03 22:18:26 by marvin           ###   ########.fr       */
+/*   Updated: 2025/03/08 16:29:36 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,7 @@ char	*get_cmd(char **av, int i)
 	if (!av || !av[i])
 		return (NULL);
 	cmd = ft_strdup(av[i++]);
-	while (av[i] || ft_strcmp(av[i], ">") || ft_strcmp(av[i], ">>")
-		|| ft_strcmp(av[i], "<") || ft_strcmp(av[i], "<<") || ft_strcmp(av[i],
-			"|"))
+	while (av[i] || str_multi_cmp(av[i], ">", ">>", "<", "<<", "|"))
 		cmd = ft_strjoin_n_free(ft_strjoin_n_free(cmd, " ", 1), av[i++], 1);
 	return (cmd);
 }

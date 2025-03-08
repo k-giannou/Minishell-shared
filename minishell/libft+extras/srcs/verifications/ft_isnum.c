@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   ft_isnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -13,8 +13,7 @@
 #include "libft_extras.h"
 
 /* return true if the argument is an number */
-
-int	ft_isdigit(int c)
+int	ft_isnum(int c)
 {
 	if (c >= '0' && c <= '9')
 		return (1);
@@ -25,6 +24,6 @@ int	ft_isdigit(int c)
 
 int	main(void)
 {
-	printf("%d\n", ft_isdigit(47));
+	printf("%d\n", ft_isnum(47));
 	return(0);
 } */

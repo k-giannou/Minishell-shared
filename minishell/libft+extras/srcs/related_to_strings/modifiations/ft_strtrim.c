@@ -6,14 +6,11 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:32:16 by locagnio          #+#    #+#             */
-/*   Updated: 2025/01/17 18:19:00 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/08 17:16:43 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_extras.h"
-
-/* return a new string by removing the characters found in set at start and end
-	of s1 */
 
 static int	set_cmp(char c, const char *set)
 {
@@ -29,6 +26,8 @@ static int	set_cmp(char c, const char *set)
 	return (0);
 }
 
+/* return a new string by removing the characters found in "set" string at start
+	and end	of s1 */
 char	*ft_strtrim(char const *s1, char const *set)
 {
 	int	i;

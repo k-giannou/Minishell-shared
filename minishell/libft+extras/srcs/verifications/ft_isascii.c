@@ -6,14 +6,13 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:32:53 by locagnio          #+#    #+#             */
-/*   Updated: 2025/01/17 17:39:16 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/08 17:18:45 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_extras.h"
 
 /* return true if the argument is an restrained ascii argument */
-
 int	ft_isascii(int c)
 {
 	if (c >= 0 && c <= 127)

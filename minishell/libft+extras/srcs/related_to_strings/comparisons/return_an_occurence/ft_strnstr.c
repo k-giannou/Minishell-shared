@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:34:10 by locagnio          #+#    #+#             */
-/*   Updated: 2025/01/17 18:16:44 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/08 17:24:14 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 /* search for the first iteration of little string into len bytes of big string
 	and returns the rest of big string at the first iteration found. If little
 	is null, the function returns big */
-
 char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
 	size_t	i;

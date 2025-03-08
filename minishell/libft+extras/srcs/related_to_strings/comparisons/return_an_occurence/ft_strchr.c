@@ -6,14 +6,13 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:33:42 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/06 17:23:30 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/08 17:24:12 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_extras.h"
 
 /* search the first iteration of c in s */
-
 char	*ft_strchr(const char *s, int c)
 {
 	int	i;

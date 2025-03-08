@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_convert_base.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:58:28 by locagnio          #+#    #+#             */
-/*   Updated: 2025/01/18 16:38:30 by marvin           ###   ########.fr       */
+/*   Updated: 2025/03/08 17:31:25 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_extras.h"
-
-/* converts a string of numbers on a certain base into another base */
 
 static void	error_msg(char *msg)
 {
@@ -49,6 +47,7 @@ static int	ft_error(char *base)
 	return (0);
 }
 
+/* converts a string of numbers on a certain base into another base */
 char	*ft_convert_base(char *nbr, char *base_from, char *base_to)
 {
 	if (!ft_error(base_from) && !ft_error(base_to))

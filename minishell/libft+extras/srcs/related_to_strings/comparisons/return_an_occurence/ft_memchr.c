@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:33:07 by locagnio          #+#    #+#             */
-/*   Updated: 2025/01/17 17:47:38 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/08 17:24:11 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 /* scans n bytes of a string for the first instance of c and return the rest of
 	the string where c was found */
-
 void	*ft_memchr(const void *s, int c, size_t n)
 {
 	size_t	i;

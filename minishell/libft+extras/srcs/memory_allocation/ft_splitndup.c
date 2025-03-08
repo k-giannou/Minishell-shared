@@ -6,14 +6,13 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:33:46 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/07 20:31:25 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/08 17:28:32 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_extras.h"
 
 /* create a dublicate of a splited string at start tab up to end tab */
-
 char	**ft_splitndup(char **split, int len_split, int start, int end)
 {
 	char	**dup;

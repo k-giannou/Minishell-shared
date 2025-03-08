@@ -6,14 +6,13 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:32:32 by locagnio          #+#    #+#             */
-/*   Updated: 2025/01/17 17:35:16 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/08 17:28:28 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_extras.h"
 
 /* set whatever argument to zero */
-
 void	ft_bzero(void *s, size_t n)
 {
 	size_t	i;

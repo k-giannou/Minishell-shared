@@ -6,14 +6,13 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:33:46 by locagnio          #+#    #+#             */
-/*   Updated: 2025/01/17 19:17:52 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/08 17:28:36 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_extras.h"
 
 /* create a dublicate of a string on n characters */
-
 char	*ft_strndup(const char *src, int n)
 {
 	char	*cpy;

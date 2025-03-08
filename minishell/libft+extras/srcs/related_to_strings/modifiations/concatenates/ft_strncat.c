@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 20:09:37 by locagnio          #+#    #+#             */
-/*   Updated: 2025/01/18 16:08:17 by marvin           ###   ########.fr       */
+/*   Updated: 2025/03/08 17:21:10 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_extras.h"
 
 /* copy n bytes of a fixed string to another fixed string */
-
 char	*ft_strncat(char *dest, char *src, size_t nb)
 {
 	int		i;

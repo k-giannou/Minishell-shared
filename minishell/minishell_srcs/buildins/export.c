@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 19:15:45 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/07 21:02:26 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/08 21:03:26 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	rest_letters_of_name(char *str)
 	i = 0;
 	while (str[i] != '\0' && str[i] != '=')
 	{
-		if (!ft_isalpha(str[i]) && !ft_isdigit(str[i]) && str[i] != '_')
+		if (!ft_isalpha(str[i]) && !ft_isnum(str[i]) && str[i] != '_')
 			return (0);
 		i++;
 	}

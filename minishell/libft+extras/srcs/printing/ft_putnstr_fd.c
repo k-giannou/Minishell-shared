@@ -6,14 +6,13 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:31:23 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/06 20:10:44 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/08 17:27:57 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_extras.h"
 
 /* write n characters of a string into the fd chosen */
-
 void	ft_putnstr_fd(char *s, int fd, int n)
 {
 	int	i;

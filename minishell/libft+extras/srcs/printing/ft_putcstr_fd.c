@@ -6,14 +6,13 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:31:23 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/06 20:10:55 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/08 17:28:10 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_extras.h"
 
 /* write a string until c occurs in the fd chosen */
-
 void	ft_putcstr_fd(char *s, int fd, char c)
 {
 	int	i;

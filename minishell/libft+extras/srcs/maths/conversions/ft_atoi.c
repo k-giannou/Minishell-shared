@@ -6,14 +6,13 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:32:27 by locagnio          #+#    #+#             */
-/*   Updated: 2025/01/17 17:32:32 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/08 17:32:45 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_extras.h"
 
 /* turn a string into an number */
-
 int	ft_atoi(const char *nptr)
 {
 	int	i;

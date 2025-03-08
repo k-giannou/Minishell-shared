@@ -12,8 +12,6 @@
 
 #include "libft_extras.h"
 
-/* write an int into the base chosen */
-
 static void	error_msg(char *msg)
 {
 	ft_putstr_fd(msg, 2);
@@ -45,6 +43,7 @@ int	ft_error(char *base)
 	return (1);
 }
 
+/* write an int into the base chosen */
 void	ft_putnbr_base(int nbr, char *base)
 {
 	long	nb;

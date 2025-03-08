@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:00:12 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/07 19:41:21 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/08 20:59:45 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <unistd.h>
 # include <stdint.h>
 # include <limits.h>
+# include <stdarg.h>
+# include <stdbool.h>
 
 # ifndef RED
 #  define RED		"\033[31m"   //Couleur rouge
@@ -33,6 +35,7 @@
 
 //* free
 void		free_dbl_tab(char **str);
+void	multi_free(char *to_free, ...);
 
 //* maths
 int			ft_sqrt(int nb);
@@ -85,6 +88,9 @@ void		*ft_memchr(const void *s, int c, size_t n);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
 char		*ft_strnstr(const char *big, const char *little, size_t len);
 //		+ return the difference :
+int			ft_strcmp(const char *s1, const char *s2);
+int			str_multi_cmp(const char *s1, ...);
+int			str_multi_ncmp(const char *s1, size_t n, ...);
 int			ft_memcmp(const void *s1, const void *s2, size_t n);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 //	-lenght :
@@ -98,9 +104,11 @@ char		*ft_strtrim(char const *s1, char const *set);
 void		ft_striteri(char *s, void (*f)(unsigned int, char *));
 char		*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 //		+ concatenates :
+char		*multi_join(char *s1,...);
 char		*ft_strcat(char *dest, char *src);
 char		*ft_strjoin(char const *s1, char const *s2);
 char		*ft_strncat(char *dest, char *src, size_t nb);
+char		*multi_join_n_free(char *to_free, char *s1, ...);
 size_t		ft_strlcat(char *dst, const char *src, size_t dsize);
 char		*ft_strnjoin(char const *s1, size_t n_s1, char const *s2,
 				size_t n_s2);
@@ -110,6 +118,7 @@ void		*ft_memcpy(void *dest, const void *src, size_t n);
 void		*ft_memmove(void *dest, const void *src, size_t n);
 size_t		ft_strlcpy(char *dst, const char *src, size_t dsize);
 //		+ set a string :
+int			*strchar_to_strint(char *str_char);
 void		*ft_memset(void *s, int c, size_t n);
 char		*ft_remove_from_string(char *str, char *to_delete, int free_str);
 
@@ -117,7 +126,7 @@ char		*ft_remove_from_string(char *str, char *to_delete, int free_str);
 int			ft_isalnum(int c);
 int			ft_isalpha(int c);
 int			ft_isascii(int c);
-int			ft_isdigit(int c);
+int			ft_isnum(int c);
 int			ft_isprint(int c);
 int			ft_isupalpha(int c);
 int			ft_islowalpha(int c);

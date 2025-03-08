@@ -6,14 +6,13 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:31:45 by locagnio          #+#    #+#             */
-/*   Updated: 2025/01/17 21:50:27 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/08 17:21:51 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_extras.h"
 
 /* apply a function on each character of a string */
-
 void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 {
 	int	i;

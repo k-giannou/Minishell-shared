@@ -6,14 +6,15 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:33:59 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/26 19:17:01 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/08 17:22:50 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_extras.h"
 
-/* returns the len of as string until it reaches the first iteration of c */
-
+/* returns the len of as string when :
+	- it reaches the first iteration of c
+	- it reaches the end of the string */
 size_t	ft_strclen(const char *s, char c)
 {
 	size_t	i;

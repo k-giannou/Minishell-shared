@@ -6,14 +6,13 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:26:24 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/12 17:33:03 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/08 17:21:07 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_extras.h"
 
 /* creates a new string by concatenate n characters of 2 strings */
-
 char	*ft_strnjoin(char const *s1, size_t n_s1, char const *s2, size_t n_s2)
 {
 	char	*new_string;

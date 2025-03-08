@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa_base.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:31:07 by locagnio          #+#    #+#             */
-/*   Updated: 2025/01/18 16:38:44 by marvin           ###   ########.fr       */
+/*   Updated: 2025/03/08 17:31:17 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_extras.h"
 
-/* turn a number into a string in a certain base */
 static void	error_msg(char *msg)
 {
 	ft_putstr_fd(msg, 2);
@@ -69,6 +68,7 @@ static int	init_vals(long nb, int *sign, char *base)
 	return (i);
 }
 
+/* turn a number into a string in a certain base */
 char	*ft_itoa_base(int n, char *base)
 {
 	char	*cpy;

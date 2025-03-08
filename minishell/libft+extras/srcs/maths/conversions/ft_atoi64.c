@@ -6,25 +6,22 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 19:26:37 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/25 21:23:53 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/08 17:36:45 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_extras.h"
 
-/* turn a string into an number */
-
 #define INT64_Max "9223372036854775807"
 #define INT64_Min "-9223372036854775808"
 
-int	error64(const char *str)
+static int	error64(const char *str)
 {
 	printf("bash: exit: %s: numeric argument required\n", str);
-	exit(1);
-	return (0);
+	return (-1);
 }
 
-int	cmp_64(char *nptr)
+static int	cmp_64(char *nptr)
 {
 	size_t	len_max;
 	size_t	len_min;
@@ -51,6 +48,9 @@ int	cmp_64(char *nptr)
 	return (free(nptr), 0);
 }
 
+/* turn a string into an int64 (or long long int).
+	if the number in the string is out of the limits of int64,
+	the program returns -1*/
 int64_t	ft_atoi64(const char *nptr)
 {
 	int		i;

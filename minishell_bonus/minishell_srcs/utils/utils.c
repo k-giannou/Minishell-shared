@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 20:38:24 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/10 17:34:39 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/13 19:14:10 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,23 +113,58 @@ void	pipe_only(char **str, int i)
 	}
 }
 
+int	check_parenthesis(char **str, int j, int open_par, int close_par)
+{
+	int i;
 
-int	is_redir_or_pipes(char **raw, int i)
+	if (!ft_strcmp(str[j], "("))
+	{
+		while (str[++j])
+			if (!ft_strcmp(str[j], ")"))
+				return (0);
+		return (ft_fprintf(2, "Error : parenthesis aren't closed properly\n"));
+	}
+	i = -1;
+	while (str[j][++i])
+	{
+		if (str[j][i] == '(')
+			open_par++;
+		else if (str[j][i] == ')')
+			close_par++;
+	}
+	if (open_par < close_par)
+		ft_fprintf(2, "minishell: syntax error near unexpected token `)'\n");
+	else if (open_par == close_par && open_par >= 2)
+		return (ft_fprintf(2, "Error: arithmetic calculations are not"),
+			ft_fprintf(2, "allowed\n"));
+	return (0);
+}
+
+int	is_symbols(char **raw, int i)
 {
 	while (raw[i])
 	{
-		if (raw[i][0] == '|')
-			pipe_only(raw, i);
-		else if (str_multi_cmp(raw[i], "<<", ">>", "<", ">", NULL))
+		if ((i > 0 && raw[i] && raw[i - 1] && !ft_strncmp(raw[i - 1], "||", 2)
+			&& raw[i][0] == '|') || !ft_strncmp(raw[i], "||||", 4))
+			return (ft_fprintf(2, "minishell: syntax error"),
+				ft_fprintf(2, " near unexpected token `||'\n"));
+		else if ((i > 0 && raw[i] && raw[i - 1] && raw[i][0] == '|'
+			&& raw[i - 1][0] == '|') || !ft_strncmp(raw[i], "|||", 3))
+			return (ft_fprintf(2, "minishell: syntax error"),
+				ft_fprintf(2, " near unexpected token `|'\n"));
+		else if (!str_multi_ncmp(1, raw[i], "(", ")")
+			&& check_parenthesis(raw, i, 0, 0))
+			return (1);
+		i++;
+	}
+	while (raw[--i] && i >= 0)
+	{
+		if (str_multi_cmp(raw[i], "<<", ">>", "<", ">", "&&", "||", "|",
+			"(", ")", NULL))
 		{
 			free(raw[i]);
 			raw[i] = NULL;
 		}
-		if (i > 0 && raw[i] && raw[i - 1] && raw[i][0] == '|'
-			&& raw[i - 1][0] == '|')
-			return (ft_fprintf(2, "bash: syntax error"),
-				ft_fprintf(2, " near unexpected token `|'\n"));
-		i++;
 	}
 	return (0);
 }

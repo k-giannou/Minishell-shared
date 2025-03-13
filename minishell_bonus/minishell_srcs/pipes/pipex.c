@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/10 21:25:17 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/13 18:41:19 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	exec_child(char **env, t_minishell *mini, char **split, char **redirs)
 		split = ft_split(mini->cmd_s[mini->p.i], " ");
 		redirs = get_redir_split(mini, mini->p.i);
 		redir(mini, env, split, redirs);
-		free_pipes_redirs(redirs, ft_count_words(split));
+		free_pipes_redirs(redirs, ft_count_words((const char **)split));
 		free_dbl_tab(split);
 	}
 	else if (is_buildin(get_first_arg(mini->cmd_s[mini->p.i]), 1))
@@ -107,7 +107,7 @@ void	pipex(t_minishell *mini, char **env)
 	int		i;
 
 	i = -1;
-	mini->p.nb_pipes = pipe_count(mini);
+	mini->p.nb_pipes = mini->prior.pipes;
 	mini->cmd_s = get_cmd_s(mini, 0);
 	mini->p.i = 0;
 	mini->p.pids = (pid_t *)ft_calloc(sizeof(pid_t), (mini->p.nb_pipes + 1));

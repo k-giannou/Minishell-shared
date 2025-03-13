@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:45:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/05 18:49:12 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/13 18:40:22 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,28 @@ char	*ft_strsrch(const char *s, char *c)
 	return (0);
 }
 
-int	pipe_count(t_minishell *mini)
+void	set_symbols(t_minishell **mini)
 {
 	int	i;
-	int	count;
 	int	len_split;
 
 	i = 0;
-	count = 0;
-	len_split = ft_count_words(mini->tokens);
+	len_split = ft_count_words((const char **)(*mini)->tokens);
 	while (i < len_split)
 	{
-		if (mini->pipes_redirs[i] && !ft_strncmp(mini->pipes_redirs[i], "|", 1))
-			count++;
+		if ((*mini)->pipes_redirs[i])
+		{
+			if (!ft_strcmp((*mini)->pipes_redirs[i], "|"))
+				(*mini)->prior.pipes++;
+			else if (!ft_strcmp((*mini)->pipes_redirs[i], "||"))
+				(*mini)->prior.or++;
+			else if (!ft_strcmp((*mini)->pipes_redirs[i], "&&"))
+				(*mini)->prior.and++;
+			else if (!ft_strcmp((*mini)->pipes_redirs[i], "("))
+				(*mini)->prior.parenthesis++;
+		}
 		i++;
 	}
-	return (count);
 }
 
 void	ft_get_env(t_env **env, char *env_var)

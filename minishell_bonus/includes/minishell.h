@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:03:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/07 20:41:42 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/13 18:39:13 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,14 @@ typedef struct s_pipes
 	int		nb_pipes;
 }	t_pipes;
 
+typedef struct s_prior
+{
+    int	and;
+	int	or;
+	int	pipes;
+	int	parenthesis;
+}	t_prior;
+
 typedef struct s_minishell
 {
 	int			fd;
@@ -115,6 +123,7 @@ typedef struct s_minishell
 	t_user		user;
 	t_variables	vars;
 	t_env		*env;
+	t_prior		prior;
 	bool		sgl_q;
 	bool		dbl_q;
 	char		**cmd_s;
@@ -131,7 +140,7 @@ int		check_quotes(char *str);
 t_env	*create_cell(char *data);
 void	ft_env_sort(t_env **begin_list);
 int		rest_letters_of_name(char *str);
-int		is_redir_or_pipes(char **raw, int i);
+int		is_symbols(char **raw, int i);
 void	ft_get_env(t_env **env, char *env_var);
 t_env	*add_at(t_env *env, char *data, int pos);
 char	*replace_var(t_minishell *mini, char *str);
@@ -162,7 +171,7 @@ char	**splited_env(t_env *env);
 int		get_file(char *av, int i);
 char	*get_cmd(char **av, int i);
 int		isredir_pipex(char *tokens);
-int		pipe_count(t_minishell *mini);
+void	set_symbols(t_minishell **mini);
 char	*find_path(char *cmd, char **env);
 void	read_stdin(int *fd, char *limiter);
 void	create_pipes(t_pipes *pipes_struct);

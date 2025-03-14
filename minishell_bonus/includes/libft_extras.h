@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:00:12 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/13 17:55:07 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/14 15:55:55 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ char		*ft_strnstr(const char *big, const char *little, size_t len);
 /*                            Return The Difference                           */
 /* -------------------------------------------------------------------------- */
 
+int			char_multi_cmp(int s1, ...);
 int			str_multi_cmp(const char *s1, ...);
 int			ft_strcmp(const char *s1, const char *s2);
 int			str_multi_ncmp(int n, const char *s1, ...);

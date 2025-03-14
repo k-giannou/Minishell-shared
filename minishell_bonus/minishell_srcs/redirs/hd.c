@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 13:12:44 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/03/07 17:38:02 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/14 16:06:40 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	last_eof(char *line, char **eofs, int *y, int sum)
 				at line %d delimited by end-of-file (wanted `%s')\n",
 				sum, eofs[*y]);
 		(*y)++;
-		if (*y == ft_count_words(eofs))
+		if (*y == ft_count_words((const char **)eofs))
 		{
 			if (line)
 				free(line);
@@ -111,7 +111,7 @@ int	create_heredoc(char **eofs)
 		line = get_next_line(STDIN_FILENO);
 		if (last_eof(line, eofs, &y, sum))
 			break ;
-		if (y == ft_count_words(eofs) - 1)
+		if (y == ft_count_words((const char **)eofs) - 1)
 			write_in_heredoc(&first, fd, line, eofs);
 		if (line)
 			free(line);
@@ -129,7 +129,7 @@ int	handle_heredoc(char **tokens, char **pipes_redirs)
 
 	if (!tokens)
 		return (0);
-	size_tokens = ft_count_words(tokens);
+	size_tokens = ft_count_words((const char **)tokens);
 	sum = 0;
 	error = false;
 	if (error_in_heredoc(tokens, pipes_redirs, &error))

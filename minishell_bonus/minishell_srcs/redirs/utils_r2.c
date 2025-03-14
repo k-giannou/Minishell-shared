@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_r2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 15:20:47 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/03/05 15:32:32 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/14 16:07:22 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	write_in_heredoc(int *first, int fd, char *line, char **eofs)
 {
 	(*first)++;
-	if (*first != 1 || ft_count_words(eofs) == 1)
+	if (*first != 1 || ft_count_words((const char **)eofs) == 1)
 		write(fd, line, ft_strlen(line));
 }
 

@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 18:07:16 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/08 16:29:36 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/14 16:25:34 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ char	*return_tab(int tab, int *new_i)
 
 void	ft_substr_mini_2(char *line, t_minishell **mini, int *len)
 {
-	while (line[*len] && line[*len] != ' ' && line[*len] != '<'
-		&& line[*len] != '>' && line[*len] != '|')
+	while (line[*len] && char_multi_cmp(line[*len], ' ', '<', '>', '|', '&',
+		'(', ')', 0))
 	{
 		if (line[*len] == SGL_Q || line[*len] == DBL_Q)
 		{
@@ -33,9 +33,8 @@ void	ft_substr_mini_2(char *line, t_minishell **mini, int *len)
 				(*len)++;
 			valid_quotes(line[(*len)++], &((*mini)->sgl_q), &((*mini)->dbl_q));
 		}
-		while (line[*len] && line[*len] != SGL_Q && line[*len] != DBL_Q
-			&& line[*len] != ' ' && line[*len] != '<' && line[*len] != '>'
-			&& line[*len] != '|')
+		while (line[*len] && char_multi_cmp(line[*len], SGL_Q, DBL_Q, ' ', '<',
+			'>', '|', '&', '(', ')', 0))
 			(*len)++;
 	}
 }
@@ -47,7 +46,8 @@ char	*get_cmd(char **av, int i)
 	if (!av || !av[i])
 		return (NULL);
 	cmd = ft_strdup(av[i++]);
-	while (av[i] || str_multi_cmp(av[i], ">", ">>", "<", "<<", "|"))
+	while (av[i] || str_multi_cmp(av[i], ">", ">>", "<", "<<", "|", "||", "&&",
+		"(", ")", NULL))
 		cmd = ft_strjoin_n_free(ft_strjoin_n_free(cmd, " ", 1), av[i++], 1);
 	return (cmd);
 }

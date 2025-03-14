@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:31:28 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/14 15:49:56 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/14 18:24:24 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,15 +71,19 @@ static char	*ft_substr2(char *line, t_minishell **mini, int len)
 static char	*ft_substr_mini(char *line, t_minishell **mini, int *new_i, int tab)
 {
 	int	len;
+	char c;
 
 	len = 0;
 	if (line[0] && ((line[0] == DBL_Q && line[1] == DBL_Q)
 			|| (line[0] == SGL_Q && line[1] == SGL_Q)))
 		return ((*mini)->pipes_redirs[tab] = return_tab(tab, new_i),
 			return_tab(tab, new_i));
-	if (char_multi_cmp(line[len], '<', '>', '|', '&', '(', ')', 0))
-		while (char_multi_cmp(line[len], '<', '>', '|', '&', '(', ')', 0))
+	if (!char_multi_cmp(line[len], '<', '>', '|', '&', '(', ')', 0))
+	{
+		c = get_multi_char_cmp(line[len], '<', '>', '|', '&', '(', ')', 0);
+		while (line[len] == c)
 			len++;
+	}
 	else
 		ft_substr_mini_2(line, mini, &len);
 	*new_i += len;
@@ -99,8 +103,8 @@ void	split_line(char *line, t_minishell **mini, int i)
 			(*mini)->tokens[j] = ft_substr_mini(line + i, mini, &i, j);
 			if (!(*mini)->tokens[j])
 				return (free_all(*mini, "tabs"));
-			else if (char_multi_cmp(line[i], '<', '>', '|', '&', '(', ')', 0)
-				|| char_multi_cmp((*mini)->tokens[j][0], '<', '>', '|', '&',
+			else if (!char_multi_cmp(line[i], '<', '>', '|', '&', '(', ')', 0)
+				|| !char_multi_cmp((*mini)->tokens[j][0], '<', '>', '|', '&',
 					'(', ')', 0))
 				break ;
 		}

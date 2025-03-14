@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 20:38:24 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/13 19:14:10 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/14 19:45:51 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,50 +117,65 @@ int	check_parenthesis(char **str, int j, int open_par, int close_par)
 {
 	int i;
 
-	if (!ft_strcmp(str[j], "("))
-	{
-		while (str[++j])
-			if (!ft_strcmp(str[j], ")"))
-				return (0);
-		return (ft_fprintf(2, "Error : parenthesis aren't closed properly\n"));
-	}
 	i = -1;
-	while (str[j][++i])
+	while (str[j])
 	{
-		if (str[j][i] == '(')
-			open_par++;
-		else if (str[j][i] == ')')
-			close_par++;
+		while (str[j][++i])
+		{
+			if (str[j][i] == '(')
+				open_par++;
+			else if (str[j][i] == ')')
+				close_par++;
+		}
+		i = -1;
+		j++;
 	}
 	if (open_par < close_par)
 		ft_fprintf(2, "minishell: syntax error near unexpected token `)'\n");
-	else if (open_par == close_par && open_par >= 2)
-		return (ft_fprintf(2, "Error: arithmetic calculations are not"),
-			ft_fprintf(2, "allowed\n"));
+	else if (open_par != close_par)
+		return (ft_fprintf(2, "Error : parenthesis aren't closed properly\n"));
+	return (0);
+}
+
+int	check_tokens_errors(char **raw, int i)
+{
+	if (!str_multi_ncmp(2, raw[i], "||", "&&", NULL)
+		&& ((raw[i][2] && raw[i][3]) || i == 0
+			|| (i > 0 && !str_multi_ncmp(1, raw[i - 1], "|", "&", NULL))))
+		return (ft_fprintf(2, "minishell: syntax error"),
+			ft_fprintf(2, " near unexpected token `%.2s'\n", raw[i]));
+	else if ((i == 0 && !str_multi_cmp(raw[i], "|", "&", NULL)
+		&& (!str_multi_ncmp(1, raw[i + 1], "|", "&", NULL))))
+		return (ft_fprintf(2, "minishell: syntax error"),
+			ft_fprintf(2, " near unexpected token `%c%c'\n",
+				raw[i][0], raw[i + 1][0]));
+	else if (i != 0 && !ft_strcmp(raw[i], "&"))
+		return (ft_fprintf(2, "Error: Run commands in the background"),
+			ft_fprintf(2, " is forbidden (\"&\")\n"));
+	else if (!str_multi_ncmp(1, raw[i], "|", "&", NULL)
+		&& ((raw[i][1] && char_multi_cmp(raw[i][1], '|', '&', 0)
+			&& !raw[i][2]) || (raw[i][2] && !raw[i][3]) || i == 0))
+		return (ft_fprintf(2, "minishell: syntax error"),
+			ft_fprintf(2, " near unexpected token `%.1s'\n", raw[i]));
+	else if (i > 0 && !str_multi_cmp(raw[i - 1], "||", "&&", "|", NULL)
+		&& !str_multi_cmp(raw[i], "||", "&&", "|", NULL))
+		return (ft_fprintf(2, "minishell: syntax error"),
+			ft_fprintf(2, " near unexpected token `%s'\n", raw[i]));
 	return (0);
 }
 
 int	is_symbols(char **raw, int i)
 {
-	while (raw[i])
-	{
-		if ((i > 0 && raw[i] && raw[i - 1] && !ft_strncmp(raw[i - 1], "||", 2)
-			&& raw[i][0] == '|') || !ft_strncmp(raw[i], "||||", 4))
-			return (ft_fprintf(2, "minishell: syntax error"),
-				ft_fprintf(2, " near unexpected token `||'\n"));
-		else if ((i > 0 && raw[i] && raw[i - 1] && raw[i][0] == '|'
-			&& raw[i - 1][0] == '|') || !ft_strncmp(raw[i], "|||", 3))
-			return (ft_fprintf(2, "minishell: syntax error"),
-				ft_fprintf(2, " near unexpected token `|'\n"));
-		else if (!str_multi_ncmp(1, raw[i], "(", ")")
-			&& check_parenthesis(raw, i, 0, 0))
+	if (check_parenthesis(raw, 0, 0, 0))
 			return (1);
-		i++;
-	}
+	i = -1;
+	while (raw[++i])
+		if (check_tokens_errors(raw, i))
+			return (1);
 	while (raw[--i] && i >= 0)
 	{
-		if (str_multi_cmp(raw[i], "<<", ">>", "<", ">", "&&", "||", "|",
-			"(", ")", NULL))
+		if (str_multi_cmp(raw[i], "<<", ">>", "<", ">", "&&", "||", "|", NULL)
+			&& str_multi_ncmp(1, raw[i], "(", ")", NULL))
 		{
 			free(raw[i]);
 			raw[i] = NULL;

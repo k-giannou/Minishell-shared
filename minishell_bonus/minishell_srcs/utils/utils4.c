@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:45:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/13 18:40:22 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/14 18:43:23 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,14 @@ int	first_letter_valid(char *str)
 
 void	if_pipes_or_redirs(char *line, int *i, int *count)
 {
-	if (line[*i] == '<' || line[*i] == '>' || line[*i] == '|')
+	char c;
+
+	c = 0;
+	if (!char_multi_cmp(line[*i], '<', '>', '|', '&', '(', ')', 0))
 	{
 		(*count)++;
-		while (line[*i + 1] == '<' || line[*i + 1] == '>'
-			|| line[*i + 1] == '|')
+		c = get_multi_char_cmp(line[*i], '<', '>', '|', '&', '(', ')', 0);
+		while (line[*i] == c)
 			(*i)++;
 		if (line[*i + 1] != ' ')
 			(*count)++;

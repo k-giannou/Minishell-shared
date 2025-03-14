@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:00:12 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/14 15:55:55 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/14 20:12:13 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ void		ft_putcstr_fd(char *s, int fd, char c);
 
 char		*ft_strchr(const char *s, int c);
 char		*get_multi_cmp(const char *s1, ...);
+char		get_multi_char_cmp(int s1, ...);
 void		*ft_memchr(const void *s, int c, size_t n);
 char		*get_multi_ncmp(int n, const char *s1, ...);
 char		*ft_substr(char const *s, unsigned int start, size_t len);

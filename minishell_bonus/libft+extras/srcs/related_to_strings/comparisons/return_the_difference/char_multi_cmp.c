@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:34:04 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/14 15:52:40 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/14 16:21:14 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	char_multi_cmp(int s1, ...)
 	int	arg;
 	va_list	args;
 
-	if (!ft_isascii(s1))
+	if (!ft_isascii(s1) || !s1)
 		return (1);
 	va_start(args, s1);
 	arg = va_arg(args, int);

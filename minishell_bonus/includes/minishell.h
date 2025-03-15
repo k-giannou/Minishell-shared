@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:03:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/13 18:39:13 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/15 15:34:43 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ typedef struct s_env
 typedef struct s_pipes
 {
 	int		i;
+	int 	end;
 	pid_t	*pids;
 	int		**pipes;
 	int		nb_pipes;
@@ -175,9 +176,9 @@ void	set_symbols(t_minishell **mini);
 char	*find_path(char *cmd, char **env);
 void	read_stdin(int *fd, char *limiter);
 void	create_pipes(t_pipes *pipes_struct);
-void	pipex(t_minishell *mini, char **env);
 void	execute(char **av, char **env, t_minishell *mini);
 char	**get_redir_split(t_minishell *mini, int cur_cmd);
+void	pipex(t_minishell *mini, char **env, int start, int end);
 void	close_and_redirect_pipes(t_pipes *pipes_struct, int current_pipe);
 void	close_curr_pipe(t_pipes *pipes_struct, int current_pipe, char **cmd_s);
 

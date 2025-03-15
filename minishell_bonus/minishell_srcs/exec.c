@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:33:34 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/14 20:26:35 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/15 15:38:12 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,22 @@ void	current_status(t_minishell *mini)
 	printf("- nb of \""RED"()"RESET"\" = %d\n", mini->prior.parenthesis);
 }
 
-void	ast(t_minishell **mini)
+void	ast(t_minishell *mini)
 {
-	(void)mini;
+	int i;
+	
+	i = 0;
+	if (!mini->prior.and && !mini->prior.or && !mini->prior.parenthesis)
+		pipex(mini, splited_env(mini->env), 0,
+			ft_count_words((const char **)mini->env));
+	/* while (mini->tokens) */
 }
 
 void	exec_cmd(t_minishell *mini)
 {
 	
 	//current_status(mini);
-	ast(&mini);
+	ast(mini);
 	free_all(mini, "tabs");
 	mini->tokens = NULL;
 	mini->pipes_redirs = NULL;

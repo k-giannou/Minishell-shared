@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/13 18:41:19 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/15 15:36:19 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,40 +76,56 @@ void	son_program(char **env, t_minishell *mini)
 	waitpid(mini->p.pids[mini->p.i - 1], NULL, 0);
 }
 
-char	**get_cmd_s(t_minishell *mini, int i)
+int	ft_pipe_count(char **pipes_redirs, int start, int end)
+{
+	int count;
+
+	count = 0;
+	while (start < end)
+	{
+		if (pipes_redirs[start] && !ft_strcmp(pipes_redirs[start], "|"))
+			count++;
+		start++;
+	}
+	return (count);
+}
+
+char	**get_cmd_s(t_minishell *mini, int start, int end)
 {
 	int		j;
 	char	**cmd_s;
 
 	if (!mini->tokens)
 		return (NULL);
-	cmd_s = (char **)ft_calloc(sizeof(char *), (mini->p.nb_pipes + 2));
+	cmd_s = (char **)ft_calloc(sizeof(char *),
+		(ft_pipe_count(mini->pipes_redirs, start, end) + 2));
 	if (!cmd_s)
 		return (printf("fail getting cmd's\n"), NULL);
 	j = 0;
-	while (mini->tokens[i])
+	while (mini->tokens[start] && start < end)
 	{
-		if (!ft_strncmp(mini->pipes_redirs[i], "|", 1))
+		if (!ft_strncmp(mini->pipes_redirs[start], "|", 1))
 			j++;
 		else
 		{
 			if (cmd_s[j])
 				cmd_s[j] = ft_strjoin_n_free(cmd_s[j], " ", 1);
-			cmd_s[j] = ft_strjoin_n_free(cmd_s[j], mini->tokens[i], 1);
+			cmd_s[j] = ft_strjoin_n_free(cmd_s[j], mini->tokens[start], 1);
 		}
-		i++;
+		start++;
 	}
 	return (cmd_s);
 }
 
-void	pipex(t_minishell *mini, char **env)
+void	pipex(t_minishell *mini, char **env, int start, int end)
 {
-	int		i;
+	int	i;
 
 	i = -1;
-	mini->p.nb_pipes = mini->prior.pipes;
-	mini->cmd_s = get_cmd_s(mini, 0);
-	mini->p.i = 0;
+	mini->p.nb_pipes = ft_pipe_count(mini->pipes_redirs, start, end);
+	mini->cmd_s = get_cmd_s(mini, start, end);
+	mini->p.i = start;
+	mini->p.end = end;
 	mini->p.pids = (pid_t *)ft_calloc(sizeof(pid_t), (mini->p.nb_pipes + 1));
 	if (!mini->p.pids)
 		return ((void)ft_fprintf(2, RED"Error : fail initiate pid's\n"RESET));

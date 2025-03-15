@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:03:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/15 15:34:43 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/15 15:44:19 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ typedef struct s_env
 typedef struct s_pipes
 {
 	int		i;
-	int 	end;
 	pid_t	*pids;
 	int		**pipes;
 	int		nb_pipes;

@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/15 15:36:19 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/15 15:44:12 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ void	pipex(t_minishell *mini, char **env, int start, int end)
 	mini->p.nb_pipes = ft_pipe_count(mini->pipes_redirs, start, end);
 	mini->cmd_s = get_cmd_s(mini, start, end);
 	mini->p.i = start;
-	mini->p.end = end;
 	mini->p.pids = (pid_t *)ft_calloc(sizeof(pid_t), (mini->p.nb_pipes + 1));
 	if (!mini->p.pids)
 		return ((void)ft_fprintf(2, RED"Error : fail initiate pid's\n"RESET));
@@ -133,7 +132,8 @@ void	pipex(t_minishell *mini, char **env, int start, int end)
 		create_pipes(&mini->p);
 	else
 		mini->p.pipes = NULL;
-	son_program(env, mini);
+	if (start < end)
+		son_program(env, mini);
 	free_pipes(mini->p.pipes, mini->p.nb_pipes);
 	free_dbl_tab(mini->cmd_s);
 	free(mini->p.pids);

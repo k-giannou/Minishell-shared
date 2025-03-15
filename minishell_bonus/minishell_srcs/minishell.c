@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:17 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/14 19:17:28 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/15 14:59:10 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char	*toprint(t_minishell *mini, char *cur_loc)
 {
 	char	*str;
 
-	str = ft_strdup(BOLD MAGENTA);
+	str = ft_strdup(BOLD GREEN);
 	if (mini->user.final)
 		str = ft_strjoin_n_free(str, mini->user.final, 1);
 	str = multi_join_n_free("0", str, cur_loc, "$ ", RESET, NULL);

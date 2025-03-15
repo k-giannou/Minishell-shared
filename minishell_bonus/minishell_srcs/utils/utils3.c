@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:45:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/07 20:46:40 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/15 14:59:44 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ char	*host_dup(char *name)
 	i = ft_strlen(name);
 	unicode_heart[0] = 0xF0;
 	unicode_heart[1] = 0x9F;
-	unicode_heart[2] = 0x92;
-	unicode_heart[3] = 0x9C;
+	unicode_heart[2] = 0x8C;
+	unicode_heart[3] = 0xB4;
 	dest = (char *)ft_calloc(sizeof(char), i + 20);
 	if (!dest)
 		return (NULL);

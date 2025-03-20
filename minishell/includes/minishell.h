@@ -6,7 +6,7 @@
 /*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:03:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/20 16:47:28 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:58:04 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,6 +227,7 @@ void	handle_single(t_variables *v, char *str);
 void	remove_multiple_slashs(char *path, int i);
 void	ft_list_add_back(t_env **lst, t_env *new);
 char	*replace_var(t_minishell *mini, char *str);
+void	start_replace(t_variables *v, char *str, t_minishell *mini, t_env *current);
 void	if_pipes_or_redirs(char *line, int *i, int *count);
 void	ft_substr_mini_2(char *line, t_minishell **mini, int *len);
 

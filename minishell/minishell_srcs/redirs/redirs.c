@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:21:49 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/03/07 17:38:13 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/20 15:51:31 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,17 +109,7 @@ int	handle_no_buildin_redir(char **env, char **tokens,
 			exit (-1);
 		}
 		join_command_free_tab(mini->r.tab, tokens);
-		path = find_path(mini->r.tab[0], env);
-		if (!path)
-		{
-			restore_and_free(mini->r.tab, NULL, &mini->r);
-			exit (-1);
-		}
-		if (execve(path, mini->r.tab, env) == -1)
-		{
-			restore_and_free(mini->r.tab, path, &mini->r);
-			exit (-1);
-		}
+		path_and_execute(path, mini, env);
 	}
 	else
 		waitpid(pid, NULL, 0);

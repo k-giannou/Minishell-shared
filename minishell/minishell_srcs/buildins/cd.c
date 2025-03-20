@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 19:15:45 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/07 20:51:25 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:01:32 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,15 @@ void	cd(char **path, t_minishell **mini)
 
 	tmp = (*mini)->env;
 	if (path[1] && path[2])
-		return (g_signal = 1, (void)ft_fprintf(2, "minishell: cd: too many arguments\n"));
+		return (g_signal = 1, \
+	(void)ft_fprintf(2, "minishell: cd: too many arguments\n"));
 	str = path[1];
 	if (!path[1])
 	{
 		ft_get_env(&tmp, "HOME=");
 		if (!tmp)
-			return (g_signal = 1, (void)ft_fprintf(2, "minishell: cd: HOME not set\n"));
+			return (g_signal = 1, \
+	(void)ft_fprintf(2, "minishell: cd: HOME not set\n"));
 		str = ft_strdup(tmp->data + 5);
 	}
 	if (change_dir(str))

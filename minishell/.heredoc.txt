@@ -1,3 +1,6 @@
-$USER
-$NOVAR
-$HOME
+AT
+ 
+ET
+G
+kgiannou
+$USE

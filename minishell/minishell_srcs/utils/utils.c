@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 20:38:24 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/10 17:34:39 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/20 15:49:48 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	check_valid_quotes(char *str, bool *sgl_q, bool *dbl_q)
 
 void	pipe_only(char **str, int i)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	while (str[i][j])
@@ -112,7 +112,6 @@ void	pipe_only(char **str, int i)
 		}
 	}
 }
-
 
 int	is_redir_or_pipes(char **raw, int i)
 {

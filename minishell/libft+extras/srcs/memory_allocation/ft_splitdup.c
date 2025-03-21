@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_splitdup.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:33:46 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/21 12:40:46 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/09 16:55:20 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ char	**ft_splitdup(char **split)
 
 	if (!split)
 		return (NULL);
-	dup = (char **)malloc(sizeof(char *) * \
-			(ft_count_words((const char **)split) + 1));
+	dup = (char **)malloc(sizeof(char *) * (ft_count_words(split) + 1));
 	if (!dup)
 		return (NULL);
 	i = 0;

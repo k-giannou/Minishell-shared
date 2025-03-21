@@ -6,7 +6,7 @@
 /*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:03:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/21 12:23:38 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/21 13:07:32 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct s_variables
 	int		t;
 	bool	dbl_quote;
 	int		quote_sum;
+	int		y;
 }	t_variables;
 
 typedef enum
@@ -215,6 +216,12 @@ int		error_in_heredoc(char **tokens, char **pipes_redirs, bool *error);
 void	write_in_heredoc(int *first, int fd, char *line, char **eofs);
 int		init_r(t_redirs *r, char **tokens);
 void	restore_and_free(char **tab1, char *path, t_redirs *r);
+void	handle_name_hr(char **pipes_redirs, char **tokens, int y);
+void	path_and_execute(char *path, t_minishell *mini, char **env);
+void	print_mess(char *str1, char c, char *str2, char *str3);
+char	*replace_var(t_minishell *mini, char *str);
+void	start_replace(t_variables *v, char *str, t_minishell *mini,
+		t_env *current);
 
 //utils
 char	*hostname(void);

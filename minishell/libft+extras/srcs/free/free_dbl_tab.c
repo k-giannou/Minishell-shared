@@ -18,7 +18,7 @@ void	free_dbl_tab(char **str)
 {
 	int	j;
 
-	if (!str || !str[0])
+	if (!str)
 		return ;
 	j = 0;
 	while (str && str[j])

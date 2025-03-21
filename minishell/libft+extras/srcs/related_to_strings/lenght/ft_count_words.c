@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:33:59 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/13 16:36:37 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/09 16:53:59 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /* returns the number of strings in a split
 */
-int	ft_count_words(const char **split)
+int	ft_count_words(char **split)
 {
 	int	i;
 

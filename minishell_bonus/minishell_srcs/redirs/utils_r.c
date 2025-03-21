@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:04:54 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/05 17:04:55 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/21 17:20:47 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	**copy_tokens(char **tokens)
 	int		i;
 	char	**tab_copy;
 
-	i = ft_count_words(tokens);
+	i = ft_count_words((const char **)tokens);
 	tab_copy = (char **)malloc(sizeof(char *) * (i + 1));
 	if (!tab_copy)
 	{
@@ -48,7 +48,7 @@ void	join_command_free_tab(char **tab, char **tokens)
 
 	y = 0;
 	i = 0;
-	while (i < ft_count_words(tokens))
+	while (i < ft_count_words((const char **)tokens))
 	{
 		if (tab[i])
 		{
@@ -97,7 +97,7 @@ int	isredir(t_minishell *mini)
 	int	words;
 
 	y = 0;
-	words = ft_count_words(mini->tokens);
+	words = ft_count_words((const char **)mini->tokens);
 	while (y < words)
 	{
 		if (mini->pipes_redirs[y])

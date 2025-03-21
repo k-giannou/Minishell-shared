@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   optimized_argument.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:31:28 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/21 11:59:04 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/21 17:18:12 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,11 @@ static char	*ft_substr_mini(char *line, t_minishell **mini, int *new_i, int tab)
 	if (!char_multi_cmp(line[len], '<', '>', '|', '&', '(', ')', 0))
 	{
 		c = get_multi_char_cmp(line[len], '<', '>', '|', '&', '(', ')', 0);
-		while (line[len] == c)
+		if (c == '(' || c == ')')
 			len++;
+		else
+			while (line[len] == c)
+				len++;
 	}
 	else
 		ft_substr_mini_2(line, mini, &len);

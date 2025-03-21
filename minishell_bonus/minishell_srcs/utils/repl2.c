@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   repl2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:25:54 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/20 16:51:11 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/21 17:26:04 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,7 @@ char	*replace_var(t_minishell *mini, char *str)
 		start_replace(&v, str, mini, current);
 	v.line[v.k] = '\0';
 	free(str);
+	if (wildcars_exist_at(v.line, 0, true))
+			return (handle_wildcards(ft_strdup(v.line), mini));
 	return (ft_strdup(v.line));
 }

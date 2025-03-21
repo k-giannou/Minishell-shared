@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 20:17:08 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/14 17:47:38 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/21 19:17:09 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,24 +36,24 @@ void	ft_print_dlb_tabs(char **tab, char *arg)
 	int	i;
 
 	i = 0;
-	printf("%s : ", arg);
+	ft_fprintf(2, "%s : ", arg);
 	while (tab && tab[i])
 	{
 		if (!ft_strcmp(tab[i], "&&"))
-			printf("|"YELLOW"%s"RESET"| ", tab[i]);
+			ft_fprintf(2, "|"YELLOW"%s"RESET"| ", tab[i]);
 		else if (!ft_strcmp(tab[i], "||"))
-			printf("|"GREEN"%s"RESET"| ", tab[i]);
+			ft_fprintf(2, "|"GREEN"%s"RESET"| ", tab[i]);
 		else if (!ft_strcmp(tab[i], "|"))
-			printf("|"BLUE"%s"RESET"| ", tab[i]);
+			ft_fprintf(2, "|"BLUE"%s"RESET"| ", tab[i]);
 		else if (!str_multi_ncmp(1, tab[i], ")", "(", NULL))
-			printf("|"RED"%s"RESET"| ", tab[i]);
+			ft_fprintf(2, "|"RED"%s"RESET"| ", tab[i]);
 		else if (!str_multi_ncmp(1, tab[i], "<", ">", NULL))
-			printf("|"CYAN"%s"RESET"| ", tab[i]);
+			ft_fprintf(2, "|"CYAN"%s"RESET"| ", tab[i]);
 		else
-			printf("|%s| ", tab[i]);
+			ft_fprintf(2, "|%s| ", tab[i]);
 		i++;
 	}
-	printf("\n");
+	ft_fprintf(2, "\n");
 }
 
 void	print_pipes_redirs(char **split, int nb_words)
@@ -61,24 +61,24 @@ void	print_pipes_redirs(char **split, int nb_words)
 	int	j;
 
 	j = 0;
-	printf("tab with pipes and redirs : ");
+	ft_fprintf(2, "tab with pipes and redirs : ");
 	while (j < nb_words)
 	{
 		if (!split[j])
-			printf("(null) ");
+			ft_fprintf(2, "(null) ");
 		else if (!ft_strcmp(split[j], "&&"))
-			printf("|"YELLOW"%s"RESET"| ", split[j]);
+			ft_fprintf(2, "|"YELLOW"%s"RESET"| ", split[j]);
 		else if (!ft_strcmp(split[j], "||"))
-			printf("|"GREEN"%s"RESET"| ", split[j]);
+			ft_fprintf(2, "|"GREEN"%s"RESET"| ", split[j]);
 		else if (!ft_strcmp(split[j], "|"))
-			printf("|"BLUE"%s"RESET"| ", split[j]);
+			ft_fprintf(2, "|"BLUE"%s"RESET"| ", split[j]);
 		else if (!str_multi_ncmp(1, split[j], ")", "(", NULL))
-			printf("|"RED"%s"RESET"| ", split[j]);
+			ft_fprintf(2, "|"RED"%s"RESET"| ", split[j]);
 		else if (!str_multi_ncmp(1, split[j], "<", ">", NULL))
-			printf("|"CYAN"%s"RESET"| ", split[j]);
+			ft_fprintf(2, "|"CYAN"%s"RESET"| ", split[j]);
 		j++;
 	}
-	printf("\n");
+	ft_fprintf(2, "\n");
 }
 
 void	ft_print_export(t_env *v, bool sign, bool inside)

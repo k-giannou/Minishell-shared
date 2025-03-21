@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:03:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/21 13:55:16 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/21 19:05:58 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,21 +73,10 @@ typedef struct s_variables
 	int		s;
 }	t_variables;
 
-typedef enum
-{
-    REDIR_NONE,// -
-    REDIR_OUT, // >
-    REDIR_APPEND,// >>
-	REDIR_IN,// <
-	REDIR_IN_OUT,//<>
-	HEREDOC// <<
-}	t_type;
-
 typedef struct s_redirs
 {
 	int	saved_in;
 	int	saved_out;
-	t_type	type;
 	char	**tab;
 	int	fd;
 	int	y;
@@ -140,6 +129,23 @@ typedef struct s_minishell
 	t_env		*env_export;
 	char		**pipes_redirs;
 }	t_minishell;
+
+typedef enum
+{
+    AND,
+    OR,
+    PARENTHESIS,
+	CMD
+}	t_type;
+
+typedef struct s_btree
+{
+	int				type;
+	char			*data;
+	struct s_btree	*left;
+	struct s_btree	*right;
+} t_btree;
+
 
 void	sig_init(void);
 t_env	*ft_envdup(t_env *src);

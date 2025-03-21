@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:31:28 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/21 17:18:12 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/21 19:25:44 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	count_tokens(char *line, bool sgl_q, bool dbl_q, int i)
 	int	count;
 
 	count = 0;
-	while (line[i])
+	while (line && line[i])
 	{
 		while (line[i] == ' ')
 			i++;

@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 16:25:44 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/21 17:23:32 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/21 19:15:35 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,102 +23,101 @@ void	current_status(t_minishell *mini)
 	printf("- nb of \""BLUE"|"RESET"\"  = %d\n", mini->prior.pipes);
 	printf("- nb of \""RED"()"RESET"\" = %d\n", mini->prior.parenthesis);
 }
-// ((cmd1 && cmd2) || cmd3) || cmd4 && cmd5
+// cmd4 && cmd5 || (cmd3 || (cmd1 && cmd2))
 
 void	handle_parenthesis(t_minishell *mini, int start, int end)
 {
-	int i;
 	int open_p;
+	/* char **new_tokens;
+	char **new_pipes_redirs; */
 
-	i = 0 * start;
-	open_p = 0;
+	open_p = 0 * start;
 	while (mini->pipes_redirs[end])
 	{
-		while (mini->pipes_redirs[end][i])
-		{
-			if (mini->pipes_redirs[end][i] == '(')
-				open_p++;
-			else if (mini->pipes_redirs[end][i] == ')')
-				open_p--;
-			if (open_p == 0)
-				break ;
-			i++;
-		}
+		if (!ft_strcmp(mini->pipes_redirs[end],"("))
+			open_p++;
+		else if (!ft_strcmp(mini->pipes_redirs[end],")"))
+			open_p--;
 		if (open_p == 0)
 			break ;
 		end++;
-		i = 0;
+	}
+	/* new_tokens = ft_splitndup(mini->tokens, ft_count_words(mini->tokens),
+		start + 1, end);
+	new_pipes_redirs = ft_splitndup(mini->pipes_redirs, ft_count_words(mini->tokens),
+		start + 1, end);
+	ast(new_tokens, new_pipes_redirs) */
+}
+
+void	ast(t_btree *tree)
+{
+	if (tree->type != CMD)
+	{
+		ast(tree->left);
+		if (tree->data == AND)
+		ast(tree->right);
+	}
+	/* pipex(tree->data); */
+}
+
+void	print_btree(t_btree *root)
+{
+	if (root)
+	{
+		print_btree(root->left);
+		printf("%s\n", root->data);
+		print_btree(root->right);
 	}
 }
 
-void	ast(t_minishell *mini, int start, int end)
+t_btree	*btree_create_node(char *item, int type)
 {
-	bool	prior;
+	t_btree	*newnode;
 
-	if (!mini->prior.and && !mini->prior.or && !mini->prior.parenthesis)
-		return (pipex(mini, splited_env(mini->env), 0,
-				ft_count_words((const char **)mini->tokens)));
-	if (mini->pipes_redirs[end][0] == '(')
-		handle_parenthesis(mini, end, end);
-	while (mini->tokens[end] && str_multi_cmp(mini->pipes_redirs[end],
-			"||", "&&", NULL)
-		&& mini->pipes_redirs[end][0] != '(')
-		end++;
-	if (mini->pipes_redirs[end][0] == '(' && mini->tokens[end + 1])
+	newnode = malloc(sizeof(t_btree));
+	newnode->data = item;
+	newnode->type = type;
+	newnode->left = NULL;
+	newnode->right = NULL;
+	return (newnode);
+}
+
+t_btree *create_tree(t_minishell *mini)
+{
+	t_btree *tree;
+	t_btree *tmp;
+	
+	tree = NULL;
+	tree = btree_create_node("&&", AND);
+	tree->left = btree_create_node("CMD1", CMD);
+	tree->right = btree_create_node("CMD2", CMD);
+	tmp = btree_create_node("||", OR);
+	tmp->left = tree;
+	tmp->right = btree_create_node("CMD3", CMD);
+	tree = tmp;
+	if (mini->prior.or)
 	{
-		start = end + 1;
-		while (mini->pipes_redirs[end][0] != ')')
-		{
-			if (!str_multi_cmp(mini->pipes_redirs[end], "||", "&&", NULL)
-				&& mini->pipes_redirs[end][0] == '(')
-				prior = true;
-			end++;
-		}
-		if (prior == false)
-			pipex(mini, splited_env(mini->env), start, end);
-		else
-			ast(mini, start, end);
+		
 	}
-	else if (!ft_strcmp(mini->pipes_redirs[end], "&&")
-		&& mini->tokens[end + 1])
+	else if (mini->prior.and)
 	{
-		start = end + 1;
-		while ((mini->pipes_redirs[end] && mini->pipes_redirs[end][0] != ')')
-			|| str_multi_cmp(mini->pipes_redirs[end], "||", "&&", NULL))
-		{
-			if (!str_multi_cmp(mini->pipes_redirs[end], "||", "&&", NULL)
-				&& mini->pipes_redirs[end][0] == '(')
-				prior = true;
-			end++;
-		}
-		if (prior == false)
-			pipex(mini, splited_env(mini->env), start, end);
-		else
-			ast(mini, start, end);
+		
 	}
-	else if (!ft_strcmp(mini->pipes_redirs[end],
-		"&&") && mini->tokens[end + 1])
+	/* else if (mini->prior.parenthesis)
 	{
-		start = end + 1;
-		while ((mini->pipes_redirs[end] && mini->pipes_redirs[end][0] != ')')
-			|| str_multi_cmp(mini->pipes_redirs[end], "||", "&&", NULL))
-		{
-			if (!str_multi_cmp(mini->pipes_redirs[end], "||", "&&", NULL)
-				&& mini->pipes_redirs[end][0] == '(')
-				prior = true;
-			end++;
-		}
-		if (prior == false)
-			pipex(mini, splited_env(mini->env), start, end);
-		else
-			ast(mini, start, end);
-	}
+		
+	}	 */
+	return (tree);
 }
 
 void	exec_cmd(t_minishell *mini)
 {
-	current_status(mini);
-	//ast(mini, 0, ft_count_words((const char **)mini->tokens));
+	t_btree *btree;
+
+	//current_status(mini);
+	btree = create_tree(mini);
+	print_btree(btree);
+	//ast(btree);
 	free_all(mini, "tabs");
 	mini->tokens = NULL;
 	mini->pipes_redirs = NULL;

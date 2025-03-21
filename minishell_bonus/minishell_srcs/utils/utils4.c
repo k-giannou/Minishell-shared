@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils4.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:45:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/21 12:21:13 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/21 19:23:19 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	set_symbols(t_minishell **mini)
 		}
 		i++;
 	}
+	ft_print_dlb_tabs((*mini)->tokens, "tokens");
 }
 
 void	ft_get_env(t_env **env, char *env_var)
@@ -73,8 +74,14 @@ void	if_pipes_or_redirs(char *line, int *i, int *count)
 	{
 		(*count)++;
 		c = get_multi_char_cmp(line[*i], '<', '>', '|', '&', '(', ')', 0);
-		while (line[*i] == c)
+		if (c == '(' || c == ')')
+		{
 			(*i)++;
+			(*count)++;
+		}
+		else
+			while (line[*i] == c)
+				(*i)++;
 		if (line[*i + 1] != ' ')
 			(*count)++;
 	}

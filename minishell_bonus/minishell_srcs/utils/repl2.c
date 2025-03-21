@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:25:54 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/21 17:26:04 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/21 19:27:55 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,6 @@ char	*replace_var(t_minishell *mini, char *str)
 	v.line[v.k] = '\0';
 	free(str);
 	if (wildcars_exist_at(v.line, 0, true))
-			return (handle_wildcards(ft_strdup(v.line), mini));
+		return (handle_wildcards(ft_strdup(v.line), mini));
 	return (ft_strdup(v.line));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   repl2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:25:54 by locagnio          #+#    #+#             */
-/*   Updated: 2025/02/28 17:01:46 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:51:11 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,23 @@ void	ft_list_add_back(t_env **lst, t_env *new)
 	while (temp->next)
 		temp = temp->next;
 	temp->next = new;
+}
+
+char	*replace_var(t_minishell *mini, char *str)
+{
+	t_env		*current;
+	t_variables	v;
+
+	if (!str)
+		return (ft_exit(mini), NULL);
+	v = (t_variables){0};
+	v = mini->vars;
+	current = mini->env;
+	if (!current)
+		return (NULL);
+	else
+		start_replace(&v, str, mini, current);
+	v.line[v.k] = '\0';
+	free(str);
+	return (ft_strdup(v.line));
 }

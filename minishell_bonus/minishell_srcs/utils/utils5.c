@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils5.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 18:07:16 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/14 16:25:34 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/21 12:21:36 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*return_tab(int tab, int *new_i)
 void	ft_substr_mini_2(char *line, t_minishell **mini, int *len)
 {
 	while (line[*len] && char_multi_cmp(line[*len], ' ', '<', '>', '|', '&',
-		'(', ')', 0))
+			'(', ')', 0))
 	{
 		if (line[*len] == SGL_Q || line[*len] == DBL_Q)
 		{
@@ -34,7 +34,7 @@ void	ft_substr_mini_2(char *line, t_minishell **mini, int *len)
 			valid_quotes(line[(*len)++], &((*mini)->sgl_q), &((*mini)->dbl_q));
 		}
 		while (line[*len] && char_multi_cmp(line[*len], SGL_Q, DBL_Q, ' ', '<',
-			'>', '|', '&', '(', ')', 0))
+				'>', '|', '&', '(', ')', 0))
 			(*len)++;
 	}
 }
@@ -47,7 +47,7 @@ char	*get_cmd(char **av, int i)
 		return (NULL);
 	cmd = ft_strdup(av[i++]);
 	while (av[i] || str_multi_cmp(av[i], ">", ">>", "<", "<<", "|", "||", "&&",
-		"(", ")", NULL))
+			"(", ")", NULL))
 		cmd = ft_strjoin_n_free(ft_strjoin_n_free(cmd, " ", 1), av[i++], 1);
 	return (cmd);
 }

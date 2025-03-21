@@ -12,17 +12,17 @@
 
 #include "libft_extras.h"
 
-static bool correct_format(char *str_char)
+static bool	correct_format(char *str_char)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str_char[i])
 	{
 		if (ft_isnum(str_char[i]))
 			i++;
-		else if(ft_strcmp(str_char + i, ", ") && i != 0)
-			i+= 2;
+		else if (ft_strcmp (str_char + i, ", ") && i != 0)
+			i += 2;
 		else
 			return (0);
 	}
@@ -38,7 +38,8 @@ static bool correct_format(char *str_char)
 	- if the number is 1, it will free a string (*str)
 	- if the number is 2, it will free a board of strings (**str)
 
-	The last argument should be NULL to interrupt the function correctly, otherwise,
+	The last argument should be NULL to i
+	nterrupt the function correctly, otherwise,
 	undefined outcome may happened.
 */
 void	multi_free(char *to_free, ...)

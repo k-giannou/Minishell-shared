@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_hd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 10:48:12 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/03/07 17:38:31 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/20 15:59:36 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 int	error_in_heredoc(char **tokens, char **pipes_redirs, bool *error)
 {
 	if (!hd_filename(tokens, pipes_redirs))
-		return (ft_fprintf(2,
-				"minishell: syntax error near unexpected token `newline'\n"),
-					1);
+		return (ft_fprintf(2, \
+"minishell: syntax error near unexpected token `newline'\n"), \
+1);
 	if (syntax_error_before_hd(tokens, pipes_redirs))
 		return (1);
 	if (syntax_error_redir(tokens, pipes_redirs))

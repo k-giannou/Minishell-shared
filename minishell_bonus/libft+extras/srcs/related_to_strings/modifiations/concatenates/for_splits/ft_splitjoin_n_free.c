@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_splitjoin_n_free.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:26:24 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/13 16:37:07 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/21 12:41:38 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	**ft_splitjoin_n_free(char **s1, char **s2, int tab_to_free)
 
 	i = -1;
 	j = 0;
-	len = ft_count_words((const char **)s1) +
+	len = ft_count_words((const char **)s1) + \
 		ft_count_words((const char **)s2) + 1;
 	new_split = malloc(len);
 	if (!new_split)

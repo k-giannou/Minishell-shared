@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multi_strjoin_n_free.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 16:07:25 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/09 18:04:47 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/21 13:21:31 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,23 @@ typedef struct s_mjnf
 	char	*arg;
 	va_list	args;
 	char	*new_string;
-	int 	*tabs_to_free;
+	int		*tabs_to_free;
 	int		cur_str;
 	int		tab_increment;
 	int		tab_len;
-} t_mjnf;
+}	t_mjnf;
 
-static bool correct_format(char *str_char)
+static bool	correct_format(char *str_char)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str_char[i])
 	{
 		if (ft_isnum(str_char[i]) || str_char[i] == '-' || str_char[i] == '+')
 			i++;
-		else if(ft_strcmp(str_char + i, ", ") && i != 0)
-			i+= 2;
+		else if (ft_strcmp (str_char + i, ", ") && i != 0)
+			i += 2;
 		else
 			return (0);
 	}
@@ -42,7 +42,8 @@ static bool correct_format(char *str_char)
 
 int	has_to_be_freed(t_mjnf v, int *tab_inc)
 {
-	while (v.tabs_to_free[*tab_inc] < v.cur_str && *tab_inc < v.tab_len - 1)//si la position dans le tableau est inferieur a la position du tableau actuel
+	while (v.tabs_to_free[*tab_inc] < v.cur_str
+		&& *tab_inc < v.tab_len - 1)//si la position dans le tableau est inferieur a la position du tableau actuel
 		(*tab_inc)++;//je vais chercher une valeur egale ou superieure
 	if (*tab_inc == v.tab_len - 1 && v.tabs_to_free[*tab_inc] < v.cur_str)//si je suis arriver a la fin du tableau et que ca ne correspond pas a la derniere valeur
 		return (0);
@@ -51,7 +52,7 @@ int	has_to_be_freed(t_mjnf v, int *tab_inc)
 	return (0);
 }
 
-char *multi_join_n_free2(t_mjnf v)
+char	*multi_join_n_free2 (t_mjnf v)
 {
 	if (v.tabs_to_free && has_to_be_freed(v, &v.tab_increment))
 		free(v.arg);
@@ -76,22 +77,25 @@ char *multi_join_n_free2(t_mjnf v)
 
 /* Join an infinite amount of strings and free the wished tabs.
 
-	The last argument should be NULL to interrupt the function correctly, otherwise,
+	The last argument should be NULL to interrupt
+	the function correctly, otherwise,
 	undefined outcome may happened.
 
 	If one string is passed in argument, it behaves like strdup(s1).
 	
 	The string "to_free" follows the rules of the function strchar_to_strint :
-	- Each numbers represent the position of each string that should be freed, starting
-	at position zero, if the number exceeds the limits of the numbers of strings, they
+	- Each numbers represent the position of each
+	string that should be freed, starting
+	at position zero, if the number exceeds the limits
+	of the numbers of strings, they
 	will be ignored.
 	- The string must follow the format : "n1, n2, ..., nn".
 	- If the format isn't respected, or if the string is NULL or empty, the
-	function returns NULL
+	string will be considered NULL and no string will be freed
 	*/
 char	*multi_join_n_free(char *to_free, char *s1, ...)
 {
-	t_mjnf v;
+	t_mjnf	v;
 
 	if (!s1)
 		return (NULL);
@@ -116,3 +120,4 @@ char	*multi_join_n_free(char *to_free, char *s1, ...)
 	v.cur_str++;
 	return (multi_join_n_free2(v));
 }
+

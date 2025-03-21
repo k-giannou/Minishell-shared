@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_multi_ncmp.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:34:04 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/10 17:24:05 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/21 13:25:33 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	str_multi_ncmp(size_t n, const char *s1, ...)
 			return (va_end(args), 0);
 		else
 			arg = va_arg(args, const char *);
-		
 	}
 	va_end(args);
 	return (1);

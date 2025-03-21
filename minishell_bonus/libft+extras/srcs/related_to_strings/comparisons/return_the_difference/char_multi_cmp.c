@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   char_multi_cmp.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:34:04 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/14 16:21:14 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/21 12:29:18 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 */
 int	char_multi_cmp(int s1, ...)
 {
-	int	arg;
+	int		arg;
 	va_list	args;
 
 	if (!ft_isascii(s1) || !s1)
@@ -27,7 +27,7 @@ int	char_multi_cmp(int s1, ...)
 	va_start(args, s1);
 	arg = va_arg(args, int);
 	while (!ft_isascii(arg))
-			arg = va_arg(args, int);
+		arg = va_arg(args, int);
 	while (arg)
 	{
 		if (s1 == arg)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:03:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/15 15:44:19 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/21 13:55:16 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <termios.h>
 # include <signal.h>
 # include <stdint.h>
+# include <dirent.h>
 
 # include "libft_extras.h"
 # include "ft_fprintf.h"
@@ -64,6 +65,12 @@ typedef struct s_variables
 	int		t;
 	bool	dbl_quote;
 	int		quote_sum;
+	int		y;
+	int		i_start;
+	int		i_end;
+	int		point;
+	bool	found;
+	int		s;
 }	t_variables;
 
 typedef enum
@@ -215,6 +222,12 @@ int		error_in_heredoc(char **tokens, char **pipes_redirs, bool *error);
 void	write_in_heredoc(int *first, int fd, char *line, char **eofs);
 int		init_r(t_redirs *r, char **tokens);
 void	restore_and_free(char **tab1, char *path, t_redirs *r);
+void	handle_name_hr(char **pipes_redirs, char **tokens, int y);
+void	path_and_execute(char *path, t_minishell *mini, char **env);
+void	print_mess(char *str1, char c, char *str2, char *str3);
+char	*replace_var(t_minishell *mini, char *str);
+void	start_replace(t_variables *v, char *str, t_minishell *mini,
+		t_env *current);
 
 //utils
 char	*hostname(void);
@@ -234,5 +247,14 @@ void	ft_list_add_back(t_env **lst, t_env *new);
 char	*replace_var(t_minishell *mini, char *str);
 void	if_pipes_or_redirs(char *line, int *i, int *count);
 void	ft_substr_mini_2(char *line, t_minishell **mini, int *len);
+
+//wildcards
+int		search_for_patterns(char *pattern, t_variables *v);
+int		wildcars_exist_at(char *str, int i, bool parse);
+char	*handle_wildcards(char *str, t_minishell *mini);
+int		find_start(char *str, int point);
+int		find_end(char *str, int point);
+int		ft_fnmatch_rec(const char *pattern, const char *str, int *i);
+void	search_test(void);
 
 #endif

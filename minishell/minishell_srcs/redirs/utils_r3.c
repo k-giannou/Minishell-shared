@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_r3.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 15:33:04 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/03/07 20:44:22 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:00:13 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,26 @@ void	exec_buildin(char **tab, t_minishell *mini, int free)
 		ft_exit(mini);
 	if (free)
 		free_dbl_tab(tab);
+}
+
+void	handle_name_hr(char **pipes_redirs, char **tokens, int y)
+{
+	pipes_redirs[y] = ft_strdup("<");
+	tokens[y] = ft_strdup("<");
+	tokens[y++ + 1] = ft_strdup(".heredoc.txt");
+}
+
+void	path_and_execute(char *path, t_minishell *mini, char **env)
+{
+	path = find_path(mini->r.tab[0], env);
+	if (!path)
+	{
+		restore_and_free(mini->r.tab, NULL, &mini->r);
+		exit (-1);
+	}
+	if (execve(path, mini->r.tab, env) == -1)
+	{
+		restore_and_free(mini->r.tab, path, &mini->r);
+		exit (-1);
+	}
 }

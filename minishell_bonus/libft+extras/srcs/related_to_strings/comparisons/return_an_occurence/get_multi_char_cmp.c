@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_multi_char_cmp.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:34:04 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/14 18:23:53 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/21 12:28:30 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,13 @@
 	- else if n = 0, the function will behave like a multicmp.
 	- else, n will be applied for every string.
 
-	the last argument should be NULL, otherwise, the function may have an undefined
+	the last argument should be NULL,
+	otherwise, the function may have an undefined
 	behavior.
 */
 char	get_multi_char_cmp(int s1, ...)
 {
-	int	arg;
+	int		arg;
 	va_list	args;
 
 	if (!ft_isascii(s1) || !s1)
@@ -33,7 +34,7 @@ char	get_multi_char_cmp(int s1, ...)
 	va_start(args, s1);
 	arg = va_arg(args, int);
 	while (!ft_isascii(arg))
-			arg = va_arg(args, int);
+		arg = va_arg(args, int);
 	while (arg)
 	{
 		if (s1 == arg)

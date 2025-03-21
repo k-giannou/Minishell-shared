@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/06 16:33:34 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/21 16:24:37 by locagnio         ###   ########.fr       */
+/*   Created: 2025/03/21 16:25:44 by locagnio          #+#    #+#             */
+/*   Updated: 2025/03/21 16:25:46 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,12 @@ void	current_status(t_minishell *mini)
 void	ast(t_minishell *mini, int start, int end)
 {
 	bool	prior;
-	
+
 	if (!mini->prior.and && !mini->prior.or && !mini->prior.parenthesis)
-		return(pipex(mini, splited_env(mini->env), 0,
-			ft_count_words((const char **)mini->tokens)));
-	while (mini->tokens[end] && str_multi_cmp(mini->pipes_redirs[end], "||", "&&", NULL)
+		return (pipex(mini, splited_env(mini->env), 0,
+				ft_count_words((const char **)mini->tokens)));
+	while (mini->tokens[end] && str_multi_cmp(mini->pipes_redirs[end],
+			"||", "&&", NULL)
 		&& mini->pipes_redirs[end][0] != '(')
 		end++;
 	if (mini->pipes_redirs[end][0] == '(' && mini->tokens[end + 1])
@@ -41,7 +42,7 @@ void	ast(t_minishell *mini, int start, int end)
 		{
 			if (!str_multi_cmp(mini->pipes_redirs[end], "||", "&&", NULL)
 				&& mini->pipes_redirs[end][0] == '(')
-					prior = true;
+				prior = true;
 			end++;
 		}
 		if (prior == false)
@@ -49,7 +50,8 @@ void	ast(t_minishell *mini, int start, int end)
 		else
 			ast(mini, start, end);
 	}
-	else if (!str_cmp(mini->pipes_redirs[end][0], "&&") && mini->tokens[end + 1])
+	else if (!str_cmp(mini->pipes_redirs[end][0], "&&")
+		&& mini->tokens[end + 1])
 	{
 		start = end + 1;
 		while (mini->pipes_redirs[end] && mini->pipes_redirs[end][0] != ')'
@@ -57,7 +59,7 @@ void	ast(t_minishell *mini, int start, int end)
 		{
 			if (!str_multi_cmp(mini->pipes_redirs[end], "||", "&&", NULL)
 				&& mini->pipes_redirs[end][0] == '(')
-					prior = true;
+				prior = true;
 			end++;
 		}
 		if (prior == false)
@@ -65,7 +67,8 @@ void	ast(t_minishell *mini, int start, int end)
 		else
 			ast(mini, start, end);
 	}
-	else if (!str_cmp(mini->pipes_redirs[end][0], "&&") && mini->tokens[end + 1])
+	else if (!str_cmp(mini->pipes_redirs[end][0],
+		"&&") && mini->tokens[end + 1])
 	{
 		start = end + 1;
 		while (mini->pipes_redirs[end] && mini->pipes_redirs[end][0] != ')'
@@ -73,7 +76,7 @@ void	ast(t_minishell *mini, int start, int end)
 		{
 			if (!str_multi_cmp(mini->pipes_redirs[end], "||", "&&", NULL)
 				&& mini->pipes_redirs[end][0] == '(')
-					prior = true;
+				prior = true;
 			end++;
 		}
 		if (prior == false)
@@ -85,7 +88,6 @@ void	ast(t_minishell *mini, int start, int end)
 
 void	exec_cmd(t_minishell *mini)
 {
-	
 	//current_status(mini);
 	ast(mini, 0, ft_count_words((const char **)mini->tokens));
 	free_all(mini, "tabs");

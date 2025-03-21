@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_multi_cmp.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:34:04 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/13 18:38:43 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/21 12:28:48 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@
 	- else if n = 0, the function will behave like a multicmp.
 	- else, n will be applied for every string.
 
-	the last argument should be NULL, otherwise, the function may have an undefined
+	the last argument should be NULL, otherwise,
+	the function may have an undefined
 	behavior.
 */
 char	*get_multi_cmp(const char *s1, ...)
@@ -38,7 +39,6 @@ char	*get_multi_cmp(const char *s1, ...)
 			return (va_end(args), (char *)arg);
 		else
 			arg = va_arg(args, const char *);
-		
 	}
 	va_end(args);
 	return (NULL);

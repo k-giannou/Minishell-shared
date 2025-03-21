@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   optimized_argument.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:31:28 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/14 18:24:24 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/21 11:59:04 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ static char	*ft_substr2(char *line, t_minishell **mini, int len)
 
 static char	*ft_substr_mini(char *line, t_minishell **mini, int *new_i, int tab)
 {
-	int	len;
-	char c;
+	int		len;
+	char	c;
 
 	len = 0;
 	if (line[0] && ((line[0] == DBL_Q && line[1] == DBL_Q)
@@ -105,7 +105,7 @@ void	split_line(char *line, t_minishell **mini, int i)
 				return (free_all(*mini, "tabs"));
 			else if (!char_multi_cmp(line[i], '<', '>', '|', '&', '(', ')', 0)
 				|| !char_multi_cmp((*mini)->tokens[j][0], '<', '>', '|', '&',
-					'(', ')', 0))
+				'(', ')', 0))
 				break ;
 		}
 		j++;

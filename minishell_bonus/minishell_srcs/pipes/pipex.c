@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/03/21 16:22:41 by locagnio         ###   ########.fr       */
+=======
+/*   Updated: 2025/03/21 12:19:58 by kgiannou         ###   ########.fr       */
+>>>>>>> 33fe5665ceaee658a47515c3691f8684ef6a0493
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +80,7 @@ void	son_program(char **env, t_minishell *mini)
 
 int	ft_pipe_count(char **pipes_redirs, int start, int end)
 {
-	int count;
+	int	count;
 
 	count = 0;
 	while (start < end)
@@ -96,7 +100,7 @@ char	**get_cmd_s(t_minishell *mini, int start, int end)
 	if (!mini->tokens)
 		return (NULL);
 	cmd_s = (char **)ft_calloc(sizeof(char *),
-		(ft_pipe_count(mini->pipes_redirs, start, end) + 2));
+			(ft_pipe_count(mini->pipes_redirs, start, end) + 2));
 	if (!cmd_s)
 		return (printf("fail getting cmd's\n"), NULL);
 	j = 0;

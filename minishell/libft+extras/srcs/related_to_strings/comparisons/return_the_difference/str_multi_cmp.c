@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_multi_cmp.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:34:04 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/10 17:32:06 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/21 13:25:21 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	str_multi_cmp(const char *s1, ...)
 			return (va_end(args), 0);
 		else
 			arg = va_arg(args, const char *);
-		
 	}
 	va_end(args);
 	return (1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft_extras.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:00:12 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/10 17:56:10 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:03:46 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ char		*ft_strtrim(char const *s1, char const *set);
 void		ft_striteri(char *s, void (*f)(unsigned int, char *));
 char		*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 //		+ concatenates :
-char		*multi_join(char *s1,...);
+char		*multi_join(char *s1, ...);
 char		*ft_strcat(char *dest, char *src);
 char		*ft_strjoin(char const *s1, char const *s2);
 char		*ft_strncat(char *dest, char *src, size_t nb);

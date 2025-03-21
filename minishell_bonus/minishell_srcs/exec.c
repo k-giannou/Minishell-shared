@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 16:25:44 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/21 16:25:46 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/21 16:27:27 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	current_status(t_minishell *mini)
 	printf("- nb of \""BLUE"|"RESET"\"  = %d\n", mini->prior.pipes);
 	printf("- nb of \""RED"()"RESET"\" = %d\n", mini->prior.parenthesis);
 }
-// (cmd1 && cmd2 || cmd3) || cmd4 && cmd5
+// ((cmd1 && cmd2) || cmd3) || cmd4 && cmd5
+
 void	ast(t_minishell *mini, int start, int end)
 {
 	bool	prior;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:03:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/21 19:05:58 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/21 19:38:16 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,20 @@
 
 extern sig_atomic_t	g_signal;
 
+typedef enum
+{
+    AND,
+    OR,
+    PARENTHESIS,
+	CMD,
+	REDIR_NONE,// -
+    REDIR_OUT, // >
+    REDIR_APPEND,// >>
+	REDIR_IN,// <
+	REDIR_IN_OUT,//<>
+	HEREDOC// <<
+}	t_type;
+
 typedef struct s_variables
 {
 	char	line[70000];
@@ -80,6 +94,7 @@ typedef struct s_redirs
 	char	**tab;
 	int	fd;
 	int	y;
+	t_type	type;
 }	t_redirs;
 
 typedef struct s_user
@@ -129,14 +144,6 @@ typedef struct s_minishell
 	t_env		*env_export;
 	char		**pipes_redirs;
 }	t_minishell;
-
-typedef enum
-{
-    AND,
-    OR,
-    PARENTHESIS,
-	CMD
-}	t_type;
 
 typedef struct s_btree
 {

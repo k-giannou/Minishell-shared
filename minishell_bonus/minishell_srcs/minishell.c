@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:17 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/21 19:26:56 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/21 19:56:43 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,6 @@ int	main(int ac, char **av, char **env)
 		if (check_quotes(str))
 			continue ;
 		str = replace_var(mini, str);
-		if (wildcars_exist_at(str, 0, true))
-			str = handle_wildcards(str, mini);
 		optimised_line(str, &mini);
 		if (is_symbols(mini->pipes_redirs, 0))
 			free_all(mini, "tabs");

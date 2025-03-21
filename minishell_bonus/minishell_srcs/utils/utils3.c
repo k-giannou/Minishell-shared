@@ -6,7 +6,7 @@
 /*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:45:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/15 14:59:44 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/21 19:42:59 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,10 @@ void	init_user(t_minishell *mini)
 {
 	mini->user.hostname = NULL;
 	mini->user.hostname = hostname();
+	//printf("hostname = %s", mini->user.hostname);
 	mini->user.name = NULL;
 	mini->user.name = getenv("USER");
+	//printf("uesrnmae = %s", mini->user.name);
 	mini->user.final = ft_strjoin_n_free(mini->user.name, mini->user.hostname,
 			2);
 }

@@ -6,7 +6,7 @@
 /*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:03:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/21 19:38:16 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/24 12:35:12 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,9 @@ typedef enum
     OR,
     PARENTHESIS,
 	CMD,
-	REDIR_NONE,// -
     REDIR_OUT, // >
     REDIR_APPEND,// >>
 	REDIR_IN,// <
-	REDIR_IN_OUT,//<>
 	HEREDOC// <<
 }	t_type;
 
@@ -268,6 +266,12 @@ char	*handle_wildcards(char *str, t_minishell *mini);
 int		find_start(char *str, int point);
 int		find_end(char *str, int point);
 int		ft_fnmatch_rec(const char *pattern, const char *str, int *i);
-void	search_test(void);
+/*void	search_test(void);*/
+bool	handle_pattern(struct dirent *entry, char *pattern, DIR *dp, t_variables *v);
+void	replace_file_in_str(t_variables *v, char *file);
+void	init_var_wild(t_variables *v, t_minishell *mini);
+int		process_pattern(t_variables *v, char *str);
+void	handle_if_not_found(t_variables *v, char *str);
+char	*final_str(t_variables *v, char *str);
 
 #endif

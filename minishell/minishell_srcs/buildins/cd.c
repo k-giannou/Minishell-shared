@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 19:15:45 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/25 17:57:39 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/25 17:57:49 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	cd(char **path, t_minishell **mini)
 	{
 		ft_get_env(&tmp, "HOME=");
 		if (!tmp)
-			return (g_signal = 1, 
+			return (g_signal = 1, \
 	(void)ft_fprintf(2, "minishell: cd: HOME not set\n"));
 		str = ft_strdup(tmp->data + 5);
 	}

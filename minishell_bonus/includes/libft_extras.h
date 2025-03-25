@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft_extras.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:00:12 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/21 12:39:26 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/25 15:40:25 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,11 +116,12 @@ void		ft_putcstr_fd(char *s, int fd, char c);
 /*                             Return An Occurence                            */
 /* -------------------------------------------------------------------------- */
 
+char		get_multi_char_cmp(int s1, ...);
 char		*ft_strchr(const char *s, int c);
 char		*get_multi_cmp(const char *s1, ...);
-char		get_multi_char_cmp(int s1, ...);
 void		*ft_memchr(const void *s, int c, size_t n);
 char		*get_multi_ncmp(int n, const char *s1, ...);
+char		**ft_splitstr(const char **split, const char *str);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
 char		*ft_strnstr(const char *big, const char *little, size_t len);
 /* -------------------------------------------------------------------------- */

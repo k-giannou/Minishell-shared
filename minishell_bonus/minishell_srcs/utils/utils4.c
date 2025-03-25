@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:45:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/21 19:23:19 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/25 16:48:19 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	set_symbols(t_minishell **mini)
 	int	len_split;
 
 	i = 0;
+	(*mini)->prior = (t_prior){0};
 	len_split = ft_count_words((const char **)(*mini)->tokens);
 	while (i < len_split)
 	{

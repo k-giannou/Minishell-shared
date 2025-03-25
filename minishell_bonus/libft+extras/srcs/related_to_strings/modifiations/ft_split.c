@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:31:37 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/21 12:30:22 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/22 17:24:35 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	skip_charset(char i, char *charset)
 {
 	int	j;
 
+	if (!charset)
+		return (0);
 	j = 0;
 	while (charset[j])
 	{

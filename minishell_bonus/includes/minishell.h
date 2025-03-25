@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:03:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/21 19:38:16 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/25 16:43:55 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ extern sig_atomic_t	g_signal;
 
 typedef enum
 {
-    AND,
+    AND = 1,
     OR,
     PARENTHESIS,
 	CMD,
@@ -128,39 +128,40 @@ typedef struct s_prior
 
 typedef struct s_minishell
 {
-	int			fd;
-	t_redirs	r;
-	t_pipes		p;
-	t_user		user;
-	t_variables	vars;
-	t_env		*env;
-	t_prior		prior;
-	bool		sgl_q;
-	bool		dbl_q;
-	char		**cmd_s;
-	char		*cur_loc;
-	char		**tokens;
-	int			hist_lines;
-	t_env		*env_export;
-	char		**pipes_redirs;
+	int				fd;
+	t_redirs		r;
+	t_pipes			p;
+	t_user			user;
+	t_variables		vars;
+	t_env			*env;
+	t_prior			prior;
+	bool			sgl_q;
+	bool			dbl_q;
+	char			**cmd_s;
+	char			*cur_loc;
+	char			**tokens;
+	int				hist_lines;
+	t_env			*env_export;
+	char			**pipes_redirs;
+	unsigned int	parenthesis_lvl;
 }	t_minishell;
 
 typedef struct s_btree
 {
 	int				type;
-	char			*data;
+	char			**tokens;
+	char			**pipes_redirs;
 	struct s_btree	*left;
 	struct s_btree	*right;
 } t_btree;
-
 
 void	sig_init(void);
 t_env	*ft_envdup(t_env *src);
 int		check_quotes(char *str);
 t_env	*create_cell(char *data);
+int		is_symbols(char **raw, int i);
 void	ft_env_sort(t_env **begin_list);
 int		rest_letters_of_name(char *str);
-int		is_symbols(char **raw, int i);
 void	ft_get_env(t_env **env, char *env_var);
 t_env	*add_at(t_env *env, char *data, int pos);
 char	*replace_var(t_minishell *mini, char *str);
@@ -195,6 +196,7 @@ void	set_symbols(t_minishell **mini);
 char	*find_path(char *cmd, char **env);
 void	read_stdin(int *fd, char *limiter);
 void	create_pipes(t_pipes *pipes_struct);
+char	**get_cmd_btree(t_minishell *mini, int *j);
 void	execute(char **av, char **env, t_minishell *mini);
 char	**get_redir_split(t_minishell *mini, int cur_cmd);
 void	pipex(t_minishell *mini, char **env, int start, int end);
@@ -262,12 +264,12 @@ void	if_pipes_or_redirs(char *line, int *i, int *count);
 void	ft_substr_mini_2(char *line, t_minishell **mini, int *len);
 
 //wildcards
+int		ft_fnmatch_rec(const char *pattern, const char *str, int *i);
 int		search_for_patterns(char *pattern, t_variables *v);
 int		wildcars_exist_at(char *str, int i, bool parse);
 char	*handle_wildcards(char *str, t_minishell *mini);
 int		find_start(char *str, int point);
 int		find_end(char *str, int point);
-int		ft_fnmatch_rec(const char *pattern, const char *str, int *i);
 void	search_test(void);
 
 #endif

@@ -5,6 +5,8 @@ FLAGS			= -Wall -Wextra -Werror -g
 HDRS			= includes
 LIBFT_DIR		= libft+extras
 LIBFT			= $(LIBFT_DIR)/libft.a
+FPRINTF_DIR		= fprintf
+FPRINTF			= $(FPRINTF_DIR)/libfprintf.a
 SRCS_DIR		= ./
 OBJ_DIR			= obj
 
@@ -31,7 +33,9 @@ $(NAME): $(LIBFT) $(SRC_O)
 $(LIBFT):
 	@mkdir -p $(OBJ_DIR)
 	$(MAKE) -C $(LIBFT_DIR)
-	@mv $(LIBFT_DIR)/libft.a libs/
+	@mv $(LIBFT) libs/
+	$(MAKE) -C $(FPRINTF_DIR)
+	@mv $(FPRINTF) libs/
 
 # Compilation des fichiers sources en objets dans le répertoire obj/
 $(OBJ_DIR)/%.o: $(SRCS_DIR)%.c $(HDRS)/*.h
@@ -44,13 +48,14 @@ clean:
 	@echo $(CYAN)"Suppression des fichiers objets..."$(RESET)
 	@rm -rf $(OBJ_DIR)
 	$(MAKE) -C $(LIBFT_DIR) clean
+	$(MAKE) -C $(FPRINTF_DIR) clean
 
 # Nettoyage complet
 fclean: clean
 	@echo $(CYAN)"Suppression de l'exécutable..."$(RESET)
 	@$(RM) $(NAME)
-	@echo $(CYAN)"Suppression de la libft..."$(RESET)
-	@$(RM) libs/libft.a
+	@echo $(CYAN)"Suppression des libs..."$(RESET)
+	@$(RM) libs/*.a
 
 # Récompilation complète depuis zéro
 re: fclean all

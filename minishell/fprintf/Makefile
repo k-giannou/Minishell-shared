@@ -1,12 +1,13 @@
-MAKEFLAGS += -s
-
 CC = cc
-FLAGS = -Wall -Wextra -Werror -g
+
+FLAGS = -Wall -Wextra -Werror -w -g
 
 SRCS_DIR = ../
 OBJ_DIR = ../obj
 
-NAME = libft.a
+NAME = libfprintf.a
+
+LIBFT = ft_fprintf.h
 
 SRCS = $(shell find $(SRCS_DIR) -type f -name '*.c')
 
@@ -16,25 +17,27 @@ CYAN	= "\033[36m"
 GREEN	= "\033[32m"
 RESET	= "\033[0m"
 
-all : message $(NAME)
+all: message ${NAME}
 
 message:
-	@echo $(CYAN)"Compilation de la libft..."$(RESET)
+	@echo $(CYAN)"Compilation de fprintf..."$(RESET)
 
-$(NAME) : $(OBJS)
+${NAME}: ${OBJS}
 	ar -rcs $(NAME) $(OBJS)
-	@echo $(GREEN)"libft crée !"$(RESET)
+	@echo $(GREEN)"libfprintf crée !"$(RESET)
 
 $(OBJ_DIR)/%.o : $(SRCS_DIR)%.c | $(OBJ_DIR)
 	@mkdir -p $(dir $@)
 	$(CC) $(FLAGS) -I ../includes -c $< -o $@
 
-clean :
-	rm -f $(OBJS) $(OBJS_BONUS)
+clean:
+	rm -f ${OBJS}
 
-fclean : clean
-	rm -f $(NAME)
+fclean: clean
+	rm -f ${NAME}
 
-re : fclean all
+bonus: $(NAME)
+
+re: fclean all
 
 .PHONY: all clean fclean re bonus

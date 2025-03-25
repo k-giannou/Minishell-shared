@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 20:38:24 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/20 15:49:48 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/25 18:18:47 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ char	*replace_by_tilde(t_env *env, char *str, int free_str)
 			NULL);
 	tmp = env;
 	ft_get_env(&tmp, "HOME=");
-	if (tmp && !ft_strncmp(str, tmp->data + 5, ft_strlen(tmp->data + 5)))
+	if (tmp && !ft_strncmp(str, tmp->data + 5, ft_strlen(tmp->data + 5))
+		&& tmp->data[ft_strlen(tmp->data) - 1] != '/')
 	{
 		new_str = ft_strjoin("~", str + ft_strlen(tmp->data + 5));
 		free(str);

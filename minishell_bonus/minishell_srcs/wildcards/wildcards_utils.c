@@ -6,12 +6,22 @@
 /*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 09:58:12 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/03/07 21:17:05 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/24 12:08:45 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include <fnmatch.h>
+
+void	replace_file_in_str(t_variables *v, char *file)
+{
+	int	i;
+
+	i = 0;
+	while (file[i] != '\0')
+		v->line[v->k++] = file[i++];
+	v->line[v->k++] = 32;
+}
 
 int	find_start(char *str, int point)
 {

@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:45:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/05 18:49:12 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/25 19:29:17 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	pipe_count(t_minishell *mini)
 
 	i = 0;
 	count = 0;
-	len_split = ft_count_words(mini->tokens);
+	len_split = ft_count_words((const char **)mini->tokens);
 	while (i < len_split)
 	{
 		if (mini->pipes_redirs[i] && !ft_strncmp(mini->pipes_redirs[i], "|", 1))

@@ -38,8 +38,7 @@ static bool	correct_format(char *str_char)
 	- if the number is 1, it will free a string (*str)
 	- if the number is 2, it will free a board of strings (**str)
 
-	The last argument should be NULL to i
-	nterrupt the function correctly, otherwise,
+	The last argument should be NULL to interrupt the function correctly, otherwise,
 	undefined outcome may happened.
 */
 void	multi_free(char *to_free, ...)

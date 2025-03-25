@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_splitchr.c                                      :+:      :+:    :+:   */
+/*   ft_splitstr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:33:42 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/25 15:39:45 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/25 20:37:40 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_extras.h"
 
-/* search the first iteration of str in split
+/* search the first iteration of str in split, return NULL if nothing is found
 */
-char	**ft_splitstr(const char **split, const char *str)
+char	**ft_splitstr(char **split, char *str)
 {
 	int	i;
 

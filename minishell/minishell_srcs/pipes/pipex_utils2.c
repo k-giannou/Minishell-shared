@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/20 14:58:30 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/25 19:30:18 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	**get_redir_split(t_minishell *mini, int cur_cmd)
 	while (mini->tokens[end] && ft_strncmp(mini->tokens[end], "|", 1))
 		end++;
 	return (ft_splitndup(mini->pipes_redirs,
-			ft_count_words(mini->tokens), start, end));
+			ft_count_words((const char **)mini->tokens), start, end));
 }
 
 int	isredir_pipex(char *tokens)
@@ -104,7 +104,7 @@ int	cat_ls(char **cmd_s)
 {
 	int	i;
 
-	i = ft_count_words(cmd_s) - 1;
+	i = ft_count_words((const char **)cmd_s) - 1;
 	if (!ft_strcmp(cmd_s[i], "ls"))
 	{
 		i--;

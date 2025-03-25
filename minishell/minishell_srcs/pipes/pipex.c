@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/21 16:55:46 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/25 20:52:40 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	exec_child(char **env, t_minishell *mini, char **split, char **redirs)
 		split = ft_split(mini->cmd_s[mini->p.i], " ");
 		redirs = get_redir_split(mini, mini->p.i);
 		redir(mini, env, split, redirs);
-		free_pipes_redirs(redirs, ft_count_words(split));
+		free_pipes_redirs(redirs, ft_count_words((const char **)split));
 		free_dbl_tab(split);
 	}
 	else if (is_buildin(get_first_arg(mini->cmd_s[mini->p.i]), 1))
@@ -51,7 +51,7 @@ void	exec_child(char **env, t_minishell *mini, char **split, char **redirs)
 		close(mini->p.pipes[mini->p.i - 1][0]);
 	if (mini->p.pipes)
 		free_pipes(mini->p.pipes, mini->p.nb_pipes);
-	multi_free("2, 1, 2", mini->cmd_s, mini->p.pids, env);
+	multi_free("2, 1, 2", mini->cmd_s, mini->p.pids, env, NULL);
 	free_all(mini, "all");
 	exit(0);
 }
@@ -117,5 +117,5 @@ void	pipex(t_minishell *mini, char **env)
 		mini->p.pipes = NULL;
 	son_program(env, mini);
 	free_pipes(mini->p.pipes, mini->p.nb_pipes);
-	multi_free("2, 1, 2", mini->cmd_s, mini->p.pids, env);
+	multi_free("2, 1, 2", mini->cmd_s, mini->p.pids, env, NULL);
 }

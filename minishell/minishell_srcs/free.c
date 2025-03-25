@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:46:16 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/07 19:33:36 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/25 20:20:15 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,11 @@ void	free_pipes(int **pipes, int nb_pipes)
 
 	j = 0;
 	while (j < nb_pipes)
-		free(pipes[j++]);
+	{
+		if (pipes[j])
+			free(pipes[j]);
+		j++;
+	}
 	free(pipes);
 }
 
@@ -65,7 +69,8 @@ void	free_all(t_minishell *mini, char *str)
 		if (mini->user.final)
 			free(mini->user.final);
 		if (mini->pipes_redirs)
-			free_pipes_redirs(mini->pipes_redirs, ft_count_words(mini->tokens));
+			free_pipes_redirs(mini->pipes_redirs,
+				ft_count_words((const char **)mini->tokens));
 		if (mini->tokens)
 			free_dbl_tab(mini->tokens);
 		free(mini);
@@ -73,7 +78,8 @@ void	free_all(t_minishell *mini, char *str)
 	else if (!ft_strcmp(str, "tabs") && mini)
 	{
 		if (mini->pipes_redirs)
-			free_pipes_redirs(mini->pipes_redirs, ft_count_words(mini->tokens));
+			free_pipes_redirs(mini->pipes_redirs,
+				ft_count_words((const char **)mini->tokens));
 		if (mini->tokens)
 			free_dbl_tab(mini->tokens);
 		mini->tokens = NULL;

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_splitchr.c                                      :+:      :+:    :+:   */
+/*   ft_splitstr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:33:42 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/25 15:39:45 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/25 20:39:17 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /* search the first iteration of str in split
 */
-char	**ft_splitstr(const char **split, const char *str)
+char	**ft_splitstr(char **split, char *str)
 {
 	int	i;
 

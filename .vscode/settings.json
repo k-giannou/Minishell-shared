@@ -13,7 +13,9 @@
 	"span": "c",
 	"sstream": "c",
 	"libft_extras.h": "c",
-	"stdint.h": "c"
+	"stdint.h": "c",
+	"cstdlib": "c",
+	"stdlib.h": "c"
 },
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "g++",

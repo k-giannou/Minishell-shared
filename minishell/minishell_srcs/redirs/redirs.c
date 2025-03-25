@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:21:49 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/03/20 15:51:31 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/25 20:16:28 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	handle_no_buildin_redir(char **env, char **tokens,
 	path = NULL;
 	pid = fork();
 	if (pid == -1)
-		return (free_dbl_tab(env), perror("fork"), 0);
+		return (perror("fork"), 0);
 	if (pid == 0)
 	{
 		if (!handle_files(tokens, pipes_redirs, &mini->r, 1))
@@ -121,26 +121,25 @@ int	handle_no_buildin_redir(char **env, char **tokens,
 int	redir(t_minishell *mini, char **env, char **tokens, char **pipes_redirs)
 {
 	if (!mini || !env || !tokens || !pipes_redirs)
-		return (free_dbl_tab(env), -1);
+		return (-1);
 	if (heredoc(tokens, pipes_redirs))
 	{
 		if (!handle_heredoc(tokens, pipes_redirs))
-			return (free_dbl_tab(env), -1);
+			return (-1);
 	}
 	if (syntax_error_redir(tokens, pipes_redirs)
 		|| !valid_filename(tokens, pipes_redirs)
 		|| !init_r(&mini->r, tokens))
-		return (free_dbl_tab(env), -1);
+		return (-1);
 	if (is_buildin(tokens[0], 0))
 	{
 		if (!handle_files(tokens, pipes_redirs, &mini->r, 0))
-			return (free_dbl_tab(env), restore_dup(&mini->r), -1);
+			return (restore_dup(&mini->r), -1);
 		join_command_free_tab(mini->r.tab, tokens);
 		exec_buildin(mini->r.tab, mini, 0);
 	}
 	else if (!handle_no_buildin_redir(env, tokens, pipes_redirs, mini))
 		return (-1);
-	free_dbl_tab(env);
 	return (restore_dup(&mini->r),
 		free_dbl_tab(mini->r.tab), 0);
 }

@@ -1,4 +1,4 @@
-MAKEFLAGS += -s  # Active le mode silencieux globalement
+MAKEFLAGS += -s
 
 CC				= cc
 FLAGS			= -Wall -Wextra -Werror -g
@@ -23,13 +23,11 @@ RESET			= "\033[0m"
 
 all: $(NAME)
 
-# Création de l'exécutable
 $(NAME): $(LIBFT) $(SRC_O)
 	@echo $(CYAN)"Compilation de minishell..."$(RESET)
 	@$(CC) $(FLAGS) $(SRC_O) -L libs -lfprintf -lft -I $(HDRS) -o $(NAME) -lreadline
 	@echo $(GREEN)"Exécutable $(NAME) créé !"$(RESET)
 
-# Règle pour compiler la libft (appelle le Makefile dans libft+extras)
 $(LIBFT):
 	@mkdir -p $(OBJ_DIR)
 	$(MAKE) -C $(LIBFT_DIR)
@@ -37,28 +35,23 @@ $(LIBFT):
 	$(MAKE) -C $(FPRINTF_DIR)
 	@mv $(FPRINTF) libs/
 
-# Compilation des fichiers sources en objets dans le répertoire obj/
 $(OBJ_DIR)/%.o: $(SRCS_DIR)%.c $(HDRS)/*.h
 	@mkdir -p $(dir $@)
 	@$(CC) $(FLAGS) -I $(HDRS) -c $< -o $@
 
 
-# Nettoyage des objets
 clean:
 	@echo $(CYAN)"Suppression des fichiers objets..."$(RESET)
 	@rm -rf $(OBJ_DIR)
 	$(MAKE) -C $(LIBFT_DIR) clean
 	$(MAKE) -C $(FPRINTF_DIR) clean
 
-# Nettoyage complet
 fclean: clean
 	@echo $(CYAN)"Suppression de l'exécutable..."$(RESET)
 	@$(RM) $(NAME)
 	@echo $(CYAN)"Suppression des libs..."$(RESET)
 	@$(RM) libs/*.a
 
-# Récompilation complète depuis zéro
 re: fclean all
 
-# Sécurité des règles
 .PHONY: all clean fclean re

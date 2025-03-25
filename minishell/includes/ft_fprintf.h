@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <stdarg.h>
 # include <limits.h>
+# include "libft_extras.h"
 
 typedef struct s_struct
 {
@@ -29,9 +30,7 @@ typedef struct s_struct
 }	t_struct;
 
 int			ft_digits(long n);
-int			ft_atoi(const char *nptr);
 int			srch_flag(char *s, char c);
-int			ft_strcmp(const char *s1, const char *s2);
 int			ft_fprintf(int fd, const char *str, ...);
 int			standard_conds(t_struct v, int i);
 int			print_this_bs(va_list args, t_struct v);
@@ -48,7 +47,6 @@ void		ft_print_str(char *str, t_struct v, int *count);
 void		ft_print_ptr(size_t ptr, t_struct v, int *count);
 void		ft_print_uns_int(long nb, t_struct v, int *count);
 void		ft_print_percent(char percent, int *count, int fd);
-size_t		ft_strlen(const char *s);
 t_struct	flag_filter(int i, t_struct v);
 t_struct	flags(char c, t_struct v);
 t_struct	erase_flag(char erased, t_struct v);

@@ -5,12 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/05 17:03:22 by locagnio          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/03/25 16:43:55 by locagnio         ###   ########.fr       */
-=======
-/*   Updated: 2025/03/24 12:35:12 by kgiannou         ###   ########.fr       */
->>>>>>> a3ee6fbde5bfd4f3b82a5e3611b7187759000fe7
+/*   Created: 2025/03/25 18:55:18 by locagnio          #+#    #+#             */
+/*   Updated: 2025/03/25 18:59:06 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,7 +194,7 @@ void	set_symbols(t_minishell **mini);
 char	*find_path(char *cmd, char **env);
 void	read_stdin(int *fd, char *limiter);
 void	create_pipes(t_pipes *pipes_struct);
-char	**get_cmd_btree(t_minishell *mini, int *j);
+char	**get_cmd_btree(char **tokens, char **p_r, int *j);
 void	execute(char **av, char **env, t_minishell *mini);
 char	**get_redir_split(t_minishell *mini, int cur_cmd);
 void	pipex(t_minishell *mini, char **env, int start, int end);
@@ -272,17 +268,12 @@ int		wildcars_exist_at(char *str, int i, bool parse);
 char	*handle_wildcards(char *str, t_minishell *mini);
 int		find_start(char *str, int point);
 int		find_end(char *str, int point);
-<<<<<<< HEAD
-void	search_test(void);
-=======
 int		ft_fnmatch_rec(const char *pattern, const char *str, int *i);
-/*void	search_test(void);*/
 bool	handle_pattern(struct dirent *entry, char *pattern, DIR *dp, t_variables *v);
 void	replace_file_in_str(t_variables *v, char *file);
 void	init_var_wild(t_variables *v, t_minishell *mini);
 int		process_pattern(t_variables *v, char *str);
 void	handle_if_not_found(t_variables *v, char *str);
 char	*final_str(t_variables *v, char *str);
->>>>>>> a3ee6fbde5bfd4f3b82a5e3611b7187759000fe7
 
 #endif

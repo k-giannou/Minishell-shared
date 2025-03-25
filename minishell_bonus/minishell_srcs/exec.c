@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 16:25:44 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/25 17:48:49 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/25 19:00:55 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void	recursive_add(t_btree **root, t_minishell *mini, int i)
 	}
 }
 
-t_btree *init_tree(char *tokens, char **p_r, int len_tokens)
+t_btree *init_tree(char **p_r, int len_tokens)
 {
 	t_btree	*tree;
 	int j;
@@ -136,7 +136,7 @@ t_btree *init_tree(char *tokens, char **p_r, int len_tokens)
 	return (tree);
 }
 
-char	**get_cmd_btree(char *tokens, char **p_r, int *j)
+char	**get_cmd_btree(char **tokens, char **p_r, int *j)
 {
 	int		i;
 
@@ -149,7 +149,7 @@ char	**get_cmd_btree(char *tokens, char **p_r, int *j)
 		ft_count_words((const char **)tokens + i), i, *j));
 }
 
-char	**get_p_r(char *tokens, char **p_r, int j)
+char	**get_p_r(char **tokens, char **p_r, int j)
 {
 	int		i;
 
@@ -163,7 +163,7 @@ char	**get_p_r(char *tokens, char **p_r, int j)
 		ft_count_words((const char **)tokens + i), i, j));
 }
 
-char	*get_next_oplog(char *tokens, char **p_r, int i)
+char	*get_next_oplog(char **tokens, char **p_r, int i)
 {
 	while (str_multi_cmp(p_r[i], "&&", "||", "(", ")", NULL)
 		&& tokens[i])
@@ -171,27 +171,27 @@ char	*get_next_oplog(char *tokens, char **p_r, int i)
 	return (p_r[i]);
 }
 
-t_btree	*left_branch(char *tokens, char **p_r, int parenthesis_lvl, int *i)
+t_btree	*left_branch(char **tokens, char **p_r, int parenthesis_lvl, int *i)
 {
 	t_btree	*tree;
-	unsigned int level_to_close;
+	int level_to_close;
 
 	level_to_close = parenthesis_lvl - 1;
 	tree = NULL;
 	while (parenthesis_lvl > level_to_close)//while i didn't lower my level
 	{
-		if (!ft_strcmp(mini->pipes_redirs[*i], "("))//if i have another opened parenthesis
+		if (!ft_strcmp(p_r[*i], "("))//if i have another opened parenthesis
 		{
 			(*i)++;
-			mini->parenthesis_lvl++;
+			parenthesis_lvl++;
 			if (tree)//if i got something before
 				tree->left = left_branch(tokens, p_r, parenthesis_lvl, i);//it goes on the left
 			else
 				tree = left_branch(tokens, p_r, parenthesis_lvl, i);//it becomes the tree
 			break ;
 		}
-		else if (!ft_strcmp(mini->pipes_redirs[*i], ")"))//if i've reached the end of a parenthesis
-			mini->parenthesis_lvl--;//i lower the lvl
+		else if (!ft_strcmp(p_r[*i], ")"))//if i've reached the end of a parenthesis
+			parenthesis_lvl--;//i lower the lvl
 		else if (!ft_strcmp(get_next_oplog(tokens, p_r, *i), ")"))//if the next logical operator is the parenthesis enclosure
 			tree = btree_create_node(get_cmd_btree(tokens, p_r, i), get_p_r(tokens, p_r, *i), CMD);//i take the command
 		else
@@ -216,7 +216,7 @@ t_btree *create_tree(t_minishell *mini, char **tokens, char **p_r, int len_token
 			ft_splitndup(p_r, len_tokens, 0, len_tokens), CMD));//i have one node of execution
 	i = 0;
 	j = 0;
-	tree = init_tree(tokens, p_r, len_tokens);
+	tree = init_tree(p_r, len_tokens);
 	left = tree;
 	right = tree;
 	while (tokens[i])
@@ -225,7 +225,7 @@ t_btree *create_tree(t_minishell *mini, char **tokens, char **p_r, int len_token
 		{
 			i++;
 			mini->parenthesis_lvl++;
-			left->left = left_branch(mini, &i);
+			left->left = left_branch(tokens, p_r, mini->parenthesis_lvl, &i);
 		}
 	}
 	recursive_add(&tree, mini, 0);
@@ -237,7 +237,7 @@ void	exec_cmd(t_minishell *mini)
 	t_btree *btree;
 
 	current_status(mini);
-	btree = create_tree(mini, mini->tokens, mini->pipes_redirs, ft_count_words(mini->tokens));
+	btree = create_tree(mini, mini->tokens, mini->pipes_redirs, ft_count_words((const char **)mini->tokens));
 	//print_btree(btree);
 	//ast(btree);
 	free_all(mini, "tabs");

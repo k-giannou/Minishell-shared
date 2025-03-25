@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi64.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 19:26:37 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/21 13:27:26 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/25 19:09:35 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_extras.h"
 
-#define INT64_Max "9223372036854775807"
-#define INT64_Min "-9223372036854775808"
+#define INT64_MAX_ATOI "9223372036854775807"
+#define INT64_MIN_ATOI "-9223372036854775808"
 
 static int	error64(const char *str)
 {
@@ -28,21 +28,21 @@ static int	cmp_64(char *nptr)
 	int		i;
 
 	i = -1;
-	len_max = ft_strlen(INT64_Max);
-	len_min = ft_strlen(INT64_Min);
+	len_max = ft_strlen(INT64_MAX_ATOI);
+	len_min = ft_strlen(INT64_MIN_ATOI);
 	if ((nptr[0] != '-' && ft_strlen(nptr) > len_max)
 		|| (nptr[0] == '-' && ft_strlen(nptr) > len_min))
 		return (free(nptr), 1);
 	else if (nptr[0] != '-' && ft_strlen(nptr) == len_max)
 	{
 		while (nptr[++i])
-			if (nptr[i] > INT64_Max[i])
+			if (nptr[i] > INT64_MAX_ATOI[i])
 				return (free(nptr), 1);
 	}
 	else if (nptr[i++] == '-' && ft_strlen(nptr) == len_min)
 	{
 		while (nptr[++i])
-			if (nptr[i] > INT64_Min[i])
+			if (nptr[i] > INT64_MIN_ATOI[i])
 				return (free(nptr), 1);
 	}
 	return (free(nptr), 0);

@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:00:12 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/25 18:57:11 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/25 19:19:29 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,28 @@
 # ifndef RESET
 #  define RESET		"\033[0m"   //Réinitialisation
 # endif
+
+typedef struct s_mjnf
+{
+	char	*arg;
+	va_list	args;
+	char	*new_string;
+	int		*tabs_to_free;
+	int		cur_str;
+	int		tab_increment;
+	int		tab_len;
+}	t_mjnf;
+
+typedef struct s_msjnf
+{
+	char	**arg;
+	va_list	args;
+	char	**new_split;
+	int		*tabs_to_free;
+	int		cur_str;
+	int		tab_increment;
+	int		tab_len;
+}	t_msjnf;
 
 /* ************************************************************************** */
 /*                                   To Free                                  */

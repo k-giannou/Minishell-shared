@@ -6,7 +6,7 @@
 /*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 14:46:21 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/21 13:24:41 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/21 12:38:27 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static bool	correct_format(char *str_char)
 	{
 		if (ft_isnum(str_char[i]) || str_char[i] == '-' || str_char[i] == '+')
 			i++;
-		else if (ft_strcmp(str_char + i, ", ") && i != 0)
+		else if (ft_strcmp (str_char + i, ", ") && i != 0)
 			i += 2;
 		else
 			return (0);

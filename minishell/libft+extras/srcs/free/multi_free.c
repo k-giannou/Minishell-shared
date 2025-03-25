@@ -21,7 +21,7 @@ static bool	correct_format(char *str_char)
 	{
 		if (ft_isnum(str_char[i]))
 			i++;
-		else if (ft_strcmp(str_char + i, ", ") && i != 0)
+		else if (ft_strcmp (str_char + i, ", ") && i != 0)
 			i += 2;
 		else
 			return (0);
@@ -38,8 +38,8 @@ static bool	correct_format(char *str_char)
 	- if the number is 1, it will free a string (*str)
 	- if the number is 2, it will free a board of strings (**str)
 
-	The last argument should be NULL to interrupt the
-	function correctly, otherwise,
+	The last argument should be NULL to i
+	nterrupt the function correctly, otherwise,
 	undefined outcome may happened.
 */
 void	multi_free(char *to_free, ...)
@@ -50,16 +50,16 @@ void	multi_free(char *to_free, ...)
 	int		i;
 
 	tabs_to_free = NULL;
-	if (to_free && correct_format(to_free))//je verifie le format du tableau to free
-		tabs_to_free = strchar_to_strint(to_free);//je le converti en tableau d'ints
+	if (to_free && correct_format(to_free))
+		tabs_to_free = strchar_to_strint(to_free);
 	va_start(args, to_free);
 	ptrn = va_arg(args, void *);
 	i = 0;
 	while (ptrn)
 	{
-		if (tabs_to_free && tabs_to_free[i] == 1)
+		if (tabs_to_free && tabs_to_free[i] == 1 && ptrn)
 			free(ptrn);
-		if (tabs_to_free && tabs_to_free[i] == 2)
+		if (tabs_to_free && tabs_to_free[i] == 2 && (char **)ptrn)
 			free_dbl_tab((char **)ptrn);
 		ptrn = va_arg(args, void *);
 		i++;

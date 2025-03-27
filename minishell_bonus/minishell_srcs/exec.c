@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 16:25:44 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/25 19:00:55 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/27 17:50:21 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,42 +97,48 @@ int	get_type(char *symbol)
 		return (CMD);
 }
 
-void	recursive_add(t_btree **root, t_minishell *mini, int i)
-{
-	if (i < ft_count_words((const char **)mini->tokens))
-	{
-		while (mini->pipes_redirs[i])
-			i++;
-		if (i < ft_count_words((const char **)mini->tokens) && !(*root)->left)
-		{
-			(*root)->left = btree_create_node(ft_split(mini->tokens[i], NULL), NULL, CMD);
-			i++;
-		}
-		while (mini->pipes_redirs[i])
-			i++;
-		if (i < ft_count_words((const char **)mini->tokens) && !(*root)->right)
-		{
-			(*root)->right = btree_create_node(ft_split(mini->tokens[i], NULL), NULL, CMD);
-			i++;
-		}
-		recursive_add(&(*root)->right, mini, i);
-	}
-}
-
-t_btree *init_tree(char **p_r, int len_tokens)
+t_btree *init_tree(char **tokens, char **p_r, int len_tokens)
 {
 	t_btree	*tree;
 	int j;
+	int incr;
+	int parenthesis;
 
 	j = 0;
+	parenthesis = 0;
 	tree = NULL;
-	while (str_multi_cmp(p_r[j], "&&", "||", "(", NULL)
-		&& j < len_tokens)
-		j++;
-	if (!str_multi_cmp(p_r[j], "&&", "||", NULL) && !tree)
+	incr = 1;
+	while (1)
+	{
+		while (str_multi_cmp(p_r[j], "&&", "||", NULL) && parenthesis != 0
+			&& j < len_tokens)//while i didnt reach the end of parenthesis and a sign && or ||
+		{
+			if (!ft_strcmp(p_r[j], "("))
+				parenthesis++;
+			else if (!ft_strcmp(p_r[j], ")"))
+				parenthesis--;
+			j++;
+		}
+		if (j == len_tokens)//if a little fucker put a parenthesis on the whole lenght of the commands
+		{
+			len_tokens--;//i shorten the fucking scan by 1
+			j = incr++;//motherfuckar
+			if (len_tokens <= j)//if it's Gabriel and the whole shit is made of parenthesis, i return NULL
+				return (ft_fprintf(2, "Bro, you're serious ?\n"), NULL);
+		}
+		else//if he or she is not a biche, i get out
+			break;
+	}
+	if (!str_multi_cmp(p_r[j], "&&", "||", NULL) && (!j || !ft_strcmp(p_r[j - 1], "(")))//if i have a && or a || in the first string of right after an open parenthesis, i return NULL
+		return (ft_fprintf(2, "minishell : logical operator at start of parenthesis\n"), NULL);
+	else if (!str_multi_cmp(p_r[j], "&&", "||", NULL) && !tree)//else if my tree is empty
+	{
 		tree = btree_create_node(ft_split(p_r[j], NULL),
-			ft_splitndup(p_r + j, 1, 0, 1),
-				get_type(p_r[j]));
+			ft_splitndup(p_r + j, 1, 0, 1), get_type(p_r[j]));//i create the first node with the operator
+		tree->left = btree_create_node(ft_splitndup(tokens,
+			ft_count_words((const char **)tokens), 0, j), ft_splitndup(p_r,
+				ft_count_words((const char **)tokens), 0, j), CMD);//and the first command node
+	}
 	return (tree);
 }
 
@@ -171,7 +177,8 @@ char	*get_next_oplog(char **tokens, char **p_r, int i)
 	return (p_r[i]);
 }
 
-t_btree	*left_branch(char **tokens, char **p_r, int parenthesis_lvl, int *i)
+t_btree	*left_branch_parenthesis(char **tokens, char **p_r, int parenthesis_lvl,
+int *i)
 {
 	t_btree	*tree;
 	int level_to_close;
@@ -193,42 +200,78 @@ t_btree	*left_branch(char **tokens, char **p_r, int parenthesis_lvl, int *i)
 		else if (!ft_strcmp(p_r[*i], ")"))//if i've reached the end of a parenthesis
 			parenthesis_lvl--;//i lower the lvl
 		else if (!ft_strcmp(get_next_oplog(tokens, p_r, *i), ")"))//if the next logical operator is the parenthesis enclosure
-			tree = btree_create_node(get_cmd_btree(tokens, p_r, i), get_p_r(tokens, p_r, *i), CMD);//i take the command
+			tree = btree_create_node(get_cmd_btree(tokens, p_r, i),
+				get_p_r(tokens, p_r, *i), CMD);//i take the command
 		else
-			tree = btree_create_node(get_cmd_btree(tokens, p_r, i), get_p_r(tokens, p_r, *i), CMD);
+			tree = btree_create_node(get_cmd_btree(tokens, p_r, i),
+				get_p_r(tokens, p_r, *i), CMD);
 	}
 	return (tree);
+}
+
+t_btree *right_branch(char **tokens, char **p_r, int *i)
+{
+	t_btree *cmd;
+	t_btree *logical_operator;
+
+	cmd = btree_create_node(get_cmd_btree(tokens, p_r, i),
+		get_p_r(tokens, p_r, *i), CMD);//i take the command
+	if (!cmd)//if i don't have any command, there's a problem
+		return (ft_fprintf(2, "minishell : error : no command after logical operator\n"));
+	if (!tokens[*i])//if i don't have any logical operators left
+		return (cmd);//i return the command and put it to the right
+	logical_operator = btree_create_node(ft_split(tokens[*i], NULL),
+		ft_split(p_r[*i], NULL), get_type(tokens[*i]));
+	logical_operator->left = cmd;
+	return (logical_operator);//else i return the logical operator with the command on the left
+}
+
+void	add_right_branch(t_btree **root, t_btree *to_add)
+{
+	t_btree *tmp;
+
+	if (!*root)//if i don't have any suite, it become my suite
+	{
+		*root = to_add;
+		return ;
+	}
+	tmp = *root;//else, i go on the right until i can add the continuation
+	while (tmp->right)
+		tmp = tmp->right;
+	tmp->right = to_add;
 }
 
 t_btree *create_tree(t_minishell *mini, char **tokens, char **p_r, int len_tokens)
 {
 	t_btree	*tree;
-	t_btree	*left;
-	t_btree	*right;
+	t_btree *right;
 	int		i;
 	int		j;
 
 	tree = NULL;
-	left = NULL;
-	right = NULL;
-	if ((!mini->prior.and && !mini->prior.or && !mini->prior.parenthesis))//if there's no shit
+	if ((!mini->prior.and && !mini->prior.or))//if there's no shit
 		return (btree_create_node(ft_splitdup(tokens),
-			ft_splitndup(p_r, len_tokens, 0, len_tokens), CMD));//i have one node of execution
+			ft_splitndup(p_r, len_tokens, 0, len_tokens), CMD));//i have one CMD
 	i = 0;
 	j = 0;
-	tree = init_tree(p_r, len_tokens);
-	left = tree;
-	right = tree;
+	tree = init_tree(tokens, p_r, len_tokens);//the tree is perfect
+	if (!tree)//if it's perfectly NULL
+		return (NULL);//i return
 	while (tokens[i])
 	{
-		if (!ft_strcmp(p_r[i], "("))
+		/* if (!ft_strcmp(p_r[i], "("))
 		{
-			i++;
 			mini->parenthesis_lvl++;
-			left->left = left_branch(tokens, p_r, mini->parenthesis_lvl, &i);
+			tree->left = left_branch_parenthesis(tokens, p_r,
+				mini->parenthesis_lvl, &i);
 		}
+		else */ if (!str_multi_cmp(p_r[i], "&&", "||", NULL) || !get_next_oplog(tokens, p_r, i))//if i have one of the signs
+		{
+			right = right_branch(tokens, p_r, &i);//i will create my right branch
+			add_right_branch(&tree->right, right);//and add it to the main one
+		}
+		i++;
 	}
-	recursive_add(&tree, mini, 0);
 	return (tree);
 }
 
@@ -237,9 +280,11 @@ void	exec_cmd(t_minishell *mini)
 	t_btree *btree;
 
 	current_status(mini);
-	btree = create_tree(mini, mini->tokens, mini->pipes_redirs, ft_count_words((const char **)mini->tokens));
+	btree = create_tree(mini, mini->tokens, mini->pipes_redirs,
+		ft_count_words((const char **)mini->tokens));
 	//print_btree(btree);
-	//ast(btree);
+	//if (btree)
+	//	ast(btree);
 	free_all(mini, "tabs");
 	mini->tokens = NULL;
 	mini->pipes_redirs = NULL;

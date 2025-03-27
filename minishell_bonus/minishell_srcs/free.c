@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:46:16 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/14 18:38:46 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/27 18:08:16 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,23 @@ void	free_pipes_redirs(char **str, int nb_words)
 	}
 	if (str)
 		free(str);
+}
+
+void	free_btree(t_btree *btree)
+{
+	if (btree)
+	{
+		free_btree(btree->left);
+		free_btree(btree->right);
+		if (btree->pipes_redirs)
+			free_pipes_redirs(btree->pipes_redirs,
+				ft_count_words((const char **)btree->tokens));
+		free_dbl_tab(btree->tokens);
+		btree->tokens = NULL;
+		btree->pipes_redirs = NULL;
+		free(btree);
+		btree = NULL;
+	}
 }
 
 void	ft_list_clear(t_env *begin_list)

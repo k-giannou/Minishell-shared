@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 16:46:36 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/25 18:44:24 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/28 18:12:03 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	exec_child(char **env, t_minishell *mini, char **split, char **redirs)
 		close(mini->p.pipes[mini->p.i - 1][0]);
 	if (mini->p.pipes)
 		free_pipes(mini->p.pipes, mini->p.nb_pipes);
-	multi_free("2, 1, 2", mini->cmd_s, mini->p.pids, env);
+	multi_free("2, 1, 2", mini->cmd_s, mini->p.pids, env, NULL);
 	free_all(mini, "all");
 	exit(0);
 }
@@ -133,5 +133,5 @@ void	pipex(t_minishell *mini, char **env, int start, int end)
 	if (start < end)
 		son_program(env, mini);
 	free_pipes(mini->p.pipes, mini->p.nb_pipes);
-	multi_free("2, 1, 2", mini->cmd_s, mini->p.pids, env);
+	multi_free("2, 1, 2", mini->cmd_s, mini->p.pids, env, NULL);
 }

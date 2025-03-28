@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 18:55:18 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/25 18:59:06 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/28 19:51:26 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ typedef struct s_prior
 typedef struct s_minishell
 {
 	int				fd;
+	int				to_free;
 	t_redirs		r;
 	t_pipes			p;
 	t_user			user;
@@ -169,6 +170,8 @@ int		just_export_or_unset(char **vars, char *command);
 char	*ft_strjoinm(char *s1, char *s2, int tab_to_free);
 char	*replace_by_tilde(t_env *env, char *str, int free_str);
 char	*ft_substr_with_quotes(char *line, t_minishell *mini, int len);
+t_btree	*create_tree(t_minishell *mini, char **tokens, char **p_r, t_btree
+	*tree);
 
 //print
 void	welcome(void);
@@ -194,9 +197,9 @@ void	set_symbols(t_minishell **mini);
 char	*find_path(char *cmd, char **env);
 void	read_stdin(int *fd, char *limiter);
 void	create_pipes(t_pipes *pipes_struct);
-char	**get_cmd_btree(char **tokens, char **p_r, int *j);
 void	execute(char **av, char **env, t_minishell *mini);
 char	**get_redir_split(t_minishell *mini, int cur_cmd);
+char	**get_cmd_btree(char **tokens, char **p_r, int *j);
 void	pipex(t_minishell *mini, char **env, int start, int end);
 void	close_and_redirect_pipes(t_pipes *pipes_struct, int current_pipe);
 void	close_curr_pipe(t_pipes *pipes_struct, int current_pipe, char **cmd_s);

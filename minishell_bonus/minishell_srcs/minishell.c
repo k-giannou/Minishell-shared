@@ -6,7 +6,7 @@
 /*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:17 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/30 15:23:13 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/30 16:45:35 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int	main(int ac, char **av, char **env)
 	char		*print;
 	t_minishell	*mini;
 
+	(void)av;
 	str = NULL;
 	mini = init_vals(env);
 	signal(SIGQUIT, SIG_IGN);

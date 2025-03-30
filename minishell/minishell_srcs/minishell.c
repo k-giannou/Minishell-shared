@@ -6,7 +6,7 @@
 /*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:17 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/30 15:18:45 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/30 16:43:49 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,11 @@ t_minishell	*init_vals(char **env)
 {
 	t_minishell	*mini;
 
+	while (g_signal != SIGINT)
+	{
+		printf("💩");
+		usleep(100);
+	}
 	mini = ft_calloc(1, sizeof(t_minishell));
 	if (!mini)
 		return (ft_fprintf(2, "Error : fail init struct\n"), exit(1), NULL);
@@ -84,36 +89,29 @@ char	*toprint(t_minishell *mini, char *cur_loc)
 
 int	main(int ac, char **av, char **env)
 {
-	//char		*str;
-	//char		*print;
-	//t_minishell	*mini;
+	char		*str;
+	char		*print;
+	t_minishell	*mini;
 
-	(void)ac;
 	(void)av;
-	(void)env;
+	str = NULL;
+	mini = init_vals(env);
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
-		printf("💩");
-		usleep(100);
+		print = toprint(mini, mini->cur_loc);
+		str = readline(print);
+		free(print);
+		if (check_quotes(str))
+			continue ;
+		str = replace_var(mini, str);
+		optimised_line(str, &mini);
+		if (is_redir_or_pipes(mini->pipes_redirs, 0))
+			free_all(mini, "tabs");
+		mini->p.nb_pipes = pipe_count(mini);
+		if (!mini->tokens || !mini->tokens[0] || mini->tokens[0][0] == 0)
+			continue ;
+		exec_cmd(mini);
 	}
-	// str = NULL;
-	// mini = init_vals(env);
-	// signal(SIGQUIT, SIG_IGN);
-	// while (1)
-	// {
-	// 	print = toprint(mini, mini->cur_loc);
-	// 	str = readline(print);
-	// 	free(print);
-	// 	if (check_quotes(str))
-	// 		continue ;
-	// 	str = replace_var(mini, str);
-	// 	optimised_line(str, &mini);
-	// 	if (is_redir_or_pipes(mini->pipes_redirs, 0))
-	// 		free_all(mini, "tabs");
-	// 	mini->p.nb_pipes = pipe_count(mini);
-	// 	if (!mini->tokens || !mini->tokens[0] || mini->tokens[0][0] == 0)
-	// 		continue ;
-	// 	exec_cmd(mini);
-	// }
-	// return (ac * 0);
+	return (ac * 0);
 }

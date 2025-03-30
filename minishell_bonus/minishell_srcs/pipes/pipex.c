@@ -3,34 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 16:46:36 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/28 18:12:03 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/30 23:59:20 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-char	*get_first_arg(char *av)
-{
-	char	*first_arg;
-	int		i;
-
-	if (!av)
-		return (NULL);
-	first_arg = malloc(sizeof(char) * (ft_strclen(av, ' ') + 1));
-	if (!first_arg)
-		return (printf("error : couldn't get first arg"), exit(1), NULL);
-	i = 0;
-	while (av[i] && av[i] != ' ')
-	{
-		first_arg[i] = av[i];
-		i++;
-	}
-	first_arg[i] = 0;
-	return (first_arg);
-}
 
 void	exec_child(char **env, t_minishell *mini, char **split, char **redirs)
 {

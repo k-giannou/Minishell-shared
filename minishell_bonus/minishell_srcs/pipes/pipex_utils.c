@@ -3,39 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 17:11:55 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/14 20:19:36 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/30 23:58:11 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-char	**splited_env(t_env *env)
-{
-	int		i;
-	char	**tab_env;
-
-	if (!env)
-		return (NULL);
-	i = len_list(env);
-	tab_env = (char **)malloc(sizeof(char *) * (i + 1));
-	if (!tab_env)
-		return (NULL);
-	i = 0;
-	while (env)
-	{
-		tab_env[i] = ft_strdup(env->data);
-		if (!tab_env[i])
-			return (free_dbl_tab(tab_env),
-				printf("Error : changing env into split failed\n"), NULL);
-		env = env->next;
-		i++;
-	}
-	tab_env[i] = NULL;
-	return (tab_env);
-}
 
 void	read_stdin(int *fd, char *limiter)
 {

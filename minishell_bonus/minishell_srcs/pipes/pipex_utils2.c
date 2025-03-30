@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/21 12:19:39 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/30 23:58:52 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,6 @@
 
 //(null) < (null) | (null) (null) > (null) | (null)
 // cat   <  file  |  echo   nice  >  file  |  ls
-
-char	**get_redir_split(t_minishell *mini, int cur_cmd)
-{
-	int	start;
-	int	end;
-	int	nb_pipe;
-
-	nb_pipe = 0;
-	if (!mini->pipes_redirs || !mini->tokens)
-		return (NULL);
-	start = 0;
-	while (nb_pipe < cur_cmd && mini->tokens[start])
-	{
-		if (!ft_strncmp(mini->tokens[start], "|", 1))
-			nb_pipe++;
-		start++;
-	}
-	end = start + 1;
-	while (mini->tokens[end] && ft_strncmp(mini->tokens[end], "|", 1))
-		end++;
-	return (ft_splitndup(mini->pipes_redirs,
-			ft_count_words((const char **)mini->tokens), start, end));
-}
 
 int	isredir_pipex(char *tokens)
 {

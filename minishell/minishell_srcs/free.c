@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:46:16 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/25 20:20:15 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/30 22:52:53 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,7 @@ void	free_all(t_minishell *mini, char *str)
 			ft_list_clear(mini->env);
 		if (mini->env_export)
 			ft_list_clear(mini->env_export);
-		if (mini->cur_loc)
-			free(mini->cur_loc);
-		if (mini->user.final)
-			free(mini->user.final);
+		multi_free("1, 1", mini->cur_loc, mini->user.final);
 		if (mini->pipes_redirs)
 			free_pipes_redirs(mini->pipes_redirs,
 				ft_count_words((const char **)mini->tokens));

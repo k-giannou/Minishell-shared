@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 18:55:18 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/28 19:51:26 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/30 23:55:11 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,23 +49,23 @@
 # define DBL_Q '"'
 # define SGL_Q '\''
 
-# define INT64_Max "9223372036854775807"
-# define INT64_Min "-9223372036854775808"
+/* # define INT64_Max "9223372036854775807"
+# define INT64_Min "-9223372036854775808" */
 
 # define HOSTNAME "/etc/hostname"
 
 extern sig_atomic_t	g_signal;
 
-typedef enum
+typedef enum s_type
 {
-    AND = 1,
-    OR,
-    PARENTHESIS,
+	AND = 1,
+	OR,
+	PARENTHESIS,
 	CMD,
-    REDIR_OUT, // >
-    REDIR_APPEND,// >>
-	REDIR_IN,// <
-	HEREDOC// <<
+	REDIR_OUT,
+	REDIR_APPEND,
+	REDIR_IN,
+	HEREDOC
 }	t_type;
 
 typedef struct s_variables
@@ -87,11 +87,11 @@ typedef struct s_variables
 
 typedef struct s_redirs
 {
-	int	saved_in;
-	int	saved_out;
+	int		saved_in;
+	int		saved_out;
 	char	**tab;
-	int	fd;
-	int	y;
+	int		fd;
+	int		y;
 	t_type	type;
 }	t_redirs;
 
@@ -118,7 +118,7 @@ typedef struct s_pipes
 
 typedef struct s_prior
 {
-    int	and;
+	int	and;
 	int	or;
 	int	pipes;
 	int	parenthesis;
@@ -143,6 +143,7 @@ typedef struct s_minishell
 	t_env			*env_export;
 	char			**pipes_redirs;
 	unsigned int	parenthesis_lvl;
+	int				*ptr_i;
 }	t_minishell;
 
 typedef struct s_btree
@@ -152,7 +153,7 @@ typedef struct s_btree
 	char			**pipes_redirs;
 	struct s_btree	*left;
 	struct s_btree	*right;
-} t_btree;
+}	t_btree;
 
 void	sig_init(void);
 t_env	*ft_envdup(t_env *src);
@@ -167,11 +168,27 @@ char	*replace_var(t_minishell *mini, char *str);
 void	valid_quotes(char c, bool *sgl_q, bool *dbl_q);
 void	optimised_line(char *line, t_minishell **mini);
 int		just_export_or_unset(char **vars, char *command);
-char	*ft_strjoinm(char *s1, char *s2, int tab_to_free);
 char	*replace_by_tilde(t_env *env, char *str, int free_str);
 char	*ft_substr_with_quotes(char *line, t_minishell *mini, int len);
 t_btree	*create_tree(t_minishell *mini, char **tokens, char **p_r, t_btree
-	*tree);
+			*tree);
+
+//exec
+void	ast(t_btree *tree);
+int		get_type(char *symbol);
+void	print_btree(t_btree *root);
+void	current_status(t_minishell *mini);
+int		init_tree_error(char **p_r, int len_tokens);
+char	**get_p_r(char **tokens, char **p_r, int j);
+char	*get_and_or(char **tokens, char **p_r, int i);
+t_btree	*right_branch(char **tokens, char **p_r, int *i);
+char	*get_next_oplog(char **tokens, char **p_r, int i);
+char	**get_cmd_btree(char **tokens, char **p_r, int *j);
+t_btree	*btree_create_node(char **item, char **p_r, int type);
+int		get_end_parenthesis(char **p_r, int i, int len_tokens);
+void	handle_parenthesis(t_minishell *mini, int start, int end);
+int		get_log_op_check_par(char **p_r, int len_tokens, int *j, int incr);
+t_btree *init_tree(t_minishell *mini, char **tokens, char **p_r, int len_tokens);
 
 //print
 void	welcome(void);
@@ -185,7 +202,6 @@ void	ft_list_clear(t_env *begin_list);
 void	free_pipes(int **pipes, int nb_pipes);
 void	free_all(t_minishell *mini, char *str);
 void	free_pipes_redirs(char **str, int nb_words);
-
 
 //pipes
 char	*get_first_arg(char *av);

@@ -29,18 +29,22 @@ static bool	correct_format(char *str_char)
 	return (1);
 }
 
-/* free an infinite number of arguments
-
-	- The string "to_free" must follow the format : "n1, n2, ..., nn".
+/*
+ * Fonction : free an infinite amount of arguments
+ *
+ * Parameters :
+ * - The string "to_free" must follow the format : "n1, n2, ..., nn".
 	- If the format isn't respected, or if the string is NULL or empty, nothing
 	will be free.
-
-	- if the number is 1, it will free a string (*str)
-	- if the number is 2, it will free a board of strings (**str)
-
-	The last argument should be NULL to interrupt the function correctly, otherwise,
-	undefined outcome may happened.
-*/
+ *
+ * Behaviour :
+ * 	- if the number is 1, it will free a string (*str).
+	- if the number is 2, it will free a board of strings (**str).
+ *
+ * Conditions :
+ * The last argument should be NULL to interrupt the function correctly,
+ * otherwise, undefined outcome may happened.
+ */
 void	multi_free(char *to_free, ...)
 {
 	va_list	args;

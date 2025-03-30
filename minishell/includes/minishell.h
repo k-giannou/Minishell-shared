@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:03:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/20 16:58:04 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/30 23:02:02 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,6 @@ char	*replace_var(t_minishell *mini, char *str);
 void	valid_quotes(char c, bool *sgl_q, bool *dbl_q);
 void	optimised_line(char *line, t_minishell **mini);
 int		just_export_or_unset(char **vars, char *command);
-char	*ft_strjoinm(char *s1, char *s2, int tab_to_free);
 char	*replace_by_tilde(t_env *env, char *str, int free_str);
 char	*ft_substr_with_quotes(char *line, t_minishell *mini, int len);
 

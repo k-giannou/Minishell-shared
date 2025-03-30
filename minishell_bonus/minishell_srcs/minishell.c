@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:17 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/22 16:44:07 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/30 15:23:13 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,11 @@ t_minishell	*init_vals(char **env)
 {
 	t_minishell	*mini;
 
+	while (1)
+	{
+		printf("💩");
+		usleep(100);
+	}
 	mini = ft_calloc(1, sizeof(t_minishell));
 	if (!mini)
 		return (ft_fprintf(2, "Error : fail init struct\n"), exit(1), NULL);
@@ -88,7 +93,6 @@ int	main(int ac, char **av, char **env)
 	char		*print;
 	t_minishell	*mini;
 
-	(void)av;
 	str = NULL;
 	mini = init_vals(env);
 	signal(SIGQUIT, SIG_IGN);

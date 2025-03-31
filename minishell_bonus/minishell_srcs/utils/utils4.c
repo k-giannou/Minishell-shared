@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils4.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:45:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/30 23:56:27 by marvin           ###   ########.fr       */
+/*   Updated: 2025/03/31 19:43:33 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,30 +26,29 @@ char	*ft_strsrch(const char *s, char *c)
 	return (0);
 }
 
-void	set_symbols(t_minishell **mini)
+void	set_symbols(char **tokens, char **p_r, t_prior *prior)
 {
 	int	i;
 	int	len_split;
 
 	i = 0;
-	(*mini)->prior = (t_prior){0};
-	len_split = ft_count_words((const char **)(*mini)->tokens);
+	*prior = (t_prior){0};
+	len_split = ft_count_words((const char **)tokens);
 	while (i < len_split)
 	{
-		if ((*mini)->pipes_redirs[i])
+		if (p_r[i])
 		{
-			if (!ft_strcmp((*mini)->pipes_redirs[i], "|"))
-				(*mini)->prior.pipes++;
-			else if (!ft_strcmp((*mini)->pipes_redirs[i], "||"))
-				(*mini)->prior.or++;
-			else if (!ft_strcmp((*mini)->pipes_redirs[i], "&&"))
-				(*mini)->prior.and++;
-			else if (!ft_strcmp((*mini)->pipes_redirs[i], "("))
-				(*mini)->prior.parenthesis++;
+			if (!ft_strcmp(p_r[i], "|"))
+				prior->pipes++;
+			else if (!ft_strcmp(p_r[i], "||"))
+				prior->or++;
+			else if (!ft_strcmp(p_r[i], "&&"))
+				prior->and++;
+			else if (!ft_strcmp(p_r[i], "("))
+				prior->parenthesis++;
 		}
 		i++;
 	}
-	ft_print_dlb_tabs((*mini)->tokens, "tokens");
 }
 
 void	ft_get_env(t_env **env, char *env_var)

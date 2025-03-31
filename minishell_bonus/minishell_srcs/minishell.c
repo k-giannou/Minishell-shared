@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:17 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/31 16:45:19 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/31 19:44:11 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,6 @@ t_minishell	*init_vals(char **env)
 {
 	t_minishell	*mini;
 
-	while (1)
-	{
-		printf("💩");
-		usleep(100);
-	}
 	mini = ft_calloc(1, sizeof(t_minishell));
 	if (!mini)
 		return (ft_fprintf(2, "Error : fail init struct\n"), exit(1), NULL);
@@ -110,7 +105,6 @@ int	main(int ac, char **av, char **env)
 			free_all(mini, "tabs");
 		if (!mini->tokens || !mini->tokens[0] || mini->tokens[0][0] == 0)
 			continue ;
-		set_symbols(&mini);
 		exec_cmd(mini);
 	}
 	return (ac * 0);

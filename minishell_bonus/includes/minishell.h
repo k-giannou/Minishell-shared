@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 18:55:18 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/31 16:45:06 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/31 21:05:01 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,6 @@ typedef struct s_minishell
 	t_user			user;
 	t_variables		vars;
 	t_env			*env;
-	t_prior			prior;
 	bool			sgl_q;
 	bool			dbl_q;
 	char			**cmd_s;
@@ -176,15 +175,15 @@ t_btree	*create_tree(t_minishell *mini, char **tokens, char **p_r, t_btree
 //exec
 void	ast(t_btree *tree);
 int		get_type(char *symbol);
-void	print_btree(t_btree *root);
-void	current_status(t_minishell *mini);
 char	**get_p_r(char **tokens, char **p_r, int j);
 char	*get_and_or(char **tokens, char **p_r, int i);
+void	print_btree(t_btree *root, int lvl, char *side);
 t_btree	*right_branch(char **tokens, char **p_r, int *i);
 char	*get_next_oplog(char **tokens, char **p_r, int i);
 char	**get_cmd_btree(char **tokens, char **p_r, int *j);
 t_btree	*btree_create_node(char **item, char **p_r, int type);
 int		get_end_parenthesis(char **p_r, int i, int len_tokens);
+void	current_status(char **tokens, char **p_r, t_prior prior);
 void	handle_parenthesis(t_minishell *mini, int start, int end);
 t_btree	*init_tree(t_minishell *mini, char **tokens, char **p_r, int j);
 int		get_log_op_check_par(char **p_r, int len_tokens, int *j, int incr);
@@ -208,13 +207,13 @@ char	**splited_env(t_env *env);
 int		get_file(char *av, int i);
 char	*get_cmd(char **av, int i);
 int		isredir_pipex(char *tokens);
-void	set_symbols(t_minishell **mini);
 char	*find_path(char *cmd, char **env);
 void	read_stdin(int *fd, char *limiter);
 void	create_pipes(t_pipes *pipes_struct);
 void	execute(char **av, char **env, t_minishell *mini);
 char	**get_redir_split(t_minishell *mini, int cur_cmd);
 char	**get_cmd_btree(char **tokens, char **p_r, int *j);
+void	set_symbols(char **tokens, char **p_r, t_prior *prior);
 void	pipex(t_minishell *mini, char **env, int start, int end);
 void	close_and_redirect_pipes(t_pipes *pipes_struct, int current_pipe);
 void	close_curr_pipe(t_pipes *pipes_struct, int current_pipe, char **cmd_s);

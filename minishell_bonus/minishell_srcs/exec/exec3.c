@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 16:25:44 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/31 16:43:37 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/31 19:28:10 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ int	get_log_op_check_par(char **p_r, int len_tokens, int *j, int incr)
 	parenthesis = 0;
 	while (1)
 	{
-		while (str_multi_cmp(p_r[*j], "&&", "||", NULL) && parenthesis != 0
-			&& *j < len_tokens)//while i didnt reach the end of parenthesis and a sign && or ||
+		while ((str_multi_cmp(p_r[*j], "&&", "||", NULL) && *j < len_tokens)
+			|| (parenthesis != 0)) //while i didnt reach the end of parenthesis and a sign && or ||
 		{
 			if (!ft_strcmp(p_r[*j], "("))
 				parenthesis++;
@@ -49,7 +49,7 @@ int	get_log_op_check_par(char **p_r, int len_tokens, int *j, int incr)
 			if (len_tokens <= *j)//if it's Gabriel and the whole shit is made of parenthesis, i return NULL
 				return (ft_fprintf(2, "Bro, you're serious ?\n"), 1);
 		}
-		else//if he or she is not a biche, i get out
+		else if (parenthesis == 0)//if he or she is not a biche, i get out
 			break;
 	}
 	return (0);
@@ -76,7 +76,7 @@ t_btree *init_tree(t_minishell *mini, char **tokens, char **p_r, int j)
 	else if (!str_multi_cmp(p_r[j], "&&", "||", NULL) && !tree)//else if my tree is empty
 	{
 		tree = btree_create_node(ft_split(p_r[j], NULL),
-			ft_splitndup(p_r + j, 1, 0, 1), get_type(p_r[j]));//i create the first node with the operator
+			ft_splitndup(p_r + j, 2, 0, 1), get_type(p_r[j]));//i create the first node with the operator
 		if (!ft_strcmp(p_r[j - 1], ")"))
 		{
 			mini->to_free++;
@@ -103,6 +103,5 @@ char	**get_cmd_btree(char **tokens, char **p_r, int *j)
 	while (str_multi_cmp(p_r[*j], "&&", "||", "(", ")", NULL)
 		&& tokens[*j])
 		(*j)++;
-	return (ft_splitndup(tokens + i,
-		ft_count_words((const char **)tokens + i), i, *j));
+	return (ft_splitndup(tokens, ft_count_words((const char **)tokens), i, *j));
 }

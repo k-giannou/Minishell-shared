@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 20:17:08 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/21 19:17:09 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/31 21:10:50 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_print_dlb_tabs(char **tab, char *arg)
 	int	i;
 
 	i = 0;
-	ft_fprintf(2, "%s : ", arg);
+	ft_fprintf(2, "%s : { ", arg);
 	while (tab && tab[i])
 	{
 		if (!ft_strcmp(tab[i], "&&"))
@@ -53,7 +53,7 @@ void	ft_print_dlb_tabs(char **tab, char *arg)
 			ft_fprintf(2, "|%s| ", tab[i]);
 		i++;
 	}
-	ft_fprintf(2, "\n");
+	ft_fprintf(2, "}\n");
 }
 
 void	print_pipes_redirs(char **split, int nb_words)
@@ -61,7 +61,7 @@ void	print_pipes_redirs(char **split, int nb_words)
 	int	j;
 
 	j = 0;
-	ft_fprintf(2, "tab with pipes and redirs : ");
+	ft_fprintf(2, "tab with pipes and redirs : { ");
 	while (j < nb_words)
 	{
 		if (!split[j])
@@ -78,7 +78,7 @@ void	print_pipes_redirs(char **split, int nb_words)
 			ft_fprintf(2, "|"CYAN"%s"RESET"| ", split[j]);
 		j++;
 	}
-	ft_fprintf(2, "\n");
+	ft_fprintf(2, "}\n");
 }
 
 void	ft_print_export(t_env *v, bool sign, bool inside)

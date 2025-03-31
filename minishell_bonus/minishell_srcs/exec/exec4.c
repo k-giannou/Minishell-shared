@@ -3,25 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   exec4.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 16:25:44 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/31 00:30:52 by marvin           ###   ########.fr       */
+/*   Updated: 2025/03/31 21:04:46 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	current_status(t_minishell *mini)
+void	current_status(char **tokens, char **p_r, t_prior prior)
 {
-	print_pipes_redirs(mini->pipes_redirs,
-		ft_count_words((const char **)mini->tokens));
-	ft_print_dlb_tabs(mini->tokens, "                   tokens");
+	print_pipes_redirs(p_r,	ft_count_words((const char **)tokens));
+	ft_print_dlb_tabs(tokens, "                   tokens");
 	printf("\ncurrent stats :\n");
-	printf("- nb of \""YELLOW"&&"RESET"\" = %d\n", mini->prior.and);
-	printf("- nb of \""GREEN"||"RESET"\" = %d\n", mini->prior.or);
-	printf("- nb of \""BLUE"|"RESET"\"  = %d\n", mini->prior.pipes);
-	printf("- nb of \""RED"()"RESET"\" = %d\n", mini->prior.parenthesis);
+	printf("- nb of \""YELLOW"&&"RESET"\" = %d\n", prior.and);
+	printf("- nb of \""GREEN"||"RESET"\" = %d\n", prior.or);
+	printf("- nb of \""BLUE"|"RESET"\"  = %d\n", prior.pipes);
+	printf("- nb of \""RED"()"RESET"\" = %d\n\n", prior.parenthesis);
 }
 // cmd4 && cmd5 || (cmd3 || (cmd1 && cmd2))
 
@@ -59,13 +58,27 @@ void	ast(t_btree *tree)
 	}
 }
 
-void	print_btree(t_btree *root)
+void	print_btree(t_btree *root, int lvl, char *side)
 {
 	if (root)
 	{
-		print_btree(root->left);
-		ft_print_dlb_tabs(root->tokens, "tokens");
-		print_btree(root->right);
+		print_btree(root->left, lvl + 1, "left");
+		if (!ft_strcmp(side, "root"))
+		{
+			ft_fprintf(2, "\t      %s of the tree -> ", side);
+			ft_print_dlb_tabs(root->tokens, "tokens");
+		}
+		else if (!ft_strcmp(side, "left"))
+		{
+			ft_fprintf(2, "lvl %d (%s  side) of the tree -> ", lvl, side);
+			ft_print_dlb_tabs(root->tokens, "tokens");
+		}
+		else
+		{
+			ft_fprintf(2, "lvl %d (%s side) of the tree -> ", lvl, side);
+			ft_print_dlb_tabs(root->tokens, "tokens");
+		}
+		print_btree(root->right, lvl + 1, "right");
 	}
 }
 
@@ -81,3 +94,4 @@ t_btree	*btree_create_node(char **item, char **p_r, int type)
 	newnode->right = NULL;
 	return (newnode);
 }
+//(cmd1 > file1 | cmd2 file1 && cmd3) || (cmd4 cmd5 > file2 && cmd6)

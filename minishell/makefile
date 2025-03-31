@@ -25,8 +25,6 @@ all: $(NAME)
 
 $(NAME): $(LIBFT) $(SRC_O)
 	@mkdir -p libs
-	@mv $(LIBFT) libs
-	@mv $(FPRINTF) libs
 	@echo $(CYAN)"Compilation de minishell..."$(RESET)
 	@$(CC) $(FLAGS) $(SRC_O) -L libs -lfprintf -lft -I $(HDRS) -o $(NAME) -lreadline
 	@echo $(GREEN)"Exécutable $(NAME) créé !"$(RESET)
@@ -34,7 +32,9 @@ $(NAME): $(LIBFT) $(SRC_O)
 $(LIBFT):
 	@mkdir -p $(OBJ_DIR)
 	$(MAKE) -C $(LIBFT_DIR)
+	@mv $(LIBFT) libs
 	$(MAKE) -C $(FPRINTF_DIR)
+	@mv $(FPRINTF) libs
 
 $(OBJ_DIR)/%.o: $(SRCS_DIR)%.c $(HDRS)/*.h
 	@mkdir -p $(dir $@)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 16:25:44 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/31 00:02:47 by marvin           ###   ########.fr       */
+/*   Updated: 2025/03/31 16:44:03 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,13 @@ void	add_right_branch(t_btree **root, t_btree *to_add)
 	}
 	tmp = *root;//else, i go on the right until i can add the continuation
 	while (tmp->right)
+	{
 		tmp = tmp->right;
 		tmp->right = to_add;
 	}
+}
 
-t_btree	*create_tree3(t_minishell *mini, char **tokens, char **p_r,
+void	create_tree3(t_minishell *mini, char **tokens, char **p_r,
 	t_btree *tree)
 {
 	t_btree	*right;
@@ -38,7 +40,7 @@ t_btree	*create_tree3(t_minishell *mini, char **tokens, char **p_r,
 	j = 0;
 	right = NULL;
 	len_tokens = ft_count_words((const char **)tokens);
-	if (!ft_strcmp(p_r[i], "("))//if i have a parenthesis after
+	if (!ft_strcmp(p_r[*mini->ptr_i], "("))//if i have a parenthesis after
 	{
 		(*mini->ptr_i)++;
 		j = get_end_parenthesis(p_r, *mini->ptr_i, len_tokens);//i take the borders of my parenthesis
@@ -46,7 +48,7 @@ t_btree	*create_tree3(t_minishell *mini, char **tokens, char **p_r,
 		tree->left = create_tree(mini, ft_splitndup(tokens,
 			ft_count_words((const char **)tokens), 1, j - 1),
 			ft_splitndup(p_r, ft_count_words((const char **)tokens),
-			1, *j - 1), NULL);//i create my node
+			1, j - 1), NULL);//i create my node
 		mini->to_free--;
 	}
 	else
@@ -56,7 +58,7 @@ t_btree	*create_tree3(t_minishell *mini, char **tokens, char **p_r,
 	}
 }
 
-t_btree	*create_tree2(t_minishell *mini, char **tokens, char **p_r,
+void	create_tree2(t_minishell *mini, char **tokens, char **p_r,
 	t_btree *tree)
 {
 	int	i;
@@ -71,9 +73,9 @@ t_btree	*create_tree2(t_minishell *mini, char **tokens, char **p_r,
 	{
 		if (!tree)
 		{
-			tree = init_tree(mini, tokens, p_r, len_tokens);//the tree is perfect
+			tree = init_tree(mini, tokens, p_r, 0);//the tree is perfect
 			if (!tree)//if it's perfectly NULL
-				return (NULL);//i return
+				return ;//i return
 		}
 		if (!str_multi_cmp(p_r[i], "&&", "||", NULL)
 			|| !get_next_oplog(tokens, p_r, i))//create the right branch and the left command if there's one

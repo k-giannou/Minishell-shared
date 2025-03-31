@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft_extras.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:00:12 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/30 23:06:10 by marvin           ###   ########.fr       */
+/*   Updated: 2025/03/31 16:33:24 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,13 @@
 # endif
 # ifndef RESET
 #  define RESET		"\033[0m"   //Réinitialisation
+# endif
+
+# ifndef INT64_MAX_ATOI
+#  define INT64_MAX_ATOI "9223372036854775807"
+# endif
+# ifndef INT64_MIN_ATOI
+#  define INT64_MIN_ATOI "-9223372036854775808"
 # endif
 
 typedef struct s_mjnf

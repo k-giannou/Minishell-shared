@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec3.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 16:25:44 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/31 00:31:03 by marvin           ###   ########.fr       */
+/*   Updated: 2025/03/31 16:43:37 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,20 @@ int	get_log_op_check_par(char **p_r, int len_tokens, int *j, int incr)
 	parenthesis = 0;
 	while (1)
 	{
-		while (str_multi_cmp(p_r[j], "&&", "||", NULL) && parenthesis != 0
-			&& j < len_tokens)//while i didnt reach the end of parenthesis and a sign && or ||
+		while (str_multi_cmp(p_r[*j], "&&", "||", NULL) && parenthesis != 0
+			&& *j < len_tokens)//while i didnt reach the end of parenthesis and a sign && or ||
 		{
-			if (!ft_strcmp(p_r[j], "("))
+			if (!ft_strcmp(p_r[*j], "("))
 				parenthesis++;
-			else if (!ft_strcmp(p_r[j], ")"))
+			else if (!ft_strcmp(p_r[*j], ")"))
 				parenthesis--;
-			j++;
+			(*j)++;
 		}
-		if (j == len_tokens)//if a little fucker put a parenthesis on the whole lenght of the commands
+		if (*j == len_tokens)//if a little fucker put a parenthesis on the whole lenght of the commands
 		{
 			len_tokens--;//i shorten the fucking scan by 1
-			j = incr++;//motherfuckar
-			if (len_tokens <= j)//if it's Gabriel and the whole shit is made of parenthesis, i return NULL
+			*j = incr++;//motherfuckar
+			if (len_tokens <= *j)//if it's Gabriel and the whole shit is made of parenthesis, i return NULL
 				return (ft_fprintf(2, "Bro, you're serious ?\n"), 1);
 		}
 		else//if he or she is not a biche, i get out
@@ -55,25 +55,23 @@ int	get_log_op_check_par(char **p_r, int len_tokens, int *j, int incr)
 	return (0);
 }
 
-int	init_tree_error(char **p_r, int len_tokens)
+int	init_tree_error(char **p_r, int len_tokens, int *j)
 {
-	int	j;
-
-	j = 0;
-	if (get_log_op_check_par(p_r, len_tokens, &j, 1)
-		|| (!str_multi_cmp(p_r[j], "&&", "||", NULL)
-			&& (!j || !ft_strcmp(p_r[j - 1], "("))))//if i have a && or a || in the first string of right after an open parenthesis, i return NULL
-		return (ft_fprintf(2, "minishell : logical operator at start of \n")
+	if (get_log_op_check_par(p_r, len_tokens, j, 1)
+		|| (!str_multi_cmp(p_r[*j], "&&", "||", NULL)
+			&& (!*j || !ft_strcmp(p_r[*j - 1], "("))))//if i have a && or a || in the first string of right after an open parenthesis, i return NULL
+		return (ft_fprintf(2, "minishell : logical operator at start of \n"),
 			ft_fprintf(2, "parenthesis\n"), 1);
 	return (0);
 }
 
-t_btree *init_tree(t_minishell *mini, char **tokens, char **p_r, int len_tokens)
+t_btree *init_tree(t_minishell *mini, char **tokens, char **p_r, int j)
 {
 	t_btree	*tree;
 
 	tree = NULL;
-	if (init_tree_error(p_r, len_tokens))//if i have a && or a || in the first string of right after an open parenthesis, i return NULL
+	j = 0;
+	if (init_tree_error(p_r, ft_count_words((const char **)tokens), &j))//if i have a && or a || in the first string of right after an open parenthesis, i return NULL
 		return (NULL);
 	else if (!str_multi_cmp(p_r[j], "&&", "||", NULL) && !tree)//else if my tree is empty
 	{
@@ -86,7 +84,7 @@ t_btree *init_tree(t_minishell *mini, char **tokens, char **p_r, int len_tokens)
 				ft_count_words((const char **)tokens), 1, j - 1),
 				ft_splitndup(p_r, ft_count_words((const char **)tokens),
 				1, j - 1), NULL);
-				mini->to_free--;
+			mini->to_free--;
 		}
 		else
 			tree->left = btree_create_node(ft_splitndup(tokens,

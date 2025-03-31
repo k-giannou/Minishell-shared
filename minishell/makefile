@@ -10,7 +10,7 @@ FPRINTF			= $(FPRINTF_DIR)/libfprintf.a
 SRCS_DIR		= ./
 OBJ_DIR			= obj
 
-SRCS			= $(shell find $(SRCS_DIR)/minishell_srcs -type f -name '*.c')
+SRCS			= $(shell find $(SRCS_DIR)minishell_srcs -type f -name '*.c')
 
 SRC_O			= $(SRCS:$(SRCS_DIR)%.c=$(OBJ_DIR)/%.o)
 
@@ -24,6 +24,9 @@ RESET			= "\033[0m"
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(SRC_O)
+	@mkdir -p libs
+	@mv $(LIBFT) libs
+	@mv $(FPRINTF) libs
 	@echo $(CYAN)"Compilation de minishell..."$(RESET)
 	@$(CC) $(FLAGS) $(SRC_O) -L libs -lfprintf -lft -I $(HDRS) -o $(NAME) -lreadline
 	@echo $(GREEN)"Exécutable $(NAME) créé !"$(RESET)
@@ -31,9 +34,7 @@ $(NAME): $(LIBFT) $(SRC_O)
 $(LIBFT):
 	@mkdir -p $(OBJ_DIR)
 	$(MAKE) -C $(LIBFT_DIR)
-	@mv $(LIBFT) libs/
 	$(MAKE) -C $(FPRINTF_DIR)
-	@mv $(FPRINTF) libs/
 
 $(OBJ_DIR)/%.o: $(SRCS_DIR)%.c $(HDRS)/*.h
 	@mkdir -p $(dir $@)

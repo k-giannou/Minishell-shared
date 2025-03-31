@@ -1,3 +1,5 @@
+MAKEFLAGS += -s
+
 CC = cc
 
 FLAGS = -Wall -Wextra -Werror -w -g

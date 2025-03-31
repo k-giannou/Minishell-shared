@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:17 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/30 16:45:35 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/03/31 16:45:19 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	init_env(t_env	**my_env, char **env)
 		{
 			free(tmp->data);
 			shlvl = ft_itoa(ft_atoi(env[i] + 6) + 1);
-			tmp->data = ft_strjoinm("SHLVL=", shlvl, 2);
+			tmp->data = ft_strjoin_n_free("SHLVL=", shlvl, 2);
 			if (!tmp->data || !tmp->data[6])
 				return (ft_list_clear(*my_env), 1);
 		}

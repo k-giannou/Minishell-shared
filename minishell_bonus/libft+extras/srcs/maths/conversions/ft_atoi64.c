@@ -6,14 +6,11 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 19:26:37 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/25 19:21:30 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/03/31 16:32:41 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_extras.h"
-
-#define INT64_MAX_ATOI "9223372036854775807"
-#define INT64_MIN_ATOI "-9223372036854775808"
 
 static int	error64(const char *str)
 {

@@ -58,7 +58,7 @@ t_minishell	*init_vals(char **env)
 {
 	t_minishell	*mini;
 
-	while (g_signal != SIGINT)
+	while (1)
 	{
 		printf("💩");
 		usleep(100);

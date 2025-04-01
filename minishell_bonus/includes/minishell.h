@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 18:55:18 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/31 21:05:01 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/01 18:03:07 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,8 @@ typedef struct s_minishell
 	t_env			*env_export;
 	char			**pipes_redirs;
 	unsigned int	parenthesis_lvl;
-	int				*ptr_i;
+	int				i;
+	int				len_tokens;
 }	t_minishell;
 
 typedef struct s_btree
@@ -177,6 +178,7 @@ void	ast(t_btree *tree);
 int		get_type(char *symbol);
 char	**get_p_r(char **tokens, char **p_r, int j);
 char	*get_and_or(char **tokens, char **p_r, int i);
+int		go_to_op_log(char **p_r, int i, int len_tokens);
 void	print_btree(t_btree *root, int lvl, char *side);
 t_btree	*right_branch(char **tokens, char **p_r, int *i);
 char	*get_next_oplog(char **tokens, char **p_r, int i);
@@ -185,8 +187,10 @@ t_btree	*btree_create_node(char **item, char **p_r, int type);
 int		get_end_parenthesis(char **p_r, int i, int len_tokens);
 void	current_status(char **tokens, char **p_r, t_prior prior);
 void	handle_parenthesis(t_minishell *mini, int start, int end);
+void	remove_parenthesis(char ***tokens, char ***p_r, int len_tokens);
 t_btree	*init_tree(t_minishell *mini, char **tokens, char **p_r, int j);
 int		get_log_op_check_par(char **p_r, int len_tokens, int *j, int incr);
+t_btree *right_branch_par(t_minishell *mini, char **tokens, char **p_r, int j);
 
 //print
 void	welcome(void);

@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 16:25:44 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/31 20:46:29 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/01 16:55:05 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,21 +36,17 @@ char	*get_next_oplog(char **tokens, char **p_r, int i)
 int	get_end_parenthesis(char **p_r, int i, int len_tokens)
 {
 	int	parenthesis_lvl;
-	int trigger;
 
-	trigger = 1;	
 	parenthesis_lvl = 1;
+	i++;
 	while (parenthesis_lvl != 0 && i < len_tokens)
 	{
-		if (!ft_strcmp(p_r[i], "(") && trigger == 0)//if i have another opened parenthesis
+		if (!ft_strcmp(p_r[i], "("))//if i have another opened parenthesis
 			parenthesis_lvl++;
-		else if (trigger == 1)//if i have another opened parenthesis
-			trigger = 0;
 		else if (!ft_strcmp(p_r[i], ")"))//if i have another opened parenthesis
 			parenthesis_lvl--;
 		i++;
 	}
-	i--;
 	if (!parenthesis_lvl)
 		return (i);
 	else

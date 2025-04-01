@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 16:25:44 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/31 21:04:46 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/01 16:37:52 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,4 +94,7 @@ t_btree	*btree_create_node(char **item, char **p_r, int type)
 	newnode->right = NULL;
 	return (newnode);
 }
-//(cmd1 > file1 | cmd2 file1 && cmd3) || (cmd4 cmd5 > file2 && cmd6)
+//(cmd1 > file1 | cmd2 file1 && cmd3) || ((cmd4 cmd5 > file2)) && ((cmd6))
+//display *(tokens + mini->i)@(len_tokens - mini->i)
+//display *tokens@len_tokens
+//display tokens[(*mini)->i]

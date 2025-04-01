@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 16:25:44 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/31 19:28:10 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/01 15:28:45 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ int	get_log_op_check_par(char **p_r, int len_tokens, int *j, int incr)
 
 int	init_tree_error(char **p_r, int len_tokens, int *j)
 {
-	if (get_log_op_check_par(p_r, len_tokens, j, 1)
+	if (get_log_op_check_par(p_r, len_tokens, j, 0)
 		|| (!str_multi_cmp(p_r[*j], "&&", "||", NULL)
 			&& (!*j || !ft_strcmp(p_r[*j - 1], "("))))//if i have a && or a || in the first string of right after an open parenthesis, i return NULL
-		return (ft_fprintf(2, "minishell : logical operator at start of \n"),
+		return (ft_fprintf(2, "minishell : logical operator at start of "),
 			ft_fprintf(2, "parenthesis\n"), 1);
 	return (0);
 }
@@ -73,7 +73,7 @@ t_btree *init_tree(t_minishell *mini, char **tokens, char **p_r, int j)
 	j = 0;
 	if (init_tree_error(p_r, ft_count_words((const char **)tokens), &j))//if i have a && or a || in the first string of right after an open parenthesis, i return NULL
 		return (NULL);
-	else if (!str_multi_cmp(p_r[j], "&&", "||", NULL) && !tree)//else if my tree is empty
+	else if (!str_multi_cmp(p_r[j], "&&", "||", NULL))//else if my tree is empty
 	{
 		tree = btree_create_node(ft_split(p_r[j], NULL),
 			ft_splitndup(p_r + j, 2, 0, 1), get_type(p_r[j]));//i create the first node with the operator

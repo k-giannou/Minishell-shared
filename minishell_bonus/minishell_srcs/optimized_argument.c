@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:31:28 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/01 18:09:49 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/01 18:36:00 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	count_tokens(char *line, bool sgl_q, bool dbl_q, int i)
 	}
 	return (count++);
 }
-
+//cmd1 || cmd2 || (cmd3)
 static char	*ft_substr2(char *line, t_minishell **mini, int len)
 {
 	char	*str;

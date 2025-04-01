@@ -3,14 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/21 16:46:36 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/30 23:59:20 by marvin           ###   ########.fr       */
+/*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
+/*   Updated: 2025/04/01 20:14:46 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+char	*get_first_arg(char *av)
+{
+	char	*first_arg;
+	int		i;
+
+	if (!av)
+		return (NULL);
+	first_arg = malloc(sizeof(char) * (ft_strclen(av, ' ') + 1));
+	if (!first_arg)
+		return (printf("error : couldn't get first arg"), exit(1), NULL);
+	i = 0;
+	while (av[i] && av[i] != ' ')
+	{
+		first_arg[i] = av[i];
+		i++;
+	}
+	first_arg[i] = 0;
+	return (first_arg);
+}
 
 void	exec_child(char **env, t_minishell *mini, char **split, char **redirs)
 {
@@ -36,82 +56,73 @@ void	exec_child(char **env, t_minishell *mini, char **split, char **redirs)
 	exit(0);
 }
 
-void	son_program(char **env, t_minishell *mini)
+int	son_program(char **env, t_minishell *mini)
 {
+	int sig;
+
+	sig = 0;
 	mini->p.pids[mini->p.i] = fork();
 	if (mini->p.pids[mini->p.i] == -1)
-		return (perror(RED "Error -> pid failure\n" RESET));
+		return (perror(RED "Error -> pid failure\n" RESET), -1);
 	if (mini->p.pids[mini->p.i] == 0)
 		exec_child(env, mini, NULL, NULL);
 	else
 		close_curr_pipe(&mini->p, mini->p.i, mini->cmd_s);
 	if (mini->p.nb_pipes == 0)
-		return ((void)waitpid(mini->p.pids[0], &g_signal, 0));
+		return (waitpid(mini->p.pids[0], &sig, 0), sig);
 	if (mini->p.i == mini->p.nb_pipes)
-		return ((void)waitpid(mini->p.pids[mini->p.i - 1], &g_signal, 0));
+		return (waitpid(mini->p.pids[mini->p.i - 1], &sig, 0), sig);
 	mini->p.i++;
-	son_program(env, mini);
+	sig = son_program(env, mini);
 	waitpid(mini->p.pids[mini->p.i - 1], NULL, 0);
+	return (sig);
 }
 
-int	ft_pipe_count(char **pipes_redirs, int start, int end)
-{
-	int	count;
-
-	count = 0;
-	while (start < end)
-	{
-		if (pipes_redirs[start] && !ft_strcmp(pipes_redirs[start], "|"))
-			count++;
-		start++;
-	}
-	return (count);
-}
-
-char	**get_cmd_s(t_minishell *mini, int start, int end)
+char	**get_cmd_s(t_btree *the_tree, int i, int nb_pipes)
 {
 	int		j;
 	char	**cmd_s;
 
-	if (!mini->tokens)
+	if (!the_tree->tokens)
 		return (NULL);
-	cmd_s = (char **)ft_calloc(sizeof(char *),
-			(ft_pipe_count(mini->pipes_redirs, start, end) + 2));
+	cmd_s = (char **)ft_calloc(sizeof(char *), (nb_pipes + 2));
 	if (!cmd_s)
 		return (printf("fail getting cmd's\n"), NULL);
 	j = 0;
-	while (mini->tokens[start] && start < end)
+	while (the_tree->tokens[i])
 	{
-		if (!ft_strncmp(mini->pipes_redirs[start], "|", 1))
+		if (!ft_strncmp(the_tree->pipes_redirs[i], "|", 1))
 			j++;
 		else
 		{
 			if (cmd_s[j])
 				cmd_s[j] = ft_strjoin_n_free(cmd_s[j], " ", 1);
-			cmd_s[j] = ft_strjoin_n_free(cmd_s[j], mini->tokens[start], 1);
+			cmd_s[j] = ft_strjoin_n_free(cmd_s[j], the_tree->tokens[i], 1);
 		}
-		start++;
+		i++;
 	}
 	return (cmd_s);
 }
 
-void	pipex(t_minishell *mini, char **env, int start, int end)
+int	pipex(t_minishell *mini, t_btree *the_tree, char **env)
 {
-	int	i;
+	int		i;
+	int		signal;
 
 	i = -1;
-	mini->p.nb_pipes = ft_pipe_count(mini->pipes_redirs, start, end);
-	mini->cmd_s = get_cmd_s(mini, start, end);
-	mini->p.i = start;
+	mini->p.nb_pipes = pipe_count(the_tree);
+	mini->cmd_s = get_cmd_s(the_tree, 0, mini->p.nb_pipes);
+	mini->p.i = 0;
 	mini->p.pids = (pid_t *)ft_calloc(sizeof(pid_t), (mini->p.nb_pipes + 1));
 	if (!mini->p.pids)
-		return ((void)ft_fprintf(2, RED"Error : fail initiate pid's\n"RESET));
+		return (ft_fprintf(2, RED"Error : fail initiate pid's\n"RESET), -1);
 	if (mini->p.nb_pipes != 0)
 		create_pipes(&mini->p);
 	else
 		mini->p.pipes = NULL;
-	if (start < end)
-		son_program(env, mini);
+	signal = son_program(env, mini);
 	free_pipes(mini->p.pipes, mini->p.nb_pipes);
 	multi_free("2, 1, 2", mini->cmd_s, mini->p.pids, env, NULL);
+	wait(NULL);
+	return (signal);
 }

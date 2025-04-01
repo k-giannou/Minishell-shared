@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:45:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/31 19:43:33 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/01 19:45:02 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,16 +74,14 @@ void	if_pipes_or_redirs(char *line, int *i, int *count)
 	{
 		(*count)++;
 		c = get_multi_char_cmp(line[*i], '<', '>', '|', '&', '(', ')', 0);
-		if (c == '(' || c == ')')
-		{
-			(*i)++;
+		if ((c == '(' || c == ')') && line[*i + 1]
+			&& char_multi_cmp(line[*i + 1], '<', '>', '|', '&', '(', ')', 0))
 			(*count)++;
-		}
+		else if ((c == '(' || c == ')') && !line[*i + 1])
+			(*count)--;
 		else
 			while (line[*i] == c)
 				(*i)++;
-		if (line[*i + 1] != ' ')
-			(*count)++;
 	}
 	(*i)++;
 }

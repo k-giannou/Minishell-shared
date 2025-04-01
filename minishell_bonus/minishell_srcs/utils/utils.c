@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 20:38:24 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/30 23:55:49 by marvin           ###   ########.fr       */
+/*   Updated: 2025/04/01 18:19:30 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,8 @@ int	is_symbols(char **raw, int i)
 	while (raw[++i])
 		if (check_tokens_errors(raw, i))
 			return (1);
-	while (raw[--i] && i >= 0)
+	i--;
+	while (i >= 0 && raw[i])
 	{
 		if (str_multi_cmp(raw[i], "<<", ">>", "<", ">", "&&", "||", "|", NULL)
 			&& str_multi_ncmp(1, raw[i], "(", ")", NULL))
@@ -111,6 +112,7 @@ int	is_symbols(char **raw, int i)
 			free(raw[i]);
 			raw[i] = NULL;
 		}
+		i--;
 	}
 	return (0);
 }

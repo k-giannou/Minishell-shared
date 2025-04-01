@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:03:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/30 23:02:02 by marvin           ###   ########.fr       */
+/*   Updated: 2025/04/01 19:37:52 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,6 @@ void	free_pipes_redirs(char **str, int nb_words);
 //pipes
 char	*get_first_arg(char *av);
 char	**splited_env(t_env *env);
-int		get_file(char *av, int i);
 char	*get_cmd(char **av, int i);
 int		isredir_pipex(char *tokens);
 int		pipe_count(t_minishell *mini);

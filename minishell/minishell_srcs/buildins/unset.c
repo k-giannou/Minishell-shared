@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 19:15:45 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/07 21:01:31 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/02 12:56:53 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	unset(char **vars, t_minishell *mini)
 {
 	int	i;
 
+	g_signal = 0;
 	i = 1;
 	if (just_export_or_unset(vars, "unset"))
 		return ;
@@ -71,5 +72,4 @@ void	unset(char **vars, t_minishell *mini)
 		i++;
 	}
 	mini->cur_loc = replace_by_tilde(mini->env, mini->cur_loc, 1);
-	g_signal = 0;
 }

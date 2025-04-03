@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils6.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 18:07:16 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/03 17:22:44 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/04/03 20:13:29 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,14 @@ int	get_sig(int status)
 	else
 		return (ft_fprintf(2, "minishell : error : Fail getting the signal "),
 			ft_fprintf(2, "of last cmd\n"));
+}
+
+int	isredir_str(char *str)
+{
+	if (!str)
+		return (0);
+	if (ft_strchr(str, '>') || ft_strchr(str, '<')
+		|| ft_strsrch(str, ">>") || ft_strsrch(str, "<<"))
+		return (1);
+	return (0);
 }

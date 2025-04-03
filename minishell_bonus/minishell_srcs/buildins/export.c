@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 19:15:45 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/08 21:03:26 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/03 15:47:22 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	rest_letters_of_name(char *str)
 	while (str[i] != '\0' && str[i] != '=')
 	{
 		if (!ft_isalpha(str[i]) && !ft_isnum(str[i]) && str[i] != '_')
-			return (0);
+			return (g_signal = 1, 0);
 		i++;
 	}
 	return (1);
@@ -85,6 +85,7 @@ void	export(char **vars, t_minishell *mini)
 {
 	int	i;
 
+	g_signal = 0;
 	i = 1;
 	if (just_export_or_unset(vars, "export"))
 		return (ft_print_export(mini->env_export, false, false));

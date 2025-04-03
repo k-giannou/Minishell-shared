@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 13:12:44 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/03/21 17:20:12 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/03 16:14:50 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,15 @@ int	create_heredoc(char **eofs, int sum)
 	line = NULL;
 	while (++sum)
 	{
-		ft_fprintf(0, ">");
+		if (g_signal != 0)
+		{
+			if (line)
+				free (line);
+			close (fd);
+			return (0);
+		}
+		else
+			ft_fprintf(0, ">");
 		line = get_next_line(STDIN_FILENO);
 		if (last_eof(line, eofs, &y, sum))
 			break ;
@@ -121,6 +129,7 @@ int	handle_heredoc(char **tokens, char **pipes_redirs)
 	int		sum;
 	int		size_tokens;
 
+	g_signal = 0;
 	if (!tokens)
 		return (0);
 	size_tokens = ft_count_words((const char **)tokens);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils4.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:45:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/01 19:45:02 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/03 15:48:06 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	first_letter_valid(char *str)
 {
 	if (ft_isalpha(str[0]) || str[0] == '_')
 		return (1);
-	return (0);
+	return (g_signal = 1, 0);
 }
 
 void	if_pipes_or_redirs(char *line, int *i, int *count)

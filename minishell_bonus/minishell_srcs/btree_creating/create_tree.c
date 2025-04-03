@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 16:25:44 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/03 17:07:51 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/03 17:13:49 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	build_right_branch(t_btree_params *p, char **tokens, char **p_r,
 		add_right_branch_create_tree(&(*tree)->right,
 			right_branch_par(*p, tokens, p_r, j));
 		p->to_free--;
-		p->i = j - 1;
+		p->i = j;
 	}
 	else
 		add_right_branch(&(*tree)->right, tokens, p_r, &p->i);
@@ -79,18 +79,13 @@ void	build_tree(t_btree_params p, char **tokens, char **p_r,
 	{
 		if (!*tree)
 		{
-			*tree = init_tree(p, tokens, p_r, 0);
+			*tree = init_tree(p, tokens, p_r, &p.i);
 			if (!*tree)
 				return ;
-			if (ft_strcmp(p_r[p.i], "("))
-				p.i = go_to_op_log(p_r, p.i, p.len_tokens);
-			else if (!ft_strcmp(p_r[p.i], "("))
-				p.i = get_end_parenthesis(p_r, p.i, p.len_tokens);
 		}
 		if (!str_multi_cmp(p_r[p.i], "&&", "||", NULL)
 			|| !get_next_oplog(tokens, p_r, p.i))
 			build_right_branch(&p, tokens, p_r, tree);
-		p.i++;
 	}
 }
 

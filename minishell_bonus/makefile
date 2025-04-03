@@ -24,12 +24,12 @@ RESET			= "\033[0m"
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(SRC_O)
-	@mkdir -p libs
 	@echo $(CYAN)"Compilation de minishell..."$(RESET)
 	@$(CC) $(FLAGS) $(SRC_O) -L libs -lfprintf -lft -I $(HDRS) -o $(NAME) -lreadline
 	@echo $(GREEN)"Exécutable $(NAME) créé !"$(RESET)
 
 $(LIBFT):
+	@mkdir -p libs
 	@mkdir -p $(OBJ_DIR)
 	$(MAKE) -C $(LIBFT_DIR)
 	@mv $(LIBFT) libs

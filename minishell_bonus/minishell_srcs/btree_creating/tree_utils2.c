@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 16:25:44 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/03 17:08:35 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/03 17:11:04 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,30 +65,29 @@ int	init_tree_error(char **p_r, int len_tokens, int *j)
 	return (0);
 }
 
-t_btree	*init_tree(t_btree_params p, char **tokens, char **p_r, int j)
+t_btree	*init_tree(t_btree_params p, char **tokens, char **p_r, int *j)
 {
 	t_btree	*tree;
 	int		len_tokens;
 
-	j = 0;
 	tree = NULL;
 	len_tokens = ft_count_words((const char **)tokens);
-	if (init_tree_error(p_r, len_tokens, &j))
+	if (init_tree_error(p_r, len_tokens, j))
 		return (NULL);
-	else if (!str_multi_cmp(p_r[j], "&&", "||", NULL))
+	else if (!str_multi_cmp(p_r[*j], "&&", "||", NULL))
 	{
-		tree = btree_create_node(ft_split(p_r[j], NULL),
-				ft_splitndup(p_r + j, 2, 0, 1), get_type(p_r[j]));
-		if (!ft_strcmp(p_r[j - 1], ")"))
+		tree = btree_create_node(ft_split(p_r[*j], NULL),
+				ft_splitndup(p_r + *j, 2, 0, 1), get_type(p_r[*j]));
+		if (!ft_strcmp(p_r[*j - 1], ")"))
 		{
 			p.to_free++;
 			tree->left = create_tree(p, ft_splitndup(tokens, len_tokens, 1,
-						j - 1), ft_splitndup(p_r, len_tokens, 1, j - 1));
+						*j - 1), ft_splitndup(p_r, len_tokens, 1, *j - 1));
 			p.to_free--;
 		}
 		else
 			tree->left = btree_create_node(ft_splitndup(tokens, len_tokens, 0,
-						j), ft_splitndup(p_r, len_tokens, 0, j), CMD);
+						*j), ft_splitndup(p_r, len_tokens, 0, *j), CMD);
 	}
 	return (tree);
 }

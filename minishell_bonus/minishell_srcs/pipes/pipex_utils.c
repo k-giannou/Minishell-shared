@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 17:11:55 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/05 18:11:14 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/03 19:39:36 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ char	*find_path(char *cmd, char **env)
 	i = 0;
 	while (env[i] && ft_strnchr(env[i], "PATH", 4) == 0)
 		i++;
+	if (!env[i])
+		return (NULL);
 	paths = ft_split(env[i] + 5, ":");
 	if (!paths)
 		perror(RED "Error -> invalid path\n" RESET);
@@ -77,8 +79,7 @@ char	*find_path(char *cmd, char **env)
 		free(path);
 		i++;
 	}
-	free_dbl_tab(paths);
-	return (0);
+	return (free_dbl_tab(paths), NULL);
 }
 
 char	*check_path(char **path, t_minishell *mini)
@@ -103,6 +104,7 @@ void	execute(char **av, char **env, t_minishell *mini)
 
 	cmd = ft_split(av[mini->p.i], " ");
 	free_dbl_tab(av);
+	free(mini->cmd_s_redirs);
 	if (!cmd)
 		return (free_all(mini, "all"), free_dbl_tab(env),
 			perror(RED "Error -> issue spliting command\n" RESET), exit(1));
@@ -111,16 +113,15 @@ void	execute(char **av, char **env, t_minishell *mini)
 		path = find_path(cmd[0], env);
 	else
 		path = check_path(&cmd[0], mini);
-	(free(mini->p.pids), free_all(mini, "all"));
+	free(mini->p.pids);
+	free_all(mini, "all");
 	if (!path)
 		return (ft_fprintf(2, RED "%s: command not found\n" RESET, cmd[0]),
 			free_dbl_tab(cmd), free_dbl_tab(env), exit(1));
 	if (execve(path, cmd, env) == -1)
 	{
 		free(path);
-		free_dbl_tab(env);
 		free_dbl_tab(cmd);
 		perror(RED "Error -> execution failure\n" RESET);
-		exit(1);
 	}
 }

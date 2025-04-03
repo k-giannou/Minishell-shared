@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 16:25:44 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/03 17:22:01 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/04/03 19:41:44 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,20 @@ void	exec_cmd(t_minishell *mini)
 	int		len_tokens;
 
 	set_symbols(mini->tokens, mini->pipes_redirs, &prior);
-	if (is_buildin(mini->tokens[0], 0) && !prior.and && !prior.or
-		&& !ft_strcmp(mini->tokens[0], "exit"))
+	if (is_buildin(mini->tokens[0], 0) && !prior.and && !prior.or && !prior.pipes)
 	{
 		len_tokens = ft_count_words((const char **)mini->tokens);
 		if (prior.parenthesis)
 			remove_parenthesis(&mini->tokens, &mini->pipes_redirs, len_tokens);
-		ft_exit(mini);
+		exec_buildin(mini->tokens, mini, 0);
 	}
-	btree = create_tree((t_btree_params){0}, mini->tokens, mini->pipes_redirs);
-	if (btree)
-		g_signal = ast(mini, btree);
+	else
+	{
+		btree = create_tree((t_btree_params){0}, mini->tokens, mini->pipes_redirs);
+		if (btree)
+			g_signal = ast(mini, btree);
+		free_btree(btree);
+	}
 	free_all(mini, "tabs");
 	mini->tokens = NULL;
 	mini->pipes_redirs = NULL;

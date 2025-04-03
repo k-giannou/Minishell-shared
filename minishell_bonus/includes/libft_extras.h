@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:00:12 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/31 16:33:24 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/03 18:31:45 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,8 @@ double		ft_atod(char *nptr);
 float		ft_atof(char *nptr);
 long		ft_atol(char *nptr);
 long long	ft_atold(char *nptr);
+int64_t		ft_atoi64(char *nptr);
 int			ft_atoi(const char *nptr);
-int64_t		ft_atoi64(const char *nptr);
 int			ft_natoi(const char *nptr, int *i);
 int			ft_atoi_base(const char *nptr, char *base);
 char		*ft_convert_base(char *nbr, char *base_from, char *base_to);
@@ -124,6 +124,7 @@ char		**ft_splitndup(char **split, int len_split, int start, int end);
 /* ************************************************************************** */
 //																			  //
 
+void		print_dlb_tabs(char **tab);
 void		ft_putnbr_fd(int n, int fd);
 void		ft_putstr_fd(char *s, int fd);
 void		ft_putchar_fd(char c, int fd);

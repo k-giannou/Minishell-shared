@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   optimized_argument.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:31:28 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/03 17:21:48 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/04/03 19:07:25 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,16 +95,18 @@ static char	*ft_substr_mini(char *line, t_minishell **mini, int *new_i, int tab)
 	return (ft_substr2(line, mini, len));
 }
 
-void	split_line(char *line, t_minishell **mini, int i)
+void	split_line(char *line, t_minishell **mini, int i, int len_line)
 {
 	int	j;
 
 	j = 0;
-	while (line[i])
+	while (line && line[i])
 	{
 		while (line[i] && line[i] != ' ')
 		{
 			(*mini)->tokens[j] = ft_substr_mini(line + i, mini, &i, j);
+			if (i > len_line)
+				i = len_line;
 			if (!(*mini)->tokens[j])
 				return (free_all(*mini, "tabs"));
 			else if (!char_multi_cmp(line[i], '<', '>', '|', '&', '(', ')', 0)
@@ -133,6 +135,6 @@ void	optimised_line(char *line, t_minishell **mini)
 	i = 0;
 	while (line[i] == ' ')
 		i++;
-	split_line(line + i, mini, 0);
+	split_line(line + i, mini, 0, (int)ft_strlen(line));
 	free(line);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 18:55:18 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/03 17:32:28 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/04/03 19:59:11 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ typedef struct s_minishell
 	bool			sgl_q;
 	bool			dbl_q;
 	char			**cmd_s;
+	int				*cmd_s_redirs;
 	char			*cur_loc;
 	char			**tokens;
 	int				hist_lines;
@@ -176,8 +177,9 @@ char	*replace_by_tilde(t_env *env, char *str, int free_str);
 t_btree	*create_tree(t_btree_params p, char **tokens, char **p_r);
 char	*ft_substr_with_quotes(char *line, t_minishell *mini, int len);
 
-//exec
+//btree
 int		get_type(char *symbol);
+void	free_btree(t_btree *btree);
 int		ast(t_minishell *mini, t_btree *the_tree);
 char	**get_p_r(char **tokens, char **p_r, int j);
 char	*get_and_or(char **tokens, char **p_r, int i);
@@ -236,6 +238,7 @@ void	unset(char **vars, t_minishell *mini);
 void	export(char **vars, t_minishell *mini);
 
 //redirs
+int		isredir_str(char *str);
 void	restore_dup(t_redirs *r);
 int		isredir(t_minishell *mini);
 char	**copy_tokens(char **tokens);
@@ -291,6 +294,8 @@ void	ft_substr_mini_2(char *line, t_minishell **mini, int *len);
 
 //signal alone
 void	sigquit_handler(int sig);
+void	sigint_handler(int sig);
+void	sigint_handler2(int sig);
 
 //wildcards
 int		ft_fnmatch_rec(const char *pattern, const char *str, int *i);

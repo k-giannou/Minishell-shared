@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_dbl_tabs.c                                :+:      :+:    :+:   */
+/*   print_dbl_tabs.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 18:51:34 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/09 16:55:05 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/03 18:27:17 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /* print all the stings of a list of strings
 */
-void	ft_print_dlb_tabs(char **tab)
+void	print_dlb_tabs(char **tab)
 {
 	int	i;
 

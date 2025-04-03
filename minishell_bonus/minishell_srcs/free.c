@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:46:16 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/27 18:08:16 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/03 15:17:42 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	free_all(t_minishell *mini, char *str)
 			free_pipes_redirs(mini->pipes_redirs,
 				ft_count_words((const char **)mini->tokens));
 		multi_free("1, 1, 2, 1", mini->cur_loc, mini->user.final, mini->tokens,
-			mini);
+			mini, NULL);
 	}
 	else if (!ft_strcmp(str, "tabs") && mini)
 	{

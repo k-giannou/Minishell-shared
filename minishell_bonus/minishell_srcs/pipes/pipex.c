@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/01 20:14:46 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/03 15:36:11 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,16 @@ char	*get_first_arg(char *av)
 
 void	exec_child(char **env, t_minishell *mini, char **split, char **redirs)
 {
+	int sig;
+
+	signal(SIGQUIT, sigquit_handler);
+	sig = 0;
 	close_and_redirect_pipes(&mini->p, mini->p.i);
 	if (isredir_pipex(mini->cmd_s[mini->p.i]))
 	{
 		split = ft_split(mini->cmd_s[mini->p.i], " ");
 		redirs = get_redir_split(mini, mini->p.i);
-		redir(mini, env, split, redirs);
+		sig = redir(mini, env, split, redirs);
 		free_pipes_redirs(redirs, ft_count_words((const char **)split));
 		free_dbl_tab(split);
 	}
@@ -53,7 +57,7 @@ void	exec_child(char **env, t_minishell *mini, char **split, char **redirs)
 		free_pipes(mini->p.pipes, mini->p.nb_pipes);
 	multi_free("2, 1, 2", mini->cmd_s, mini->p.pids, env, NULL);
 	free_all(mini, "all");
-	exit(0);
+	exit(sig);
 }
 
 int	son_program(char **env, t_minishell *mini)
@@ -69,9 +73,9 @@ int	son_program(char **env, t_minishell *mini)
 	else
 		close_curr_pipe(&mini->p, mini->p.i, mini->cmd_s);
 	if (mini->p.nb_pipes == 0)
-		return (waitpid(mini->p.pids[0], &sig, 0), sig);
+		return (waitpid(mini->p.pids[0], &sig, 0), get_sig(sig));
 	if (mini->p.i == mini->p.nb_pipes)
-		return (waitpid(mini->p.pids[mini->p.i - 1], &sig, 0), sig);
+		return (waitpid(mini->p.pids[mini->p.i - 1], &sig, 0), get_sig(sig));
 	mini->p.i++;
 	sig = son_program(env, mini);
 	waitpid(mini->p.pids[mini->p.i - 1], NULL, 0);

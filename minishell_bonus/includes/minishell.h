@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 18:55:18 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/01 19:49:03 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/03 15:36:38 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,6 +269,7 @@ void	start_replace(t_variables *v, char *str, t_minishell *mini,
 //utils
 char	*hostname(void);
 int		ft_charset(int c);
+int		get_sig(int status);
 long	len_list(t_env *list);
 char	*host_dup(char *name);
 void	init_v(t_variables v);
@@ -284,6 +285,9 @@ void	ft_list_add_back(t_env **lst, t_env *new);
 char	*replace_var(t_minishell *mini, char *str);
 void	if_pipes_or_redirs(char *line, int *i, int *count);
 void	ft_substr_mini_2(char *line, t_minishell **mini, int *len);
+
+//signal alone
+void	sigquit_handler(int sig);
 
 //wildcards
 int		ft_fnmatch_rec(const char *pattern, const char *str, int *i);

@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 18:07:16 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/01 19:36:57 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/03 15:37:11 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,25 @@ int	pipe_count(t_btree *the_tree)
 		i++;
 	}
 	return (count);
+}
+
+int	get_sig(int status)
+{
+	int	sig;
+
+	sig = 0;
+	if (WIFSIGNALED(status))
+	{
+		sig = WTERMSIG(status) + 128;
+		if (sig == 141)
+			sig = 0;
+		else if (sig == 131)
+			ft_fprintf(2, "Quit (code dumped)\n");
+		return (sig);
+	}
+	else if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	else
+		return (ft_fprintf(2, "minishell : error : Fail getting the signal "),
+			ft_fprintf(2, "of last cmd\n"));
 }

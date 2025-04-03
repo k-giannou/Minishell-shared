@@ -6,7 +6,7 @@
 /*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 15:33:04 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/03/20 16:00:13 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/04/03 17:34:06 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,11 @@ void	path_and_execute(char *path, t_minishell *mini, char **env)
 		restore_and_free(mini->r.tab, path, &mini->r);
 		exit (-1);
 	}
+}
+
+void	free_line(char **line)
+{
+	if (*line)
+		free (*line);
+	*line = NULL;
 }

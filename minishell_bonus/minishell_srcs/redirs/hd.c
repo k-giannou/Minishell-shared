@@ -6,7 +6,7 @@
 /*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 13:12:44 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/04/03 16:14:50 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/04/03 17:33:08 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,12 +102,7 @@ int	create_heredoc(char **eofs, int sum)
 	while (++sum)
 	{
 		if (g_signal != 0)
-		{
-			if (line)
-				free (line);
-			close (fd);
-			return (0);
-		}
+			return (free_line(&line), close(fd), 0);
 		else
 			ft_fprintf(0, ">");
 		line = get_next_line(STDIN_FILENO);
@@ -115,9 +110,7 @@ int	create_heredoc(char **eofs, int sum)
 			break ;
 		if (y == ft_count_words((const char **)eofs) - 1)
 			write_in_heredoc(&first, fd, line, eofs);
-		if (line)
-			free(line);
-		line = NULL;
+		free_line(&line);
 	}
 	return (1);
 }

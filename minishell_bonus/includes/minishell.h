@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 18:55:18 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/03 17:10:21 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/03 17:32:28 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,7 +193,7 @@ void	handle_parenthesis(t_minishell *mini, int start, int end);
 t_btree	*init_tree(t_btree_params p, char **tokens, char **p_r, int *j);
 void	remove_parenthesis(char ***tokens, char ***p_r, int len_tokens);
 int		get_log_op_check_par(char **p_r, int len_tokens, int *j, int incr);
-t_btree *right_branch_par(t_btree_params p, char **tokens, char **p_r, int j);
+t_btree	*right_branch_par(t_btree_params p, char **tokens, char **p_r, int j);
 
 //print
 void	welcome(void);
@@ -240,19 +240,21 @@ void	restore_dup(t_redirs *r);
 int		isredir(t_minishell *mini);
 char	**copy_tokens(char **tokens);
 int		is_buildin(char *tab, int to_free);
-int		redir(t_minishell *mini, char **env, char **tokens, char **pipes_redirs);
+int		redir(t_minishell *mini, char **env, \
+			char **tokens, char **pipes_redirs);
 int		valid_filename(char **tab, char **ntab);
 int		syntax_error_redir(char **tab, char **ntab);
 void	find_tab(int *y, char **tab, char **tokens);
-int		handle_files(char **tokens, char **pipes_redirs, t_redirs *r, int make_dup);
+int		handle_files(char **tokens, char **pipes_redirs, \
+			t_redirs *r, int make_dup);
 void	exec_buildin(char **tab, t_minishell *mini, int free);
 void	join_command_free_tab(char **tab, char **tokens);
-int		handle_heredoc (char **tokens, char **pipes_redirs);
+int		handle_heredoc(char **tokens, char **pipes_redirs);
 char	**find_eofs(int *sum, char **tokens, char **pipes_redirs);
 void	copy_eofs(int *sum, char **eofs, char **tokens, char **pipes_redirs);
-int		heredoc (char **tokens, char **pipes_redirs);
+int		heredoc(char **tokens, char **pipes_redirs);
 void	free_strs(char **str1, char **str2, char **str3);
-int		hd_filename(char **tokens, char ** pipes_redirs);
+int		hd_filename(char **tokens, char **pipes_redirs);
 void	correct_null_tabs(int size_tokens, char **tokens, char **pipes_redirs);
 int		syntax_error_before_hd(char **tokens, char **pipes_redirs);
 int		error_in_heredoc(char **tokens, char **pipes_redirs, bool *error);
@@ -263,8 +265,9 @@ void	handle_name_hr(char **pipes_redirs, char **tokens, int y);
 void	path_and_execute(char *path, t_minishell *mini, char **env);
 void	print_mess(char *str1, char c, char *str2, char *str3);
 char	*replace_var(t_minishell *mini, char *str);
-void	start_replace(t_variables *v, char *str, t_minishell *mini,
+void	start_replace(t_variables *v, char *str, t_minishell *mini, \
 		t_env *current);
+void	free_line(char **line);
 
 //utils
 char	*hostname(void);
@@ -297,7 +300,8 @@ char	*handle_wildcards(char *str, t_minishell *mini);
 int		find_start(char *str, int point);
 int		find_end(char *str, int point);
 int		ft_fnmatch_rec(const char *pattern, const char *str, int *i);
-bool	handle_pattern(struct dirent *entry, char *pattern, DIR *dp, t_variables *v);
+bool	handle_pattern(struct dirent *entry, \
+			char *pattern, DIR *dp, t_variables *v);
 void	replace_file_in_str(t_variables *v, char *file);
 void	init_var_wild(t_variables *v, t_minishell *mini);
 int		process_pattern(t_variables *v, char *str);

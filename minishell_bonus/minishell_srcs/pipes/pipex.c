@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/03 15:36:11 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/03 17:22:22 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*get_first_arg(char *av)
 
 void	exec_child(char **env, t_minishell *mini, char **split, char **redirs)
 {
-	int sig;
+	int	sig;
 
 	signal(SIGQUIT, sigquit_handler);
 	sig = 0;
@@ -62,7 +62,7 @@ void	exec_child(char **env, t_minishell *mini, char **split, char **redirs)
 
 int	son_program(char **env, t_minishell *mini)
 {
-	int sig;
+	int	sig;
 
 	sig = 0;
 	mini->p.pids[mini->p.i] = fork();

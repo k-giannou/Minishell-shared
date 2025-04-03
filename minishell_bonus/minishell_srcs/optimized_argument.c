@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   optimized_argument.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:31:28 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/01 18:36:00 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/03 17:21:48 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ static int	count_tokens(char *line, bool sgl_q, bool dbl_q, int i)
 	}
 	return (count++);
 }
+
 //cmd1 || cmd2 || (cmd3)
 static char	*ft_substr2(char *line, t_minishell **mini, int len)
 {

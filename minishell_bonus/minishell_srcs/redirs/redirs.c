@@ -6,7 +6,7 @@
 /*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:21:49 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/04/03 16:09:39 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/04/03 17:23:00 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ int	redir(t_minishell *mini, char **env, char **tokens, char **pipes_redirs)
 		return (2);
 	if (!valid_filename(tokens, pipes_redirs)
 		|| !init_r(&mini->r, tokens))
-			return (1);
+		return (1);
 	if (is_buildin(tokens[0], 0))
 	{
 		if (!handle_files(tokens, pipes_redirs, &mini->r, 0))

@@ -6,7 +6,7 @@
 /*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/04 19:10:47 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/04/04 19:12:14 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ int	son_program(char **env, t_minishell *mini, int redir)
 		multi_free("1, 2, 1", mini->p.pids, env, mini->cmd_s_redirs, NULL);
 	if (is_buildin(mini->cmd_s[mini->p.i][0], 0) && !redir)
 		exec_buildin(mini->cmd_s[mini->p.i], mini, 0, mini->cmd_s);
-	else if (!is_buildin(mini->cmd_s[mini->p.i][0], 0) && !mini->cmd_s_redirs[mini->p.i])
+	else if (!is_buildin(mini->cmd_s[mini->p.i][0], 0)
+			&& !mini->cmd_s_redirs[mini->p.i])
 	{
 		mini->p.pids[mini->p.i] = fork();
 		if (mini->p.pids[mini->p.i] == -1)
@@ -70,8 +71,7 @@ int	son_program(char **env, t_minishell *mini, int redir)
 		return (waitpid(mini->p.pids[mini->p.i - 1], &sig, 0), get_sig(sig));
 	mini->p.i++;
 	sig = son_program(env, mini, mini->cmd_s_redirs[mini->p.i]);
-	waitpid(mini->p.pids[mini->p.i - 1], NULL, 0);
-	return (sig);
+	return (waitpid(mini->p.pids[mini->p.i - 1], NULL, 0), sig);
 }
 
 char	***get_cmd_s(t_btree *the_tree, int i, int nb_pipes, int *cmd_s_redirs)

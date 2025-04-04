@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 17:11:55 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/04 16:41:52 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/04 18:58:38 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ void	execute(char ***cmd, int i, char **env, t_minishell *mini)
 	if (execve(path, cmd[i], env) == -1)
 	{
 		free(path);
-		perror(RED "Error -> execution failure\n" RESET);
+		perror("Error -> execution failure ");
+		free_array_of_splits(cmd);
 	}
 }

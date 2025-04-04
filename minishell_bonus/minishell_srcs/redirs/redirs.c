@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:21:49 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/04/04 17:50:31 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/04 18:54:28 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,6 @@ int	redir(t_minishell *mini, char **env, char **tokens, char **pipes_redirs)
 	}
 	else if (!handle_no_buildin_redir(env, tokens, pipes_redirs, mini))
 		return (1);
-	unlink(".heredoc.txt");
 	return (restore_dup(&mini->r),
 		free_dbl_tab(mini->r.tab), 0);
 }

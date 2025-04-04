@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/04 18:00:51 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/04 18:59:58 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,49 +32,35 @@ char	*get_first_arg(char *av)
 	return (first_arg);
 }
 
-void	exec_child(char **env, t_minishell *mini, char **split, char **redirs)
+void	exec_child(char **env, t_minishell *mini)
 {
 	int	sig;
 
 	sig = 0;
 	signal(SIGQUIT, sigquit_handler);
 	close_and_redirect_pipes(&mini->p, mini->p.i);
-	if (mini->cmd_s_redirs[mini->p.i])
-	{
-		split = ft_splitdup(mini->cmd_s[mini->p.i]);
-		redirs = get_redir_split(mini, mini->p.i);
-		sig = redir(mini, env, split, redirs);
-		free_pipes_redirs(redirs, ft_count_words((const char **)split));
-		free_dbl_tab(split);
-	}
-	else
-		execute(mini->cmd_s, mini->p.i, env, mini);
-	if (mini->p.i > 0)
-		close(mini->p.pipes[mini->p.i - 1][0]);
-	if (mini->p.pipes)
-		free_pipes(mini->p.pipes, mini->p.nb_pipes);
-	multi_free("1, 2, 1", mini->p.pids, env, mini->cmd_s_redirs, NULL);
-	free_array_of_splits(mini->cmd_s);
-	free_all(mini, "all");
+	sig = redir_if_needed(env, mini);
+	execute(mini->cmd_s, mini->p.i, env, mini);
+	free_dbl_tab(env);
 	exit(sig);
 }
 
-int	son_program(char **env, t_minishell *mini)
+int	son_program(char **env, t_minishell *mini, int redir)
 {
 	int	sig;
 
-	sig = 0;
+	sig = redir_if_needed(env, mini);
 	if (will_exit(mini->cmd_s[mini->p.i]))
 		multi_free("1, 2, 1", mini->p.pids, env, mini->cmd_s_redirs, NULL);
-	if (is_buildin(mini->cmd_s[mini->p.i][0], 0))
+	if (is_buildin(mini->cmd_s[mini->p.i][0], 0) && !redir)
 		exec_buildin(mini->cmd_s[mini->p.i], mini, 0, mini->cmd_s);
-	else
+	else if (!is_buildin(mini->cmd_s[mini->p.i][0], 0))
 	{
 		mini->p.pids[mini->p.i] = fork();
 		if (mini->p.pids[mini->p.i] == -1)
 			return (perror(RED "Error -> pid failure\n" RESET), -1);
 		if (mini->p.pids[mini->p.i] == 0)
-			exec_child(env, mini, NULL, NULL);
+			exec_child(env, mini);
 		else
 			close_curr_pipe(&mini->p, mini->p.i, mini->cmd_s[mini->p.i]);
 	}
@@ -83,7 +69,7 @@ int	son_program(char **env, t_minishell *mini)
 	if (mini->p.i == mini->p.nb_pipes)
 		return (waitpid(mini->p.pids[mini->p.i - 1], &sig, 0), get_sig(sig));
 	mini->p.i++;
-	sig = son_program(env, mini);
+	sig = son_program(env, mini, mini->cmd_s_redirs[mini->p.i]);
 	waitpid(mini->p.pids[mini->p.i - 1], NULL, 0);
 	return (sig);
 }
@@ -133,7 +119,7 @@ int	pipex(t_minishell *mini, t_btree *the_tree, char **env)
 		create_pipes(&mini->p);
 	else
 		mini->p.pipes = NULL;
-	signal = son_program(env, mini);
+	signal = son_program(env, mini, mini->cmd_s_redirs[mini->p.i]);
 	free_pipes(mini->p.pipes, mini->p.nb_pipes);
 	multi_free("1, 2, 1", mini->p.pids, env, mini->cmd_s_redirs, NULL);
 	free_array_of_splits(mini->cmd_s);

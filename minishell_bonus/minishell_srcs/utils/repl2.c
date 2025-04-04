@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   repl2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:25:54 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/21 19:53:37 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/04/04 17:34:31 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*replace_var(t_minishell *mini, char *str)
 	t_variables	v;
 
 	if (!str)
-		return (ft_exit(mini), NULL);
+		return (ft_exit(mini->tokens, mini), NULL);
 	v = (t_variables){0};
 	v = mini->vars;
 	current = mini->env;

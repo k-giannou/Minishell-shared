@@ -6,13 +6,13 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 21:07:06 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/03 18:37:10 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/04 17:43:20 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	strcmp_64(char *nptr)
+int	strcmp_64_mini(char *nptr)
 {
 	size_t	len_max;
 	size_t	len_min;
@@ -65,26 +65,26 @@ int	valid_nb(char *str)
 	return (1);
 }
 
-void	ft_exit(t_minishell *mini)
+void	ft_exit(char **tokens, t_minishell *mini)
 {
 	int		i;
 	int64_t	nb;
 
 	i = 1;
 	nb = 0;
-	if (mini->tokens && mini->tokens[0] && mini->tokens[0][0]
-		&& mini->tokens[1])
+	if (tokens && tokens[0] && tokens[0][0]
+		&& tokens[1])
 	{
-		if (!valid_nb(mini->tokens[1])
-			|| strcmp_64(
-				ft_remove_from_string(mini->tokens[1], " \n\v\f\r+", 0)))
-			return (g_signal = 2, error_exit(mini->tokens[1], 1),
+		if (!valid_nb(tokens[1])
+			|| strcmp_64_mini(
+				ft_remove_from_string(tokens[1], " \n\v\f\r+", 0)))
+			return (g_signal = 2, error_exit(tokens[1], 1),
 				free_all(mini, "all"), exit(2));
-		nb = ft_atoi64(mini->tokens[1]);
+		nb = ft_atoi64(tokens[1]);
 	}
-	if (mini->tokens && mini->tokens[0] && mini->tokens[0][0] && mini->tokens[1]
-		&& mini->tokens[2])
-		return (g_signal = 1, error_exit(mini->tokens[2], 2));
+	if (tokens && tokens[0] && tokens[0][0] && tokens[1]
+		&& tokens[2])
+		return (g_signal = 1, error_exit(tokens[2], 2));
 	return (g_signal = nb % 256, printf("exit\n"), free_all(mini, "all"),
 		exit(nb % 256));
 }

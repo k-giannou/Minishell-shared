@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 16:25:44 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/03 16:03:16 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/04 16:15:25 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ t_btree	*btree_create_node(char **item, char **p_r, int type)
 	newnode = malloc(sizeof(t_btree));
 	newnode->tokens = item;
 	newnode->pipes_redirs = p_r;
+	newnode->len_arg = ft_count_words((const char **)item);
 	newnode->type = type;
 	newnode->left = NULL;
 	newnode->right = NULL;

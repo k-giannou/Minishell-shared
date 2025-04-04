@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 19:15:45 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/21 12:18:14 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/04/04 16:56:56 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	change_old_pwd(char *data, t_minishell **mini)
 
 	tmp = (*mini)->env;
 	ft_get_env(&tmp, "OLDPWD=");
+	if (!tmp->data)
+		return ;
 	free(tmp->data);
 	tmp->data = ft_strjoin("OLD", data);
 	tmp = (*mini)->env_export;

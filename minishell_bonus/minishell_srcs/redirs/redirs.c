@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:21:49 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/04/03 17:23:00 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/04/04 17:50:31 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ int	redir(t_minishell *mini, char **env, char **tokens, char **pipes_redirs)
 		if (!handle_files(tokens, pipes_redirs, &mini->r, 0))
 			return (restore_dup(&mini->r), 1);
 		join_command_free_tab(mini->r.tab, tokens);
-		exec_buildin(mini->r.tab, mini, 0);
+		exec_buildin(mini->r.tab, mini, 0, NULL);
 	}
 	else if (!handle_no_buildin_redir(env, tokens, pipes_redirs, mini))
 		return (1);

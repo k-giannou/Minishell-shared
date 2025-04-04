@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 18:07:16 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/03 20:13:29 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/04 16:10:53 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,15 @@ int	isredir_str(char *str)
 		|| ft_strsrch(str, ">>") || ft_strsrch(str, "<<"))
 		return (1);
 	return (0);
+}
+
+void	free_array_of_splits(char ***cmd_s)
+{
+	int	j;
+
+	j = 0;
+	while (cmd_s[j])
+		free_dbl_tab(cmd_s[j++]);
+	if (cmd_s)
+		free(cmd_s);
 }

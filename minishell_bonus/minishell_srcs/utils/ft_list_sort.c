@@ -12,7 +12,27 @@
 
 #include "../../includes/minishell.h"
 
-/* sort a list */
+void	twenty_five_lines_bs(int *j, int *i, int *k)
+{
+	(*j)++;
+	(*i)++;
+	*k = *i;
+}
+
+int	will_exit(char **tokens)
+{
+	if (tokens && ft_strcmp(tokens[0], "exit"))
+		return (0);
+	if (tokens && tokens[0] && tokens[0][0]
+		&& tokens[1] && (!valid_nb(tokens[1])
+			|| strcmp_64_mini(
+				ft_remove_from_string(tokens[1], " \n\v\f\r+", 0))))
+		return (1);
+	if (tokens && tokens[0] && tokens[0][0] && tokens[1]
+		&& tokens[2])
+		return (0);
+	return (1);
+}
 
 static int	ft_sorted_list(t_env *list)
 {

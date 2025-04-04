@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 16:25:44 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/04 15:41:42 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/04 17:50:42 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	exec_cmd(t_minishell *mini)
 		len_tokens = ft_count_words((const char **)mini->tokens);
 		if (prior.parenthesis)
 			remove_parenthesis(&mini->tokens, &mini->pipes_redirs, len_tokens);
-		exec_buildin(mini->tokens, mini, 0);
+		exec_buildin(mini->tokens, mini, 0, NULL);
 	}
 	else
 	{

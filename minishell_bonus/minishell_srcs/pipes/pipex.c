@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/04 18:59:58 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/04 19:10:47 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	son_program(char **env, t_minishell *mini, int redir)
 		multi_free("1, 2, 1", mini->p.pids, env, mini->cmd_s_redirs, NULL);
 	if (is_buildin(mini->cmd_s[mini->p.i][0], 0) && !redir)
 		exec_buildin(mini->cmd_s[mini->p.i], mini, 0, mini->cmd_s);
-	else if (!is_buildin(mini->cmd_s[mini->p.i][0], 0))
+	else if (!is_buildin(mini->cmd_s[mini->p.i][0], 0) && !mini->cmd_s_redirs[mini->p.i])
 	{
 		mini->p.pids[mini->p.i] = fork();
 		if (mini->p.pids[mini->p.i] == -1)

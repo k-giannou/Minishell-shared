@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/03 20:07:25 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/04 15:39:03 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	exec_child(char **env, t_minishell *mini, char **split, char **redirs)
 	sig = 0;
 	signal(SIGQUIT, sigquit_handler);
 	close_and_redirect_pipes(&mini->p, mini->p.i);
+	ft_fprintf(2, "nb = %d\n", mini->cmd_s_redirs[mini->p.i]);
 	if (mini->cmd_s_redirs[mini->p.i])
 	{
 		split = ft_split(mini->cmd_s[mini->p.i], " ");

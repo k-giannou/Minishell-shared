@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 16:25:44 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/05 18:11:24 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/05 19:01:12 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ast(t_minishell *mini, t_btree *the_tree)
 	int	sig;
 
 	sig = 0;
+	if (!the_tree)
+		return (0);
 	if (the_tree->type == CMD)
 		return (pipex(mini, the_tree, splited_env(mini->env)));
 	if (the_tree->type == AND)

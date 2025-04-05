@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 16:25:44 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/05 15:58:42 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/05 19:07:33 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,8 @@ t_btree	*create_tree(t_btree_params p, char **tokens, char **p_r)
 	{
 		if (prior.parenthesis)
 			remove_parenthesis(&tokens, &p_r, p.len_tokens);
-		tree = btree_create_node(ft_splitdup(tokens),
+		if (tokens && tokens[0])
+			tree = btree_create_node(ft_splitdup(tokens),
 				ft_splitndup(p_r, p.len_tokens, 0, p.len_tokens), CMD);
 		if (p.to_free)
 			multi_free("2, 2", tokens, p_r, NULL);

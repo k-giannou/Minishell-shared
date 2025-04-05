@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/05 15:51:18 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/05 16:23:13 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ void	exec_child(char **env, t_minishell *mini)
 	signal(SIGQUIT, sigquit_handler);
 	close_and_redirect_pipes(&mini->p, mini->p.i);
 	sig = redir_if_needed(env, mini);
-	execute(mini->cmd_s, mini->p.i, env, mini);
+	if (is_buildin(mini->cmd_s[mini->p.i][0], 0))
+		exec_buildin(mini->cmd_s[mini->p.i], mini, 0, mini->cmd_s);
+	else
+		execute(mini->cmd_s, mini->p.i, env, mini);
 	free_dbl_tab(env);
 	exit(sig);
 }
@@ -50,12 +53,13 @@ int	son_program(char **env, t_minishell *mini, int redir)
 	int	sig;
 
 	sig = redir_if_needed(env, mini);
-	if (will_exit(mini->cmd_s[mini->p.i]))
+	if (will_exit(mini->cmd_s[mini->p.i]) && (mini && mini->p.nb_pipes == 0))
 		multi_free("1, 2, 1", mini->p.pids, env, mini->cmd_s_redirs, NULL);
-	if (is_buildin(mini->cmd_s[mini->p.i][0], 0) && !redir)
+	if (is_buildin(mini->cmd_s[mini->p.i][0], 0) && !redir
+		&& (mini && mini->p.nb_pipes == 0))
 		exec_buildin(mini->cmd_s[mini->p.i], mini, 0, mini->cmd_s);
-	else if (!is_buildin(mini->cmd_s[mini->p.i][0], 0)
-			&& !mini->cmd_s_redirs[mini->p.i])
+	else if (!(is_buildin(mini->cmd_s[mini->p.i][0], 0)
+			&& (mini && mini->p.nb_pipes == 0)) && !mini->cmd_s_redirs[mini->p.i])
 	{
 		mini->p.pids[mini->p.i] = fork();
 		if (mini->p.pids[mini->p.i] == -1)

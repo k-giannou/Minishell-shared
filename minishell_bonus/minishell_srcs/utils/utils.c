@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 20:38:24 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/01 18:19:30 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/05 18:39:33 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,11 @@ int	check_parenthesis(char **str, int j, int open_par, int close_par)
 		j++;
 	}
 	if (open_par < close_par)
-		ft_fprintf(2, "minishell: syntax error near unexpected token `)'\n");
+		return (ft_fprintf(2, "minishell: error : syntax error near \n"),
+			ft_fprintf(2, "unexpected token `)'\n"));
 	else if (open_par != close_par)
-		return (ft_fprintf(2, "Error : parenthesis aren't closed properly\n"));
+		return (ft_fprintf(2, "minishell: error : parenthesis aren't closed "),
+			ft_fprintf(2, "properly\n"));
 	return (0);
 }
 

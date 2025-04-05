@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils4.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:45:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/03 15:48:06 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/04/05 18:35:04 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	if_pipes_or_redirs(char *line, int *i, int *count)
 		else if ((c == '(' || c == ')') && !line[*i + 1])
 			(*count)--;
 		else
-			while (line[*i] == c)
+			while (line[*i] == c && !(c == '(' || c == ')'))
 				(*i)++;
 	}
 	(*i)++;

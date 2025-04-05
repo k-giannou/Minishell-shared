@@ -6,15 +6,14 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 15:33:04 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/04/05 16:52:26 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/05 18:00:58 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	exec_buildin(char **tab, t_minishell *mini, int free, char ***cmd_s)
+void	exec_buildin(char **tab, t_minishell *mini, int free)
 {
-	(void)cmd_s;
 	if (!tab || !tab[0])
 		return ;
 	if (!ft_strcmp(tab[0], "pwd"))

@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/05 17:08:32 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/05 18:17:46 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	exec_child(char **env, t_minishell *mini)
 	close_and_redirect_pipes(&mini->p, mini->p.i);
 	sig = redir_if_needed(env, mini);
 	if (is_buildin(mini->cmd_s[mini->p.i][0], 0))
-		exec_buildin(mini->cmd_s[mini->p.i], mini, 0, mini->cmd_s);
+		exec_buildin(mini->cmd_s[mini->p.i], mini, 0);
 	else
 		execute(mini->cmd_s, mini->p.i, env, mini);
 	free_dbl_tab(env);
@@ -54,12 +54,15 @@ int	son_program(char **env, t_minishell *mini, int redir)
 
 	sig = redir_if_needed(env, mini);
 	if (will_exit(mini->cmd_s[mini->p.i]) && (mini && mini->p.nb_pipes == 0))
+	{
 		multi_free("1, 2, 1", mini->p.pids, env, mini->cmd_s_redirs, NULL);
+		free_btree(*mini->p_btree);
+	}
 	if (is_buildin(mini->cmd_s[mini->p.i][0], 0) && !redir
-		&& (mini && mini->p.nb_pipes == 0))
-		exec_buildin(mini->cmd_s[mini->p.i], mini, 0, mini->cmd_s);
+		&& mini->p.nb_pipes == 0)
+		exec_buildin(mini->cmd_s[mini->p.i], mini, 0);
 	else if (!(is_buildin(mini->cmd_s[mini->p.i][0], 0)
-			&& (mini && mini->p.nb_pipes == 0)) && !mini->cmd_s_redirs[mini->p.i])
+			&& mini->p.nb_pipes == 0) && !mini->cmd_s_redirs[mini->p.i])
 	{
 		mini->p.pids[mini->p.i] = fork();
 		if (mini->p.pids[mini->p.i] == -1)
@@ -114,7 +117,7 @@ int	pipex(t_minishell *mini, t_btree *the_tree, char **env)
 	mini->p.i = 0;
 	mini->p.pids = (pid_t *)ft_calloc(sizeof(pid_t), (mini->p.nb_pipes + 1));
 	if (!mini->p.pids)
-		return (free(mini->cmd_s_redirs), free_array_of_splits(mini->cmd_s),
+		return (free(mini->cmd_s_redirs), free_array_of_splits(&mini->cmd_s),
 			ft_fprintf(2, RED"Error : fail initiate pid's\n"RESET), -1);
 	if (mini->p.nb_pipes != 0)
 		create_pipes(&mini->p);
@@ -123,7 +126,7 @@ int	pipex(t_minishell *mini, t_btree *the_tree, char **env)
 	signal = son_program(env, mini, mini->cmd_s_redirs[mini->p.i]);
 	free_pipes(mini->p.pipes, mini->p.nb_pipes);
 	multi_free("1, 2, 1", mini->p.pids, env, mini->cmd_s_redirs, NULL);
-	free_array_of_splits(mini->cmd_s);
+	free_array_of_splits(&mini->cmd_s);
 	wait(NULL);
 	return (signal);
 }

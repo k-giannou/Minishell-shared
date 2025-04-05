@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 16:25:44 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/04 17:50:42 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/05 18:11:24 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,19 @@ void	exec_cmd(t_minishell *mini)
 		len_tokens = ft_count_words((const char **)mini->tokens);
 		if (prior.parenthesis)
 			remove_parenthesis(&mini->tokens, &mini->pipes_redirs, len_tokens);
-		exec_buildin(mini->tokens, mini, 0, NULL);
+		exec_buildin(mini->tokens, mini, 0);
 	}
 	else
 	{
 		btree = create_tree((t_btree_params){0}, mini->tokens,
 				mini->pipes_redirs);
+		mini->p_btree = &btree;
+		mini->btree_used = true;
 		if (btree)
 			g_signal = ast(mini, btree);
 		free_btree(btree);
 	}
+	mini->btree_used = false;
 	free_all(mini, "tabs");
 	mini->tokens = NULL;
 	mini->pipes_redirs = NULL;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 21:07:06 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/05 11:00:15 by marvin           ###   ########.fr       */
+/*   Updated: 2025/04/05 18:16:35 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,12 @@ void	ft_exit(char **tokens, t_minishell *mini)
 			|| strcmp_64_mini(
 				ft_remove_from_string(tokens[1], " \n\v\f\r+", 0)))
 			return (g_signal = 2, error_exit(tokens[1], 1),
-				free_all(mini, "all"), exit(2));
+				free_array_of_splits(&mini->cmd_s), free_all(mini, "all"), exit(2));
 		nb = ft_atoi64(tokens[1]);
 	}
 	if (tokens && tokens[0] && tokens[0][0] && tokens[1]
 		&& tokens[2])
 		return (g_signal = 1, error_exit(tokens[2], 2));
-	return (g_signal = nb % 256, printf("exit\n"), free_all(mini, "all"),
-		exit(nb % 256));
+	return (g_signal = nb % 256, printf("exit\n"), 
+		free_array_of_splits(&mini->cmd_s), free_all(mini, "all"), exit(nb % 256));
 }

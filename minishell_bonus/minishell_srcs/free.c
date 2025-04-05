@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:46:16 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/04 18:41:14 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/05 17:56:59 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	free_btree(t_btree *btree)
 	{
 		free_btree(btree->left);
 		free_btree(btree->right);
-		if (btree->pipes_redirs)
+		//if (btree->pipes_redirs)
 			free_pipes_redirs(btree->pipes_redirs,
 				ft_count_words((const char **)btree->tokens));
 		free_dbl_tab(btree->tokens);

@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 18:55:18 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/05 17:08:14 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/05 18:16:43 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,8 @@ typedef struct s_minishell
 	t_env			*env_export;
 	char			**pipes_redirs;
 	unsigned int	parenthesis_lvl;
-	t_btree			*btree;
+	t_btree			**p_btree;
+	bool			btree_used;
 }	t_minishell;
 
 typedef struct s_btree_params
@@ -208,10 +209,10 @@ void	ft_print_export(t_env *v, bool sign, bool inside);
 
 //frees
 void	ft_list_clear(t_env *begin_list);
-void	free_array_of_splits(char ***cmd_s);
 void	free_pipes(int **pipes, int nb_pipes);
 void	free_all(t_minishell *mini, char *str);
 void	free_pipes_redirs(char **str, int nb_words);
+void	free_array_of_splits(char ****cmd_s);
 
 //pipes
 char	*get_first_arg(char *av);
@@ -253,7 +254,7 @@ int		syntax_error_redir(char **tab, char **ntab);
 void	find_tab(int *y, char **tab, char **tokens);
 int		handle_files(char **tokens, char **pipes_redirs, \
 			t_redirs *r, int make_dup);
-void	exec_buildin(char **tab, t_minishell *mini, int free, char ***cmd_s);
+void	exec_buildin(char **tab, t_minishell *mini, int free);
 void	join_command_free_tab(char **tab, char **tokens);
 int		handle_heredoc(char **tokens, char **pipes_redirs);
 char	**find_eofs(int *sum, char **tokens, char **pipes_redirs);

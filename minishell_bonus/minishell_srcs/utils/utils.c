@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 20:38:24 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/05 18:57:09 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/05 21:02:45 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	check_parenthesis(char **str, int j, int open_par, int close_par)
 int	check_tokens_errors(char **raw, int i)
 {
 	if (!str_multi_ncmp(2, raw[i], "||", "&&", NULL)
-		&& ((raw[i][2] && raw[i][3]) || i == 0
+		&& (!raw[i + 1] || (raw[i][2] && raw[i][3]) || i == 0
 			|| (i > 0 && !str_multi_ncmp(1, raw[i - 1], "|", "&", NULL))))
 		return (ft_fprintf(2, "minishell: syntax error"),
 			ft_fprintf(2, " near unexpected token `%.2s'\n", raw[i]));
@@ -83,15 +83,16 @@ int	check_tokens_errors(char **raw, int i)
 			ft_fprintf(2, " near unexpected token `%c%c'\n",
 				raw[i][0], raw[i + 1][0]));
 	else if (i != 0 && !ft_strcmp(raw[i], "&"))
-		return (ft_fprintf(2, "Error: Run commands in the background"),
-			ft_fprintf(2, " is forbidden (\"&\")\n"));
-	else if (!str_multi_ncmp(1, raw[i], "|", "&", NULL)
+		return (ft_fprintf(2, "minishell: error: Run commands in the "),
+			ft_fprintf(2, "background is forbidden (\"&\")\n"));
+	else if ((i > 0 && !ft_strcmp(raw[i - 1], "(") && !ft_strcmp(raw[i], ")"))
+		|| (!str_multi_ncmp(1, raw[i], "|", "&", NULL)
 		&& ((raw[i][1] && char_multi_cmp(raw[i][1], '|', '&', 0)
-		&& !raw[i][2]) || (raw[i][2] && !raw[i][3]) || i == 0))
+		&& !raw[i][2]) || (raw[i][2] && !raw[i][3]) || i == 0)))
 		return (ft_fprintf(2, "minishell: syntax error"),
 			ft_fprintf(2, " near unexpected token `%.1s'\n", raw[i]));
 	else if (i > 0 && !str_multi_cmp(raw[i - 1], "||", "&&", "|", NULL)
-		&& !str_multi_cmp(raw[i], "||", "&&", "|", NULL))
+		&& !str_multi_cmp(raw[i], "||", "&&", "|", ")", NULL))
 		return (ft_fprintf(2, "minishell: syntax error"),
 			ft_fprintf(2, " near unexpected token `%s'\n", raw[i]));
 	return (0);

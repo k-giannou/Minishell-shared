@@ -1,0 +1,13 @@
+total 260
+-rwxr-xr-x 1 locagnio 2024_perpignan      0 Apr  5 21:12 fil
+-rwxr-xr-x 1 locagnio 2024_perpignan      2 Apr  5 20:54 file
+drwxr-xr-x 3 locagnio 2024_perpignan   4096 Apr  5 21:10 fprintf
+drwxr-xr-x 2 locagnio 2024_perpignan     96 Apr  3 21:01 includes
+drwxr-xr-x 3 locagnio 2024_perpignan     50 Apr  5 21:10 libft+extras
+drwxr-xr-x 2 locagnio 2024_perpignan     41 Apr  5 21:10 libs
+-rw-r--r-- 1 locagnio 2024_perpignan   1290 Apr  3 21:01 makefile
+drwxr-xr-x 2 locagnio 2024_perpignan      6 Apr  4 16:55 mdrer
+-rwxr-xr-x 1 locagnio 2024_perpignan 245448 Apr  5 21:10 minishell
+drwxr-xr-x 9 locagnio 2024_perpignan   4096 Apr  5 18:48 minishell_srcs
+drwxr-xr-x 5 locagnio 2024_perpignan     63 Apr  5 19:09 obj
+-rw-r--r-- 1 locagnio 2024_perpignan    647 Apr  3 21:01 valgrind.supp

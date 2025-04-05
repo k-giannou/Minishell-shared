@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/05 18:17:46 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/05 20:47:26 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	exec_child(char **env, t_minishell *mini)
 	int	sig;
 
 	sig = 0;
+	free_btree(*mini->p_btree);
 	signal(SIGQUIT, sigquit_handler);
 	close_and_redirect_pipes(&mini->p, mini->p.i);
 	sig = redir_if_needed(env, mini);

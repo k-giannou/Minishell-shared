@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:45:29 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/05 18:35:04 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/05 21:08:09 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,9 @@ int	first_letter_valid(char *str)
 void	if_pipes_or_redirs(char *line, int *i, int *count)
 {
 	char	c;
+	int		start;
 
+	start = *i;
 	c = 0;
 	if (!char_multi_cmp(line[*i], '<', '>', '|', '&', '(', ')', 0))
 	{
@@ -77,11 +79,16 @@ void	if_pipes_or_redirs(char *line, int *i, int *count)
 		if ((c == '(' || c == ')') && line[*i + 1]
 			&& char_multi_cmp(line[*i + 1], '<', '>', '|', '&', '(', ')', 0))
 			(*count)++;
-		else if ((c == '(' || c == ')') && !line[*i + 1])
-			(*count)--;
+		/* else if ((c == '(' || c == ')') && !line[*i + 1])
+			(*count)--; */
 		else
+		{
 			while (line[*i] == c && !(c == '(' || c == ')'))
 				(*i)++;
+			if (start == 0 && !line[*i])
+				(*count)--;
+		}
 	}
-	(*i)++;
+	if (*i < (int)ft_strlen(line))
+		(*i)++;
 }

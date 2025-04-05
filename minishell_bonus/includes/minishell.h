@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 18:55:18 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/05 18:57:23 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/05 20:28:49 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,7 +197,7 @@ void	current_status(char **tokens, char **p_r, t_prior prior);
 void	handle_parenthesis(t_minishell *mini, int start, int end);
 t_btree	*init_tree(t_btree_params p, char **tokens, char **p_r, int *j);
 void	remove_parenthesis(char ***tokens, char ***p_r, int len_tokens);
-int		get_log_op_check_par(char **p_r, int len_tokens, int *j, int incr);
+int		get_log_op_check_par(char **p_r, int len_tokens, int *j, int *incr);
 t_btree	*right_branch_par(t_btree_params p, char **tokens, char **p_r, int j);
 
 //print

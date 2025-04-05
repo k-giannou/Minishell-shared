@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 16:25:44 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/05 17:28:29 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/05 20:30:02 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	get_type(char *symbol)
 		return (CMD);
 }
 
-int	get_log_op_check_par(char **p_r, int len_tokens, int *j, int incr)
+int	get_log_op_check_par(char **p_r, int len_tokens, int *j, int *incr)
 {
 	int	parenthesis;
 
@@ -45,7 +45,7 @@ int	get_log_op_check_par(char **p_r, int len_tokens, int *j, int incr)
 		if (*j == len_tokens)
 		{
 			len_tokens--;
-			*j = incr++;
+			*j = ++(*incr);
 			if (len_tokens <= *j)
 				return (ft_fprintf(2, "Bro, you're serious ?\n"), 1);
 		}
@@ -55,9 +55,9 @@ int	get_log_op_check_par(char **p_r, int len_tokens, int *j, int incr)
 	return (0);
 }
 
-int	init_tree_error(char **p_r, int len_tokens, int *j)
+int	init_tree_error(char **p_r, int len_tokens, int *j, int *i)
 {
-	if (get_log_op_check_par(p_r, len_tokens, j, 0)
+	if (get_log_op_check_par(p_r, len_tokens, j, i)
 		|| (!str_multi_cmp(p_r[*j], "&&", "||", NULL)
 			&& (!*j || !ft_strcmp(p_r[*j - 1], "("))))
 		return (ft_fprintf(2, "minishell : logical operator at start of "),
@@ -69,10 +69,12 @@ t_btree	*init_tree(t_btree_params p, char **tokens, char **p_r, int *j)
 {
 	t_btree	*tree;
 	int		len_tokens;
+	int		i;
 
+	i = 0;
 	tree = NULL;
 	len_tokens = ft_count_words((const char **)tokens);
-	if (init_tree_error(p_r, len_tokens, j))
+	if (init_tree_error(p_r, len_tokens, j, &i))
 		return (NULL);
 	else if (!str_multi_cmp(p_r[*j], "&&", "||", NULL))
 	{
@@ -86,8 +88,8 @@ t_btree	*init_tree(t_btree_params p, char **tokens, char **p_r, int *j)
 			p.to_free--;
 		}
 		else
-			tree->left = btree_create_node(ft_splitndup(tokens, len_tokens, 0,
-						*j), ft_splitndup(p_r, len_tokens, 0, *j), CMD);
+			tree->left = btree_create_node(ft_splitndup(tokens, len_tokens, i,
+						*j), ft_splitndup(p_r, len_tokens, i, *j), CMD);
 	}
 	return (tree);
 }
@@ -103,3 +105,5 @@ char	**get_cmd_btree(char **tokens, char **p_r, int *j)
 		(*j)++;
 	return (ft_splitndup(tokens, ft_count_words((const char **)tokens), i, *j));
 }
+
+//*tokens@p.len_tokens

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_utils4.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 15:42:30 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/03 17:08:49 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/05 10:59:49 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,8 @@ static void	remv_par_while(char ***tokens, char ***p_r, int len_tokens, int i)
 void	remove_parenthesis(char ***tokens, char ***p_r, int len_tokens)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	j = 0;
 	while ((*tokens)[i] && i < len_tokens)
 	{
 		if (!str_multi_cmp((*p_r)[i], "(", ")", NULL))

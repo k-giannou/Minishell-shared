@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_tree.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 16:25:44 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/03 17:13:49 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/05 10:59:26 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,11 @@ void	add_right_branch(t_btree **root, char **tokens, char **p_r, int *ptr_i)
 void	build_right_branch(t_btree_params *p, char **tokens, char **p_r,
 	t_btree **tree)
 {
-	t_btree	*right;
 	int		j;
 
 	if (!str_multi_cmp(p_r[p->i], "&&", "||", NULL))
 		p->i++;
 	j = 0;
-	right = NULL;
 	if (!ft_strcmp(p_r[p->i], "("))
 	{
 		j = get_end_parenthesis(p_r, p->i, p->len_tokens);
@@ -71,9 +69,6 @@ void	build_right_branch(t_btree_params *p, char **tokens, char **p_r,
 void	build_tree(t_btree_params p, char **tokens, char **p_r,
 	t_btree **tree)
 {
-	int	j;
-
-	j = 0;
 	p.i = 0;
 	while (p.i < p.len_tokens && tokens[p.i])
 	{

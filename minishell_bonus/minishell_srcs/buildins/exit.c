@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 21:07:06 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/04 17:43:20 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/05 11:00:15 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,8 @@ int	valid_nb(char *str)
 
 void	ft_exit(char **tokens, t_minishell *mini)
 {
-	int		i;
 	int64_t	nb;
 
-	i = 1;
 	nb = 0;
 	if (tokens && tokens[0] && tokens[0][0]
 		&& tokens[1])

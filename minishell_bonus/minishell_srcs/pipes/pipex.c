@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/04 19:12:14 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/04/05 11:01:22 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,8 @@ char	***get_cmd_s(t_btree *the_tree, int i, int nb_pipes, int *cmd_s_redirs)
 
 int	pipex(t_minishell *mini, t_btree *the_tree, char **env)
 {
-	int		i;
 	int		signal;
 
-	i = -1;
 	mini->p.nb_pipes = pipe_count(the_tree);
 	mini->cmd_s_redirs = (int *)ft_calloc(sizeof(int), (mini->p.nb_pipes + 1));
 	mini->cmd_s = get_cmd_s(the_tree, 0, mini->p.nb_pipes, mini->cmd_s_redirs);

@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:17 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/04 17:34:04 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/05 18:27:57 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	main(int ac, char **av, char **env)
 		str = replace_var(mini, str);
 		optimised_line(str, &mini);
 		if (is_symbols(mini->pipes_redirs, 0))
-			free_all(mini, "tabs");
+			(free_all(mini, "tabs"), mini->tokens = NULL);
 		if (!mini->tokens || !mini->tokens[0] || mini->tokens[0][0] == 0)
 			continue ;
 		exec_cmd(mini);

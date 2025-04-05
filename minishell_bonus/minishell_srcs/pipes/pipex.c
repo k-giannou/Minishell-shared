@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/05 11:01:22 by marvin           ###   ########.fr       */
+/*   Updated: 2025/04/05 15:51:18 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,8 @@ int	son_program(char **env, t_minishell *mini, int redir)
 			return (perror(RED "Error -> pid failure\n" RESET), -1);
 		if (mini->p.pids[mini->p.i] == 0)
 			exec_child(env, mini);
-		else
-			close_curr_pipe(&mini->p, mini->p.i, mini->cmd_s[mini->p.i]);
 	}
+	close_curr_pipe(&mini->p, mini->p.i, mini->cmd_s[mini->p.i]);
 	if (mini->p.nb_pipes == 0)
 		return (waitpid(mini->p.pids[0], &sig, 0), get_sig(sig));
 	if (mini->p.i == mini->p.nb_pipes)

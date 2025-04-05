@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_tree.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 16:25:44 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/05 10:59:26 by marvin           ###   ########.fr       */
+/*   Updated: 2025/04/05 15:58:42 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ void	build_tree(t_btree_params p, char **tokens, char **p_r,
 		if (!str_multi_cmp(p_r[p.i], "&&", "||", NULL)
 			|| !get_next_oplog(tokens, p_r, p.i))
 			build_right_branch(&p, tokens, p_r, tree);
+		else
+			p.i++;
 	}
 }
 
@@ -107,3 +109,5 @@ t_btree	*create_tree(t_btree_params p, char **tokens, char **p_r)
 		multi_free("2, 2", tokens, p_r, NULL);
 	return (tree);
 }
+
+//display *(tokens + p.i)@(p.len_tokens - p.i)

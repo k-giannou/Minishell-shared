@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 18:07:16 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/04 19:00:15 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/05 18:57:14 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,18 @@ int	redir_if_needed(char **env, t_minishell *mini)
 		free_dbl_tab(split);
 	}
 	return (sig);
+}
+
+int only_parenthesis(char **split)
+{
+	int i;
+
+	i = 0;
+	while (split[i])
+	{
+		if (str_multi_cmp(split[i], "(", ")", NULL))
+			return (0);
+		i++;
+	}
+	return (1);
 }

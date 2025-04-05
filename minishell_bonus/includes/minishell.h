@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 18:55:18 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/05 18:16:43 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/05 18:57:23 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,6 +287,7 @@ int		will_exit(char **tokens);
 int		strcmp_64_mini(char *nptr);
 void	init_user(t_minishell *mini);
 int		first_letter_valid(char *str);
+int 	only_parenthesis(char **split);
 int		ft_strrchr(const char *s, int c);
 char	*return_tab(int tab, int *new_i);
 char	*ft_strsrch(const char *s, char *c);

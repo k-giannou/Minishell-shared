@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 20:38:24 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/05 18:39:33 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/05 18:57:09 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	check_tokens_errors(char **raw, int i)
 
 int	is_symbols(char **raw, int i)
 {
-	if (check_parenthesis(raw, 0, 0, 0))
+	if (check_parenthesis(raw, 0, 0, 0) || only_parenthesis(raw))
 		return (1);
 	i = -1;
 	while (raw[++i])

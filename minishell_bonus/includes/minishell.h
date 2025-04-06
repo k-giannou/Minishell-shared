@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 18:55:18 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/06 16:18:05 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/06 16:22:44 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,6 @@ char	*ft_substr_with_quotes(char *line, t_minishell *mini, int len);
 
 //btree
 int		get_type(char *symbol);
-void	free_btree(t_btree *btree);
 int		ast(t_minishell *mini, t_btree *the_tree);
 char	**get_p_r(char **tokens, char **p_r, int j);
 char	*get_and_or(char **tokens, char **p_r, int i);
@@ -208,8 +207,9 @@ void	print_pipes_redirs(char **split, int nb_words);
 void	ft_print_export(t_env *v, bool sign, bool inside);
 
 //frees
+void	free_btree(t_btree *btree);
 void	ft_list_clear(t_env *begin_list);
-void	free_array_of_splits(char ****cmd_s);
+void	free_splits_array(char ****cmd_s);
 void	free_pipes(int **pipes, int nb_pipes);
 void	free_all(t_minishell *mini, char *str);
 void	free_pipes_redirs(char **str, int nb_words);

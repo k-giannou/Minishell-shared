@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 18:55:18 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/05 20:28:49 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/06 16:18:05 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,10 +209,11 @@ void	ft_print_export(t_env *v, bool sign, bool inside);
 
 //frees
 void	ft_list_clear(t_env *begin_list);
+void	free_array_of_splits(char ****cmd_s);
 void	free_pipes(int **pipes, int nb_pipes);
 void	free_all(t_minishell *mini, char *str);
 void	free_pipes_redirs(char **str, int nb_words);
-void	free_array_of_splits(char ****cmd_s);
+void	free_tokens_splits(char ***tokens, char ***p_r, int len_tokens);
 
 //pipes
 char	*get_first_arg(char *av);

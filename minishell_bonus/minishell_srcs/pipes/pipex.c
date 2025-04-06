@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/05 20:47:26 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/06 16:08:06 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,14 @@ void	exec_child(char **env, t_minishell *mini)
 		exec_buildin(mini->cmd_s[mini->p.i], mini, 0);
 	else
 		execute(mini->cmd_s, mini->p.i, env, mini);
+	free_pipes(mini->p.pipes, mini->p.nb_pipes);
+	if (mini->p.pids)
+		free(mini->p.pids);
+	if (mini->cmd_s_redirs)
+		free(mini->cmd_s_redirs);
 	free_dbl_tab(env);
+	free_array_of_splits(&mini->cmd_s);
+	free_all(mini, "all");
 	exit(sig);
 }
 

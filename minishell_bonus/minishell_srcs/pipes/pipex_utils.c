@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 17:11:55 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/05 20:49:53 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/06 16:07:40 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ void	execute(char ***cmd, int i, char **env, t_minishell *mini)
 	char	*path;
 
 	free(mini->cmd_s_redirs);
+	mini->cmd_s_redirs = NULL;
 	if (!cmd[i])
 		return (free_all(mini, "all"), free_dbl_tab(env),
 			perror("Error -> issue spliting command\n"), exit(1));
@@ -115,11 +116,10 @@ void	execute(char ***cmd, int i, char **env, t_minishell *mini)
 		return (ft_fprintf(2, "%s: command not found\n", cmd[i][0]),
 			free_pipes(mini->p.pipes, mini->p.nb_pipes), free_dbl_tab(env),
 			free_array_of_splits(&cmd), free_all(mini, "all"), exit(1));
-	free_all(mini, "all");
 	if (execve(path, cmd[i], env) == -1)
 	{
 		free(path);
-		perror("Error -> execution failure ");
 		free_array_of_splits(&cmd);
+		perror("Error -> execution failure ");
 	}
 }

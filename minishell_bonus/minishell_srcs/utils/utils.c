@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 20:38:24 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/06 16:44:50 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/06 18:25:54 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ int	check_tokens_errors(char **raw, int i)
 			ft_fprintf(2, "background is forbidden (\"&\")\n"));
 	else if ((i > 0 && !ft_strcmp(raw[i - 1], "(") && !ft_strcmp(raw[i], ")"))
 		|| (!str_multi_ncmp(1, raw[i], "|", "&", NULL)
-		&& ((raw[i][1] && char_multi_cmp(raw[i][1], '|', '&', 0)
-		&& !raw[i][2]) || (raw[i][2] && !raw[i][3]) || i == 0)))
+			&& ((raw[i][1] && char_multi_cmp(raw[i][1], '|', '&', 0)
+			&& !raw[i][2]) || (raw[i][2] && !raw[i][3]) || i == 0)))
 		return (ft_fprintf(2, "4minishell: syntax error"),
 			ft_fprintf(2, " near unexpected token `%.1s'\n", raw[i]));
 	else if (i > 0 && !str_multi_cmp(raw[i - 1], "||", "&&", "|", NULL)

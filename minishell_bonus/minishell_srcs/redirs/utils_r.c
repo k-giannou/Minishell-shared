@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_r.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:04:54 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/05 18:53:51 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/06 18:24:41 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,9 @@ void	find_tab(int *y, char **tnulls, char **tokens)
 int	is_buildin(char *tab, int to_free)
 {
 	if (tab && (!ft_strcmp(tab, "pwd") || !ft_strcmp(tab, "echo")
-		|| !ft_strcmp(tab, "cd") || !ft_strcmp(tab, "export")
-		|| !ft_strcmp(tab, "unset") || !ft_strcmp(tab, "env")
-		|| !ft_strcmp(tab, "exit")))
+			|| !ft_strcmp(tab, "cd") || !ft_strcmp(tab, "export")
+			|| !ft_strcmp(tab, "unset") || !ft_strcmp(tab, "env")
+			|| !ft_strcmp(tab, "exit")))
 	{
 		if (to_free)
 			free(tab);

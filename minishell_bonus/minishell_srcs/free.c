@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:46:16 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/06 16:18:45 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/06 18:28:29 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ void	free_btree(t_btree *btree)
 		free_btree(btree->left);
 		free_btree(btree->right);
 		//if (btree->pipes_redirs)
-			free_pipes_redirs(btree->pipes_redirs,
-				ft_count_words((const char **)btree->tokens));
+		free_pipes_redirs(btree->pipes_redirs,
+			t_count_words((const char **)btree->tokens));
 		free_dbl_tab(btree->tokens);
 		btree->tokens = NULL;
 		btree->pipes_redirs = NULL;
@@ -83,7 +83,8 @@ void	free_all(t_minishell *mini, char *str)
 		if (mini->pipes_redirs)
 			free_pipes_redirs(mini->pipes_redirs,
 				ft_count_words((const char **)mini->tokens));
-		multi_free("1, 1, 2", mini->cur_loc, mini->user.final, mini->tokens, NULL);
+		multi_free("1, 1, 2", mini->cur_loc, \
+mini->user.final, mini->tokens, NULL);
 		free(mini);
 	}
 	else if (!ft_strcmp(str, "tabs") && mini)

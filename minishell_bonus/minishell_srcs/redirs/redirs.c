@@ -6,7 +6,7 @@
 /*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:21:49 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/04/06 18:14:23 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/04/06 18:22:40 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,11 +135,13 @@ int	redir(t_minishell *mini, char **env, char **tokens, char **pipes_redirs)
 	if (is_buildin(tokens[0], 0) || isredir_pipex(tokens[0]))
 	{
 		if (!handle_files(tokens, pipes_redirs, &mini->r, 0))
-			return (restore_dup(&mini->r), free_pipes_redirs(mini->r.tab, ft_count_words((const char **)tokens)), 1);
+			return (restore_dup(&mini->r), free_pipes_redirs(mini->r.tab, \
+ft_count_words((const char **)tokens)), 1);
 		join_command_free_tab(mini->r.tab, tokens);
 		exec_buildin(mini->r.tab, mini, 0);
 	}
 	else if (!handle_no_buildin_redir(env, tokens, pipes_redirs, mini))
 		return (1);
-	return (restore_dup(&mini->r), free_pipes_redirs(mini->r.tab, ft_count_words((const char **)tokens)), 0);
+	return (restore_dup(&mini->r), free_pipes_redirs(mini->r.tab, \
+ft_count_words((const char **)tokens)), 0);
 }

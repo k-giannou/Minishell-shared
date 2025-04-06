@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_tree.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 16:25:44 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/06 16:18:14 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/06 18:26:23 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ t_btree	*create_tree(t_btree_params p, char **tokens, char **p_r)
 			remove_parenthesis(&tokens, &p_r, p.len_tokens);
 		if (tokens && tokens[0])
 			tree = btree_create_node(ft_splitdup(tokens),
-				ft_splitndup(p_r, p.len_tokens, 0, p.len_tokens), CMD);
+					ft_splitndup(p_r, p.len_tokens, 0, p.len_tokens), CMD);
 		if (p.to_free)
 			free_tokens_splits(&tokens, &p_r, p.len_tokens);
 		return (tree);

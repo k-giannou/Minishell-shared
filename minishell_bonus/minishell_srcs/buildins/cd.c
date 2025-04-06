@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 19:15:45 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/06 15:25:50 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/06 18:27:12 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,8 @@ void	cd(char **path, t_minishell **mini)
 		return ;
 	if (!path[1])
 		free(str);
-	(*mini)->cur_loc = replace_by_tilde((*mini)->env_export, (*mini)->cur_loc, 1);
+	(*mini)->cur_loc = replace_by_tilde((*mini)->env_export, \
+	(*mini)->cur_loc, 1);
 	if (!(*mini)->cur_loc || new_location(mini))
 		return (free_all(*mini, "all"), exit(1));
 	g_signal = 0;

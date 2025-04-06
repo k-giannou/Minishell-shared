@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils7.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 18:07:16 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/05 18:57:14 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/06 18:21:06 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ int	redir_if_needed(char **env, t_minishell *mini)
 	return (sig);
 }
 
-int only_parenthesis(char **split)
+int	only_parenthesis(char **split)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (split[i])

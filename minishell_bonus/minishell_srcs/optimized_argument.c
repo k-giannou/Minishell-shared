@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:31:28 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/05 21:04:34 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/06 15:07:53 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,13 +127,12 @@ void	optimised_line(char *line, t_minishell **mini)
 	int	count;
 
 	count = count_tokens(line, 0, 0, 0);
-	printf("%d\n", count);
 	(*mini)->tokens = malloc(sizeof(char *) * (count + 1));
 	(*mini)->pipes_redirs = malloc(sizeof(char *) * (count + 1));
 	if (!(*mini)->tokens || !(*mini)->pipes_redirs)
 		return (free(line));
 	i = 0;
-	while (line[i] == ' ')
+	while (line && line[i] == ' ')
 		i++;
 	split_line(line + i, mini, 0, (int)ft_strlen(line));
 	free(line);

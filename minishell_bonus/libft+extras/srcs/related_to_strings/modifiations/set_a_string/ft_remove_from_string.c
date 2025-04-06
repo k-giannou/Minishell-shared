@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 14:46:21 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/03 18:28:20 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/06 14:25:18 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ char	*ft_remove_from_string(char *str, char *to_delete, int free_str)
 		free(line);
 		line = tmp;
 	}
+	free_dbl_tab(tab);
 	if (free_str)
 		free(str);
 	return (line);

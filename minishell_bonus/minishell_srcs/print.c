@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 20:17:08 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/01 17:54:29 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/06 14:46:25 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	ft_print_export(t_env *v, bool sign, bool inside)
 void	print_list(t_env *L)
 {
 	if (!L)
-		printf("(null)");
+		printf("(null)\n");
 	while (L)
 	{
 		printf("%s\n", L->data);

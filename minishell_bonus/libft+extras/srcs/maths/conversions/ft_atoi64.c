@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 19:26:37 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/03 18:36:40 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/06 14:24:20 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static int	cmp_64(char *nptr)
 			if (nptr[i] > INT64_MIN_ATOI[i])
 				return (1);
 	}
+	free(nptr);
 	return (0);
 }
 
@@ -58,7 +59,7 @@ int64_t	ft_atoi64(char *nptr)
 	i = 0;
 	sign = 1;
 	result = 0;
-	if (cmp_64(ft_remove_from_string((char *)nptr, " \t+", 0)))
+	if (cmp_64(ft_remove_from_string(nptr, " \t+", 0)))
 		return (error64(nptr));
 	while (nptr[i] == ' ' || (nptr[i] >= 9 && nptr[i] <= 13))
 		i++;

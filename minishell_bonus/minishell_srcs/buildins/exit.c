@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 21:07:06 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/05 18:16:35 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/06 14:26:30 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	strcmp_64_mini(char *nptr)
 			if (nptr[i] > INT64_MIN_ATOI[i])
 				return (1);
 	}
+	free(nptr);
 	return (0);
 }
 
@@ -68,14 +69,15 @@ int	valid_nb(char *str)
 void	ft_exit(char **tokens, t_minishell *mini)
 {
 	int64_t	nb;
+	char *tmp;
 
 	nb = 0;
+	tmp = NULL;
 	if (tokens && tokens[0] && tokens[0][0]
 		&& tokens[1])
 	{
-		if (!valid_nb(tokens[1])
-			|| strcmp_64_mini(
-				ft_remove_from_string(tokens[1], " \n\v\f\r+", 0)))
+		tmp = ft_remove_from_string(tokens[1], " \n\v\f\r+", 0);
+		if (!valid_nb(tokens[1]) || strcmp_64_mini(tmp))
 			return (g_signal = 2, error_exit(tokens[1], 1),
 				free_array_of_splits(&mini->cmd_s), free_all(mini, "all"), exit(2));
 		nb = ft_atoi64(tokens[1]);

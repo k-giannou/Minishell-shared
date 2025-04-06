@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   repl.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:03:42 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/20 16:51:55 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/04/06 15:28:45 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ void	search_and_change(t_variables *v, char *str, t_minishell *mini,
 {
 	char	*dest;
 
-	current = mini->env;
+	current = mini->env_export;
 	v->i++;
 	v->t = 0;
-	current = mini->env;
+	current = mini->env_export;
 	while (ft_isalpha(str[v->i]) || ft_isnum(str[v->i]) || str[v->i] == '_')
 		v->to_search[v->t++] = str[v->i++];
 	v->to_search[v->t++] = '\0';

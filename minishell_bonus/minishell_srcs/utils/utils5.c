@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils5.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 18:07:16 by locagnio          #+#    #+#             */
-/*   Updated: 2025/03/30 23:56:31 by marvin           ###   ########.fr       */
+/*   Updated: 2025/04/06 14:38:58 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ char	*replace_by_tilde(t_env *env, char *str, int free_str)
 	if (!str)
 		return (ft_fprintf(2, "Error : unable to get the current directory\n"),
 			NULL);
+	if (!env)
+		return (str);
 	tmp = env;
 	ft_get_env(&tmp, "HOME=");
 	if (tmp && !ft_strncmp(str, tmp->data + 5, ft_strlen(tmp->data + 5)))

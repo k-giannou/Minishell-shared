@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 19:15:45 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/03 15:47:22 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/04/06 15:23:35 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,14 @@ int	equal_sign(char *str)
 	return (0);
 }
 
-void	add_in_env(char *str, t_env *v)
+void	add_in_env(char *str, t_env **v, int is_env_export)
 {
 	t_env	*new_node;
 	t_env	*temp;
 
-	temp = v;
+	if (!*v && !is_env_export)
+		return ;
+	temp = *v;
 	while (temp != NULL)
 	{
 		if (ft_strncmp(str, temp->data, ft_strclen(str, '=')) == 0)
@@ -78,7 +80,7 @@ void	add_in_env(char *str, t_env *v)
 		return ;
 	new_node->data = ft_strdup(str);
 	new_node->next = NULL;
-	ft_list_add_back(&v, new_node);
+	ft_list_add_back(v, new_node);
 }
 
 void	export(char **vars, t_minishell *mini)
@@ -95,15 +97,15 @@ void	export(char **vars, t_minishell *mini)
 			ft_fprintf(2, "minishell: export: `%s': not a valid identifier\n",
 				vars[i]);
 		else if (!equal_sign(vars[i]))
-			add_in_env(vars[i], mini->env_export);
+			add_in_env(vars[i], &mini->env_export, 1);
 		else
 		{
-			add_in_env(vars[i], mini->env);
-			add_in_env(vars[i], mini->env_export);
+			add_in_env(vars[i], &mini->env, 0);
+			add_in_env(vars[i], &mini->env_export, 1);
 		}
 		i++;
 	}
 	ft_env_sort(&mini->env_export);
-	mini->cur_loc = replace_by_tilde(mini->env, mini->cur_loc, 1);
+	mini->cur_loc = replace_by_tilde(mini->env_export, mini->cur_loc, 1);
 	g_signal = 0;
 }

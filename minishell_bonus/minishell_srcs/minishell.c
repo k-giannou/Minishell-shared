@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 18:03:17 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/06 15:12:55 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/06 16:38:32 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,8 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		str = replace_var(mini, str);
 		optimised_line(str, &mini);
-		if (is_symbols(mini->pipes_redirs, 0))
+		if (is_symbols(mini->pipes_redirs, 0)
+			|| syntax_error_redir(mini->tokens, mini->pipes_redirs))
 			free_all(mini, "tabs");
 		if (!mini->tokens || !mini->tokens[0] || mini->tokens[0][0] == 0)
 			continue ;

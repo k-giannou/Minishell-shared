@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:00:12 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/06 14:56:31 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/06 16:25:29 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct s_msjnf
 
 void		free_dbl_tab(char **str);
 void		multi_free(char *to_free, ...);
+void		ft_free_splits_array(char ****cmd_s);
 //																			  //
 /* ************************************************************************** */
 

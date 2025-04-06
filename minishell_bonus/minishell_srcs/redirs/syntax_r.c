@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:50:09 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/04/06 16:33:46 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/06 16:50:51 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	syntax_error_redir(char **tab, char **ntab)
 	{
 		if (ntab[y + 1])
 		{
-			if (ntab[y] && ntab[y + 1])
+			if (isredir_pipex(ntab[y]) && isredir_pipex(ntab[y + 1]))
 				return (print_mess(tab[y + 1], 0, NULL, NULL), 1);
 		}
 		y++;

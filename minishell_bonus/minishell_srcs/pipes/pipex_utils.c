@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 17:11:55 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/06 16:07:40 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/06 16:23:21 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,11 +115,11 @@ void	execute(char ***cmd, int i, char **env, t_minishell *mini)
 	if (!path)
 		return (ft_fprintf(2, "%s: command not found\n", cmd[i][0]),
 			free_pipes(mini->p.pipes, mini->p.nb_pipes), free_dbl_tab(env),
-			free_array_of_splits(&cmd), free_all(mini, "all"), exit(1));
+			free_splits_array(&cmd), free_all(mini, "all"), exit(1));
 	if (execve(path, cmd[i], env) == -1)
 	{
 		free(path);
-		free_array_of_splits(&cmd);
+		free_splits_array(&cmd);
 		perror("Error -> execution failure ");
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 21:07:06 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/06 14:26:30 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/06 16:23:09 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,12 @@ void	ft_exit(char **tokens, t_minishell *mini)
 		tmp = ft_remove_from_string(tokens[1], " \n\v\f\r+", 0);
 		if (!valid_nb(tokens[1]) || strcmp_64_mini(tmp))
 			return (g_signal = 2, error_exit(tokens[1], 1),
-				free_array_of_splits(&mini->cmd_s), free_all(mini, "all"), exit(2));
+				free_splits_array(&mini->cmd_s), free_all(mini, "all"), exit(2));
 		nb = ft_atoi64(tokens[1]);
 	}
 	if (tokens && tokens[0] && tokens[0][0] && tokens[1]
 		&& tokens[2])
 		return (g_signal = 1, error_exit(tokens[2], 2));
 	return (g_signal = nb % 256, printf("exit\n"), 
-		free_array_of_splits(&mini->cmd_s), free_all(mini, "all"), exit(nb % 256));
+		free_splits_array(&mini->cmd_s), free_all(mini, "all"), exit(nb % 256));
 }

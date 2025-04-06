@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/06 16:08:06 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/06 16:23:40 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	exec_child(char **env, t_minishell *mini)
 	if (mini->cmd_s_redirs)
 		free(mini->cmd_s_redirs);
 	free_dbl_tab(env);
-	free_array_of_splits(&mini->cmd_s);
+	free_splits_array(&mini->cmd_s);
 	free_all(mini, "all");
 	exit(sig);
 }
@@ -125,7 +125,7 @@ int	pipex(t_minishell *mini, t_btree *the_tree, char **env)
 	mini->p.i = 0;
 	mini->p.pids = (pid_t *)ft_calloc(sizeof(pid_t), (mini->p.nb_pipes + 1));
 	if (!mini->p.pids)
-		return (free(mini->cmd_s_redirs), free_array_of_splits(&mini->cmd_s),
+		return (free(mini->cmd_s_redirs), free_splits_array(&mini->cmd_s),
 			ft_fprintf(2, RED"Error : fail initiate pid's\n"RESET), -1);
 	if (mini->p.nb_pipes != 0)
 		create_pipes(&mini->p);
@@ -134,7 +134,7 @@ int	pipex(t_minishell *mini, t_btree *the_tree, char **env)
 	signal = son_program(env, mini, mini->cmd_s_redirs[mini->p.i]);
 	free_pipes(mini->p.pipes, mini->p.nb_pipes);
 	multi_free("1, 2, 1", mini->p.pids, env, mini->cmd_s_redirs, NULL);
-	free_array_of_splits(&mini->cmd_s);
+	free_splits_array(&mini->cmd_s);
 	wait(NULL);
 	return (signal);
 }

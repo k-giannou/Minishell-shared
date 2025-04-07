@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 18:55:18 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/07 16:45:40 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/04/07 17:34:55 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,7 +200,7 @@ int		get_log_op_check_par(char **p_r, int len_tokens, int *j, int *incr);
 t_btree	*right_branch_par(t_btree_params p, char **tokens, char **p_r, int j);
 
 //print
-void	welcome(void);
+void	print_welcome(void);
 void	print_list(t_env *L);
 void	ft_print_dlb_tabs(char **tab, char *arg);
 void	print_pipes_redirs(char **split, int nb_words);
@@ -324,7 +324,4 @@ int		process_pattern(t_variables *v, char *str);
 void	handle_if_not_found(t_variables *v, char *str);
 char	*final_str(t_variables *v, char *str);
 
-//welcome
-void	print_welcome(void);
-void	print_welcome_two(void);
 #endif

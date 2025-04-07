@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcards_utils2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 12:32:54 by kgiannou          #+#    #+#             */
-/*   Updated: 2025/04/07 16:44:19 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/04/07 17:28:09 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_fnmatch_rec(const char *pattern, const char *str, int *i)
 	int	result1;
 	int	result2;
 
-	while (*pattern == '*' && (*(pattern + 1) ==  '*'))
+	while (*pattern == '*' && (*(pattern + 1) == '*'))
 		pattern++;
 	while (*pattern == '\"')
 	{

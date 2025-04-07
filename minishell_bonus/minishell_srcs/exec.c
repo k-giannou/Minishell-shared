@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 16:25:44 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/06 15:08:19 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/06 20:47:44 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ void	exec_cmd(t_minishell *mini)
 	}
 	mini->btree_used = false;
 	free_all(mini, "tabs");
-	mini->tokens = NULL;
-	mini->pipes_redirs = NULL;
 }
 
 	/* t_prior prior;

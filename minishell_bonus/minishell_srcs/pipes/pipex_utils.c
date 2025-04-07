@@ -6,7 +6,7 @@
 /*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 17:11:55 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/06 18:16:38 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/06 20:42:39 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	execute(char ***cmd, int i, char **env, t_minishell *mini)
 	if (!cmd[i])
 		return (free_all(mini, "all"), free_dbl_tab(env),
 			perror("Error -> issue spliting command\n"),
-			free_pipes(mini->p.pipes, mini->p.nb_pipes),
+			free_pipes(mini->p.pipes, mini->p.nb_pipes), free(mini->p.pids),
 			free_splits_array(&cmd), free_all(mini, "all"), exit(1));
 	if (!(cmd[i][0][0] == '/' || !ft_strncmp(cmd[i][0], "./", 2)
 		|| !ft_strncmp(cmd[i][0], "../", 2)))
@@ -116,7 +116,8 @@ void	execute(char ***cmd, int i, char **env, t_minishell *mini)
 	if (!path)
 		return (ft_fprintf(2, "%s: command not found\n", cmd[i][0]),
 			free_pipes(mini->p.pipes, mini->p.nb_pipes), free_dbl_tab(env),
-			free_splits_array(&cmd), free_all(mini, "all"), exit(127));
+			free_splits_array(&cmd), free(mini->p.pids), free_all(mini, "all"),
+			exit(127));
 	if (execve(path, cmd[i], env) == -1)
 	{
 		free(path);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:46:16 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/06 18:28:29 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/04/06 20:48:20 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,8 @@ void	free_btree(t_btree *btree)
 	{
 		free_btree(btree->left);
 		free_btree(btree->right);
-		//if (btree->pipes_redirs)
 		free_pipes_redirs(btree->pipes_redirs,
-			t_count_words((const char **)btree->tokens));
+			ft_count_words((const char **)btree->tokens));
 		free_dbl_tab(btree->tokens);
 		btree->tokens = NULL;
 		btree->pipes_redirs = NULL;

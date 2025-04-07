@@ -3,34 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:14:22 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/06 18:20:42 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/04/06 20:48:55 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-char	*get_first_arg(char *av)
-{
-	char	*first_arg;
-	int		i;
-
-	if (!av)
-		return (NULL);
-	first_arg = malloc(sizeof(char) * (ft_strclen(av, ' ') + 1));
-	if (!first_arg)
-		return (printf("error : couldn't get first arg"), exit(1), NULL);
-	i = 0;
-	while (av[i] && av[i] != ' ')
-	{
-		first_arg[i] = av[i];
-		i++;
-	}
-	first_arg[i] = 0;
-	return (first_arg);
-}
 
 void	exec_child(char **env, t_minishell *mini)
 {
@@ -56,6 +36,15 @@ void	exec_child(char **env, t_minishell *mini)
 	exit(sig);
 }
 
+void	exec_child_pipe(char **env, t_minishell *mini)
+{
+	mini->p.pids[mini->p.i] = fork();
+	if (mini->p.pids[mini->p.i] == -1)
+		return (perror(RED "Error -> pid failure\n" RESET));
+	if (mini->p.pids[mini->p.i] == 0)
+		exec_child(env, mini);
+}
+
 int	son_program(char **env, t_minishell *mini, int redir)
 {
 	int	sig;
@@ -71,13 +60,7 @@ int	son_program(char **env, t_minishell *mini, int redir)
 		exec_buildin(mini->cmd_s[mini->p.i], mini, 0);
 	else if (!(is_buildin(mini->cmd_s[mini->p.i][0], 0)
 		&& mini->p.nb_pipes == 0) && !mini->cmd_s_redirs[mini->p.i])
-	{
-		mini->p.pids[mini->p.i] = fork();
-		if (mini->p.pids[mini->p.i] == -1)
-			return (perror(RED "Error -> pid failure\n" RESET), -1);
-		if (mini->p.pids[mini->p.i] == 0)
-			exec_child(env, mini);
-	}
+		exec_child_pipe(env, mini);
 	close_curr_pipe(&mini->p, mini->p.i, mini->cmd_s[mini->p.i]);
 	if (mini->p.nb_pipes == 0)
 		return (waitpid(mini->p.pids[0], &sig, 0), get_sig(sig));
@@ -132,6 +115,8 @@ int	pipex(t_minishell *mini, t_btree *the_tree, char **env)
 	else
 		mini->p.pipes = NULL;
 	signal = son_program(env, mini, mini->cmd_s_redirs[mini->p.i]);
+	if (!is_the_cmd_exist(mini->cmd_s[mini->p.nb_pipes][0]))
+		signal = 127;
 	free_pipes(mini->p.pipes, mini->p.nb_pipes);
 	multi_free("1, 2, 1", mini->p.pids, env, mini->cmd_s_redirs, NULL);
 	free_splits_array(&mini->cmd_s);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 20:38:24 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/06 18:25:54 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/04/07 16:28:51 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	check_parenthesis(char **str, int j, int open_par, int close_par)
 
 int	check_tokens_errors(char **raw, int i)
 {
-	if (!str_multi_ncmp(2, raw[i], "||", "&&", NULL)
+	if (!str_multi_ncmp(2, raw[i], "||", "&&", "|", NULL)
 		&& (!raw[i + 1] || (raw[i][2] && raw[i][3]) || i == 0
 			|| (i > 0 && !str_multi_ncmp(1, raw[i - 1], "|", "&", NULL))))
 		return (ft_fprintf(2, "1minishell: syntax error"),

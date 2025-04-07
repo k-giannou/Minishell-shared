@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 18:55:18 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/06 18:17:51 by kgiannou         ###   ########.fr       */
+/*   Updated: 2025/04/06 20:36:12 by locagnio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -286,6 +286,7 @@ long	len_list(t_env *list);
 char	*host_dup(char *name);
 int		will_exit(char **tokens);
 int		strcmp_64_mini(char *nptr);
+int		is_the_cmd_exist(char *cmd);
 void	init_user(t_minishell *mini);
 int		first_letter_valid(char *str);
 int		only_parenthesis(char **split);

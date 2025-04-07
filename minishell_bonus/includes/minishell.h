@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: locagnio <locagnio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kgiannou <kgiannou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 18:55:18 by locagnio          #+#    #+#             */
-/*   Updated: 2025/04/06 20:36:12 by locagnio         ###   ########.fr       */
+/*   Updated: 2025/04/07 16:45:40 by kgiannou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -324,4 +324,7 @@ int		process_pattern(t_variables *v, char *str);
 void	handle_if_not_found(t_variables *v, char *str);
 char	*final_str(t_variables *v, char *str);
 
+//welcome
+void	print_welcome(void);
+void	print_welcome_two(void);
 #endif
